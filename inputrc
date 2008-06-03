@@ -1,0 +1,64 @@
+# -*- readline -*-
+# Configurazione personale per GNU Readline.
+#
+
+# Rilegge questo file.
+"\C-x\C-r": re-read-init-file
+
+# Vai all'inizio della riga con <Home> (era C-a)
+"\e[H": beginning-of-line
+# Vai alla fine della riga con <End> (era C-e)
+"\e[F": end-of-line
+# Vai indietro di una parola con <PageUp> (era M-b)
+"\e[5~": backward-word
+# Vai avanti di una parola con <PageDown> (era M-f).
+"\e[6~": forward-word
+# Vai indietro di una parola con <Control> + <Left> (era M-b).
+"\e[1;5D": backward-word
+# Vai avanti di una parola con <Control> + <Right> (era M-f).
+"\e[1;5C": forward-word
+# Cancella un carattere a destra con <Del>.
+"\e[3~": delete-char
+"\C-d":  delete-char
+
+# Con <Ins> passiamo dalla modalita` inserimento alla modalita`
+# sostituzione.
+"\e[2~": overwrite-mode
+
+# Inserisce un carattere di tabulazione letterale.
+"\C- ": tab-insert
+# Tentare una command completion  --  <Tab>.
+"	": complete
+
+# These are required to get readline to display accents and/or umlauts,
+# i.e. to be put into "8 bit" mode.  SOme systems (e.g. FreeBSD) really
+# require this.
+set input-meta on
+set output-meta on
+set convert-meta off
+
+$if Bash
+
+   # Tentare una command completion  --  <F1>.
+   "\eOP": complete
+
+   # Un aiuto per completare le opzioni lunghe (deal with a minor
+   # botch of bash completion)  --  <F2> e <Meta>+"-"
+   # XXX: "\M--" doesn't work; why?
+   "\e-": "\C-b\C-b\C-b\C-d\C-f"
+   "\eOQ": "\C-b\C-b\C-b\C-d\C-f"
+   # Un aiuto per completare le optzioni lunghe (deal with a minor
+   # botch of bash completion)  --  <F5> e <Meta>+"+"
+   # XXX: "\M--" doesn't work; why?
+   "\e+": "    \C-b\C-b\C-b\C-d\C-f"
+   "\e[15~": " \C-b\C-b\C-b\C-d\C-f"
+   # Vedere i possibili completamenti di un comando  --  <F3>.
+   "\eOR": possible-completions
+   # Completamento "a menu" di un comando  --  <F4>.
+   "\eOS": menu-complete
+
+   # Stampa un bel fortune.
+   "\C-\M-w": "\C-a\C-kdeclare -F welcome &>/dev/null && welcome\C-o\C-a\C-k"
+
+$endif
+
