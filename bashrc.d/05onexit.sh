@@ -5,7 +5,7 @@
 
 declare -a EXEC_ON_EXIT_ACTIONS=(":")
 
-_exit_trap() {
+exit_trap() {
     local exit_status=$?
     local i exit_action
     unset PS1 PS2 PS3 PS4 PROMPT_COMMAND
@@ -30,9 +30,9 @@ _exit_trap() {
     exit $exit_status
 
 }
-declare -rf _exit_trap
+declare -rf exit_trap
 
-trap _exit_trap EXIT HUP QUIT ABRT PIPE TERM
+trap exit_trap EXIT HUP QUIT ABRT PIPE TERM
 
 atexit() {
     EXEC_ON_EXIT_ACTIONS=("$@" "${EXEC_ON_EXIT_ACTION[@]}")
