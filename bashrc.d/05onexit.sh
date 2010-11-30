@@ -6,26 +6,28 @@
 declare -a EXEC_ON_EXIT_ACTIONS=(":")
 
 _exit_trap() {
-    local _exit_status=$?
-    local i _exit_action
+    local exit_status=$?
+    local i exit_action
     unset PS1 PS2 PS3 PS4 PROMPT_COMMAND
     trap - EXIT
     # Execute planned cleanup actions in the proper order.
-    for _exit_action in "${EXEC_ON_EXIT_ACTIONS[@]}"; do
-        eval "${_exit_action}" || _exit_status=$?
+    local exit_action
+    for exit_action in "${EXEC_ON_EXIT_ACTIONS[@]}"; do
+        eval "$exit_action" || exit_status=$FAILURE
     done
     # Really clear screen, so that even page-up commands cannot show
     # it anymore.
     if [ 1 -eq ${SHLVL} ] && { IsHost bigio || IsHost bplab; }; then
+        declare -i i
         for ((i = 0; i < 5000; i++)); do
             echo
         done
     fi
     # Clear history file.
-    : > "${HISTFILE-"$HOME/.bash_history"}" || _exit_status=1
+    : > "${HISTFILE-"$HOME/.bash_history"}" || exit_status=$FAILURE
     # Reset terminal defaults.
-    tput reset || _exit_status=$FAILURE
-    exit ${_exit_status}
+    tput reset || exit_status=$FAILURE
+    exit $exit_status
 
 }
 declare -rf _exit_trap
