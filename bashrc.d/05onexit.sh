@@ -6,9 +6,10 @@
 declare -a EXEC_ON_EXIT_ACTIONS=(":")
 
 _exit_trap() {
+    local _exit_status=$?
+    local i _exit_action
     PS1=''
     unset PROMPT_COMMAND
-    local i _exit_action _exit_status=$?
     trap - EXIT
     # Execute planned cleanup actions in the proper order.
     for _exit_action in "${EXEC_ON_EXIT_ACTIONS[@]}"; do
