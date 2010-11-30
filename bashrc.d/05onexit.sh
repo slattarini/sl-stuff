@@ -37,9 +37,9 @@ atexit() {
 }
 declare -rf atexit
 
-ClearExitActions() {
+atexit_clear() {
     EXEC_ON_EXIT_ACTIONS=(":")
 }
-declare -rf ClearExitActions
+declare -rf atexit_clear
 
 # vim: ft=sh et sw=4 ts=4
