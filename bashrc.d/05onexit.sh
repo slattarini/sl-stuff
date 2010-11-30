@@ -17,7 +17,7 @@ exit_trap() {
     done
     # Really clear screen, so that even page-up commands cannot show
     # it anymore.
-    if [ 1 -eq ${SHLVL} ] && { IsHost bigio || IsHost bplab; }; then
+    if [ 1 -eq $SHLVL ] && { IsHost bigio || IsHost bplab; }; then
         declare -i i
         for ((i = 0; i < 5000; i++)); do
             echo
