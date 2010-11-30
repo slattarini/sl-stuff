@@ -9,6 +9,7 @@ _exit_trap() {
     local i _exit_action _exit_status=$?
     trap - EXIT
     PS1=''
+    unset PROMPT_COMMAND
     # execute planned cleanup actions
     for _exit_action in "${EXEC_ON_EXIT_ACTIONS[@]}"; do
         eval "${_exit_action}" || _exit_status=$?
