@@ -24,7 +24,7 @@ _exit_trap() {
     # Clear history file.
     : > "${HISTFILE-"$HOME/.bash_history"}" || _exit_status=1
     # Reset terminal defaults.
-    tput reset
+    tput reset || _exit_status=$FAILURE
     exit ${_exit_status}
 
 }
