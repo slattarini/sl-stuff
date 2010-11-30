@@ -8,6 +8,6 @@ elif [[ ${SSH_AGENT_PID+set} == set ]]; then
     return $SUCCESS
 fi
 eval "$(ssh-agent -s)" || return $FAILURE;
-ExecOnExit 'eval "$(ssh-agent -k)"' || { ssh-agent -k; return $FAILURE; }
+atexit 'eval "$(ssh-agent -k)"' || { ssh-agent -k; return $FAILURE; }
 
 # vim: ft=sh ts=4 sw=4 et

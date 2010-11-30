@@ -32,13 +32,10 @@ declare -rf _exit_trap
 
 trap _exit_trap EXIT HUP QUIT ABRT PIPE TERM
 
-ExecOnExit() {
+atexit() {
     EXEC_ON_EXIT_ACTIONS=("$@" "${EXEC_ON_EXIT_ACTION[@]}")
 }
-atexit() {
-    ExecOnExit "$@"
-}
-declare -rf ExecOnExit atexit
+declare -rf atexit
 
 ClearExitActions() {
     EXEC_ON_EXIT_ACTIONS=(":")

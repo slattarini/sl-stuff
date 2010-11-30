@@ -19,7 +19,7 @@ eval "$(gpg-agent --daemon --sh)" \
   && GPG_AGENT_PID=${GPG_AGENT_INFO%:*} \
   && GPG_AGENT_PID=${GPG_AGENT_PID%:*} \
   && export GPG_AGENT_PID GPG_AGENT_INFO \
-  && ExecOnExit 'kill_gpg_agent' \
+  && atexit 'kill_gpg_agent' \
   || { kill_gpg_agent; return $FAILURE; } \
   && export GPG_TTY=$(tty) \
   || { kill_gpg_agent; return $FAILURE; }
