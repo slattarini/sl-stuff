@@ -19,7 +19,6 @@ INSTALL = install -c
 MKDIR = mkdir
 MKDIR_P = $(MKDIR) -p
 GNUTAR = tar
-SHELL = bash
 
 install_data = $(INSTALL) -m 444
 
@@ -34,7 +33,7 @@ help:
 
 install:
 	@: --------------------------------------------------------------- ; \
-	 set -u; set -e; set -C; \
+	 set -u; set -e; (set -C) >/dev/null 2>&1 && set -C; \
 	 trap 'echo "Makefile bug: UNEXPECTED EXIT" >&2; exit 255;' 0; \
 	 : --------------------------------------------------------------- ; \
 	 case '$(FAKEINSTALL)' in \
@@ -62,13 +61,13 @@ install:
 	 run $(install_data) bashrc.d/* $(homedir)/.bashrc.d/; \
 	 vrun $(install_data) dir_colors $(homedir)/.dir_colors; \
 	 vrun $(install_data) inputrc $(homedir)/.inputrc; \
-	 if [ -e $(homedir)/.bash_inputrc ] || \
+	 if [ -f $(homedir)/.bash_inputrc ] || \
 	    [ -h $(homedir)/.bash_inputrc ]; then \
 		 vrun $(RM_F) $(homedir)/.bash_inputrc; \
 	 fi; \
 	 vrun $(LN_S) .inputrc $(homedir)/.bash_inputrc; \
 	 : --------------------------------------------------------------- ; \
-	 trap - 0; \
+	 trap 'exit $$?' 0; \
 	 exit 0; \
 	 : --------------------------------------------------------------- ;
 .PHONY: install
