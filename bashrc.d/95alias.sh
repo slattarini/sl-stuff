@@ -16,15 +16,6 @@ alias rmf='rm -f'
 alias cpf='cp -f'
 alias mvf='mv -f'
 
-# dpkg(1) commands with wide output
-alias dpkgl='COLUMNS=150 dpkg -l'
-alias "dpkg-l"='COLUMNS=150 dpkg -l'
-alias dpkgL='COLUMNS=150 dpkg -L'
-alias "dpkg-L"='COLUMNS=150 dpkg -L'
-alias dpkgS='COLUMNS=150 dpkg -S'
-alias "dpkg-S"='COLUMNS=150 dpkg -S'
-alias dpkgrep='COLUMNS=150 dpkg -l | grep -i -e'
-
 # More user-friendly and chromed file diffs.
 if W colordiff; then
     cdiff() { LC_ALL=C colordiff "$@"; }

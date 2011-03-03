@@ -24,29 +24,6 @@ copy_completion() {
     fi
 }
 
-# dpkg revised.
-if have dpkg && declare -F _comp_dpkg_installed_packages &>/dev/null; then
-    _dpkg_aux() {
-        local name
-        COMPREPLY=()
-        name="${COMP_WORDS[0]}"
-        case "$name" in
-          *l) COMPREPLY=( $( apt-cache pkgnames "$cur" 2>/dev/null ) ) ;;
-          *S) _filedir ;;
-          *L) COMPREPLY=( $( _comp_dpkg_installed_packages "$cur" ) ) ;;
-        esac
-    }
-    declare -i _have_completion=0
-    for x in l -l L -L S -S; do
-        if have dpkg$x; then
-          _have_completion=1
-          complete -F _dpkg_aux dpkg$x
-        fi
-    done
-    ((_have_completion)) || unset -f _dpkg_aux
-    unset -v x _have_completion
-fi
-
 # XXX ???
 if declare -F _command &>/dev/null; then
     for x in bleeding heirloom; do
