@@ -42,8 +42,6 @@ IsHost bigio && alias H=listen-radioclassica
 # Laziness aliases
 alias cmd='command'
 alias o='open_url'
-alias b='bak'
-alias t='touch'
 alias L='less'
 alias m='more'
 W sensible-pager && alias p=sensible-pager || alias p=less
@@ -55,8 +53,6 @@ alias vw="$VIEW"
 if [ -n "${DISPLAY-}" ]; then
     W kview && alias kv='kview'
     W konqueror && alias k='konqueror'
-    W firefox && alias f='firefox'
-    IsHost bigio && W kmail && alias km='kmail'
 fi
 
 # print exit status of last command, without losing it
