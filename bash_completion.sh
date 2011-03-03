@@ -84,4 +84,11 @@ copy_completion mkdir md
 have kview && complete -o dirnames -f -X '!*.@(gif|jp?(e)g|miff|tif?(f)|pn[gm]|p[bgp]m|bmp|xpm|ico|xwd|tga|pcx|GIF|JP?(E)G|MIFF|TIF?(F)|PN[GM]|P[BGP]M|BMP|XPM|ICO|XWD|TGA|PCX)' kview
 copy_completion kview kv
 
+# Extra user completions.
+for _extra_bash_completion_user_file in ~/.bash_completion.d/*; do
+  test -f "${_extra_bash_completion_user_file}" || continue
+  . "${_extra_bash_completion_user_file}"
+done
+unset _extra_bash_completion_user_file
+
 # vim: expandtab tabstop=4 shiftwidth=4 ft=sh
