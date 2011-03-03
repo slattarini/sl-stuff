@@ -200,8 +200,8 @@ case "$TERM" in
               esac
             } >/dev/null 2>&1
             echo -ne "\033]0;${USER}@${HOSTNAME}: $(_ps1_pretty_cwd)"
-            echo -ne "  §§  ${_ps1_sh_fancyname}  §§  \007"
-            _ps1 --funny-string="§§" ${_ps1_last_exit_status}
+            echo -ne "  Â§Â§  ${_ps1_sh_fancyname}  Â§Â§  \007"
+            _ps1 --funny-string="Â§Â§" ${_ps1_last_exit_status}
             unset _ps1_last_exit_status
             ${_ps1_reset_x}'
         ;;
