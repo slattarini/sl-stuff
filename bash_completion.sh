@@ -82,6 +82,12 @@ copy_completion mkdir md
 have kview && complete -o dirnames -f -X '!*.@(gif|jp?(e)g|miff|tif?(f)|pn[gm]|p[bgp]m|bmp|xpm|ico|xwd|tga|pcx|GIF|JP?(E)G|MIFF|TIF?(F)|PN[GM]|P[BGP]M|BMP|XPM|ICO|XWD|TGA|PCX)' kview
 copy_completion kview kv
 
+# Is not unusual for the shell to run files that does not end with
+# the `.sh' extension, but the completion subroutine offered by the
+# bash-completion package does not recognize that :-(
+# We need a fix.
+eval "$(declare -f _sh | sed 's/^ *_filedir  *sh *$/_filedir/')"
+
 # Extra user completions.
 for _extra_bash_completion_user_file in ~/.bash_completion.d/*; do
   test -f "${_extra_bash_completion_user_file}" || continue
