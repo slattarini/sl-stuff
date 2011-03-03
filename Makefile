@@ -25,7 +25,7 @@ install_data = $(INSTALL) -m 444
 
 help:
 	@echo "Type '$(MAKE) install' to install the shell init system."; \
-	 echo '**WARNING**:  This will overwrite yout ~/.bash_profile and' \
+	 echo '**WARNING**:  This will overwrite your ~/.bash_profile and' \
 	 	  'other initialization files!'; \
 	 echo "Try '$(MAKE) fake-install' to see what would have been" \
 	      "removed/installed."; \
