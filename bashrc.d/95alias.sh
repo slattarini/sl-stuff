@@ -49,10 +49,8 @@ alias wh='which'
 W scons && alias scons='scons -Q'
 alias v="$VI"
 alias vw="$VIEW"
-if [ -n "${DISPLAY-}" ]; then
-    W kview && alias kv='kview'
-    W konqueror && alias k='konqueror'
-fi
+W kview && alias kv='kview'
+W konqueror && alias k='konqueror'
 
 # print exit status of last command, without losing it
 ok() { local ok_val=$?; echo $ok_val; return $ok_val; }
