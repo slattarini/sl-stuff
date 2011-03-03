@@ -6,7 +6,7 @@
 
 
 # Remove any system-defined undesired aliases.
-unalias '..' 'l' >/dev/null 2>&1
+unalias .. l >/dev/null 2>&1
 
 # An help to avoid damages.
 alias cp='cp -i'
@@ -40,18 +40,18 @@ unset p
 IsHost bigio && alias H=listen-radioclassica
 
 # Laziness aliases
-alias cmd='command'
-alias t='touch'
-alias o='open_url'
-alias L='less'
-alias m='more'
+alias cmd=command
+alias t=touch
+alias o=open_url
+alias L=less
+alias m=more
 W sensible-pager && alias p=sensible-pager || alias p=less
-alias wh='which'
+alias wh=which
 W scons && alias scons='scons -Q'
-alias v="$VI"
-alias vw="$VIEW"
-W kview && alias kv='kview'
-W konqueror && alias k='konqueror'
+alias v=$VI
+alias vw=$VIEW
+W kview && alias kv=kview
+W konqueror && alias k=konqueror
 
 # print exit status of last command, without losing it
 ok() { local ok_val=$?; echo $ok_val; return $ok_val; }
@@ -74,10 +74,10 @@ if W vim; then
     alias ggw="vim $gopt -R -p"
     unset gopt
 else
-    alias   g="$VI"
-    alias  gg="$VI"
-    alias  gw="$VIEW"
-    alias ggw="$VIEW"
+    alias   g=$VI
+    alias  gg=$VI
+    alias  gw=$VIEW
+    alias ggw=$VIEW
 fi
 
 # Grep with colors.
