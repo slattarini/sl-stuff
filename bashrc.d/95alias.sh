@@ -30,7 +30,7 @@ diff() {
     fi
 }
 
-# I like to have ceratain programs always running with C locale.
+# I like to have certain programs always running with C locale.
 for p in svn svkwset svo psvo gpg ftp ncftp df fdisk; do
     W $p && eval "alias $p='LC_ALL=C $p'"
 done
@@ -39,7 +39,7 @@ unset p
 # To quickly start listening radio classica bresciana.
 IsHost bigio && alias H=listen-radioclassica
 
-# Lazyness aliases
+# Laziness aliases
 alias cmd='command'
 alias o='open_url'
 alias b='bak'
