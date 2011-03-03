@@ -46,7 +46,6 @@ alias L='less'
 alias m='more'
 W sensible-pager && alias p=sensible-pager || alias p=less
 alias wh='which'
-alias du='du -s'
 W scons && alias scons='scons -Q'
 alias v="$VI"
 alias vw="$VIEW"
