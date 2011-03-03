@@ -38,6 +38,6 @@ speak() {
 }
 
 savelang
-setlang -f it_IT.UTF-8
+setlang -f en_GB.UTF-8
 
 # vim: ft=sh ts=4 sw=4 et
