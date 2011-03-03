@@ -41,6 +41,7 @@ IsHost bigio && alias H=listen-radioclassica
 
 # Laziness aliases
 alias cmd='command'
+alias t='touch'
 alias o='open_url'
 alias L='less'
 alias m='more'

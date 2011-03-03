@@ -36,7 +36,7 @@ _comp_xcmd() {
 
 for cmd in heirloom bleeding; do
     have $cmd || continue
-    eval "_$cmd() { _xcmd $cmd; }"
+    eval "_$cmd() { _comp_xcmd $cmd; }"
     complete -F _$cmd $cmd
 done
 
