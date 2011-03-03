@@ -12,9 +12,6 @@ unalias .. l >/dev/null 2>&1
 alias cp='cp -i'
 alias mv='mv -i'
 alias rm='rm -i'
-alias rmf='rm -f'
-alias cpf='cp -f'
-alias mvf='mv -f'
 
 # More user-friendly and chromed file diffs.
 if W colordiff; then
