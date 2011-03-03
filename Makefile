@@ -72,9 +72,9 @@ install:
 	 : --------------------------------------------------------------- ;
 .PHONY: install
 
-fakeinstall:
+fake-install:
 	$(MAKE) $(MAKEFLAGS) 'DESTDIR=$(DESTDIR)' 'FAKEINSTALL=y' install
-.PHONY: fakeinstall
+.PHONY: fake-install
 
 $(DISTNAME).tar.gz: dist
 dist:
