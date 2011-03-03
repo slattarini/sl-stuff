@@ -8,7 +8,7 @@
 # Remove any system-defined undesired aliases.
 unalias .. l >/dev/null 2>&1
 
-# An help to avoid damages.
+# An help to avoid absent-minded errors.
 alias cp='cp -i'
 alias mv='mv -i'
 alias rm='rm -i'
