@@ -24,25 +24,23 @@ copy_completion() {
     fi
 }
 
-# XXX ???
-if declare -F _command &>/dev/null; then
-    for x in bleeding heirloom; do
-        _require_xcmd=0
-        if have "$x"; then
-            _require_xcmd=1
-            eval "_$x() { _xcmd $x; } && complete -F _$x $x"
-        fi
-    done
-    if ((_require_xcmd)); then
-        _xcmd() {
-            eval "$("$1" | sed 's/^/declare -x /')"
-            _command
-        }
-    fi
-    unset x _require_xcmd
-fi
+# Programs whose purpose is to run commands in environments with extended
+# or modified PATH.
 
+_comp_xcmd() {
+    local _comp_xcmd_env
+    _comp_xcmd_env=$(set -o pipefail "$1" | sed 's/^/declare -x /') \
+      && eval "${_comp_xcmd_env}" \
+      && _command
+}
 
+for cmd in heirloom bleeding; do
+    have $cmd || continue
+    eval "_$cmd() { _xcmd $cmd; }"
+    complete -F _$cmd $cmd
+done
+
+# Commands operating on programs in PATH.
 for x in wh where whcat whed whfl whpkg whdpkg; do
     have $x && complete -c command $x
 done
