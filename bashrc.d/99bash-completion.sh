@@ -12,12 +12,25 @@
 # aliases and/or functions defined in the other shell initialization files.
 #
 
-: "${BASH_COMPLETION=/etc/bash_completion}"
+if [[ -z $BASH_COMPLETION ]]; then
+    for d in $HOME/etc /usr/local/opt/etc /usr/local/etc /etc; do
+        if test -f $d/bash_completion; then
+            BASH_COMPLETION=$d/bash_completion
+            break
+        fi
+    done
+fi
 
-if ! [[ -f "$BASH_COMPLETION" && -r "$BASH_COMPLETION" ]]; then
+if [[ -z $BASH_COMPLETION ]]; then
+    mwarn "  no bash completion file could be found"
+    mwarn "  Bash advanced completion features won't be avaible."
+    return $SUCCESS
+fi
+
+if [[ ! -f $BASH_COMPLETION || ! -r $BASH_COMPLETION ]]; then
     mwarn "  expected bash completion file \`$BASH_COMPLETION"
     mwarn "  does not exist or is not a regular readable file."
-    mwarn "  Bash's advanced completion features will not be avaible."
+    mwarn "  Bash advanced completion features won't be avaible."
     return $SUCCESS
 fi
 
