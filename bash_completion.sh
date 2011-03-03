@@ -92,7 +92,7 @@ copy_completion man cman mman
 # Wrappers around `info'.
 copy_completion info cinfo minfo
 # "Extensions" for `ls'.
-copy_completion ls l la ll lls
+copy_completion ls la ll lls
 # Alias for builtin `command'.
 copy_completion command cmd
 # "Extensions" for `cp', `mv' and `rm'.
