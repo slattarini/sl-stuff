@@ -1,15 +1,15 @@
 # -*- bash -*-
 
 #
-# Costruzione di funzioni-alias per lanciare comandi GUI da una
-# shell (in X)
+# Build "alias functions" to launch GUI commands from a shell (in an
+# X-Terminal).
 #
 
 IsHost bigio || IsHost bplab || return $SUCCESS
 
 #--------------------------------------------------------------------------
 
-# helper subroutine
+# An helper subroutine.
 _mkgui_process_added_code() {
     case $# in (0) cat;; (*) xecho "$*";; esac | \
     sed -e "s|@FUNC@|$mkgui_funcname|g" \
@@ -19,7 +19,7 @@ _mkgui_process_added_code() {
 
 declare -rf _mkgui_process_added_code
 
-# big ugly function
+# The big, ugly, do-it-all function.
 MakeGUI() {
 
     local mkgui_E_OK=$SUCCESS
@@ -35,7 +35,7 @@ MakeGUI() {
           return $E_USAGE
       fi'
 
-    # TODO: use getopts for option parsing
+    # TODO: maybe use getopts for option parsing?
     local mkgui_action='eval'
     local mkgui_program_wrapper=''
     declare -i mkgui_subify=$FALSE
@@ -92,9 +92,10 @@ MakeGUI() {
 
     for mkgui_program in "$@"; do
 
-        [ -z "$mkgui_program" ] && continue #  ignore empty args
+        # Ignore empty arguments.
+        [ -z "$mkgui_program" ] && continue
 
-        # does program exist, and is it executable?
+        # Does the program exist, and is it executable?
         local mkgui_program_path=$(which "$mkgui_program")
         if [ -z "$mkgui_program_path" ]; then
             fwarn "\`$mkgui_program': program not found"
@@ -106,7 +107,7 @@ MakeGUI() {
         mkgui_funcname=${mkgui_program##*/}
         mkgui_funcname=${mkgui_funcname%%.*}
 
-        # mkgui_funcname is a valid function identifier?
+        # Is `$mkgui_funcname 'a valid function identifier?
         case "$mkgui_funcname" in
           ([a-zA-Z_]*([a-zA-Z0-9_])) ;;
           (*)
@@ -215,8 +216,8 @@ if W firefox3; then
     W firefox || firefox() { firefox3 "$@"; }
 fi
 
-# kompare subroutine *must* not to go in background is standard input is
-# not a tty
+# The `kompare' subroutine *must* not to go in background is standard
+# input is not a tty.
 MakeGUI -T kompare
 
 if IsHost bigio; then
@@ -243,7 +244,7 @@ MakeGUI -h "$chc" -- xpdf zxpdf gv ddd {x,}emacs djview
 MakeGUI -h "$chc; set -- -s 4 \"\$@\"" -- xdvi zxdvi
 IsHost bigio && MakeGUI -h "$chc" snake4
 
-# dirty hack
+# A dirty hack for kile(1).
 MakeGUI -h '
     case $# in
         0)
