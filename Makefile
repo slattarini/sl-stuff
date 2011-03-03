@@ -51,6 +51,7 @@ install:
 	 [ -d $(homedir) ] || vrun $(MKDIR_P) $(homedir); \
 	 vrun $(install_data) bash_profile.sh $(homedir)/.bash_profile; \
 	 vrun $(install_data) bashrc.sh $(homedir)/.bashrc; \
+	 vrun $(install_data) bash_completion.sh $(homedir)/.bash_completion; \
 	 if [ -d $(homedir)/.bashrc.d ]; then \
 	   vrun $(RM_RF) $(homedir)/.bashrc.d; \
 	 else \
@@ -79,7 +80,8 @@ fakeinstall:
 $(DISTNAME).tar.gz: dist
 dist:
 	@set -x -u; \
-	files='Makefile bash_profile.sh bashrc.sh inputrc dir_colors'; \
+	files="Makefile bash_profile.sh bashrc.sh bash_completion.sh \
+	       inputrc dir_colors"; \
 	$(RM_RF) dist.tmpdir \
 	  && $(MKDIR) dist.tmpdir \
 	  && $(GNUTAR) -cf dist.tmpdir/tmp.tar $$files bashrc.d/*.sh \
