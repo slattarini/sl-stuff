@@ -49,7 +49,7 @@ if [[ -n "$KDE_FULL_SESSION" && -n "$KDE_SESSION_VERSION" ]]; then
     fi
 fi
 
-add_to_path -B "/usr/local/opt/bin" "$HOME/bin"
+add_to_path -B "/usr/local/opt/bin" "$HOME/bin" "$HOME/bin/utils"
 
 declare -a a=("$SYSTEM_UNAME")
 if [[ $SYSTEM_DISTRIBUTOR != UNKNOWN ]]; then
