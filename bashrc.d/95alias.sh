@@ -81,15 +81,6 @@ if [[ $SYSTEM_UNAME == linux ]]; then
     W autogrep && alias autogrep='autogrep --color=auto'
 fi
 
-# ANSI colors for the terminal.
-for c in green red cyan yellow blue magenta white black; do
-   eval alias " $c='set_term_foreground_color $c';"
-   eval alias "r$c='set_term_background_color $c';"
-   eval alias "b$c='term_bold; set_term_foreground_color $c'; \
-               term_unbold;"
-done
-unset c
-
 #---------------------------------------------------------------------------
 
 # vim: et ts=4 sw=4 ft=sh
