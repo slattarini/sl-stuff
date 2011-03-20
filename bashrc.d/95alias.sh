@@ -15,9 +15,9 @@ alias rm='rm -i'
 
 # More user-friendly and chromed file diffs.
 if W colordiff; then
-    cdiff() { LC_ALL=C colordiff "$@"; }
+    cdiff() { colordiff "$@"; }
 else
-    cdiff() { LC_ALL=C diff "$@"; }
+    cdiff() { diff "$@"; }
 fi
 diff() {
     if test -t 1; then
@@ -26,12 +26,6 @@ diff() {
         builtin command diff "$@"
     fi
 }
-
-# I like to have certain programs always running with C locale.
-for p in svn svkwset svo psvo gpg ftp ncftp df fdisk; do
-    W $p && eval "alias $p='LC_ALL=C $p'"
-done
-unset p
 
 # To quickly start listening radio classica bresciana.
 IsHost bigio && alias H=listen-radioclassica
