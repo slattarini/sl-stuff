@@ -208,8 +208,7 @@ MakeGUI \
     gaim openoffice oobase oodraw oofromtemplate oomath ooweb oocalc \
     ooffice ooimpress ooo-wrapper oowriter kprof kpdf display open_url \
     xfig gimp akregator kopete dolphin systemsettings gitk qgit hgview \
-    easytag
-
+    easytag kchmviewer
 
 if W firefox3; then
     MakeGUI firefox3
