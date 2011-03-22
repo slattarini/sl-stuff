@@ -49,9 +49,11 @@ ok() { local ok_val=$?; echo $ok_val; return $ok_val; }
 
 # detailed information on all process
 if [[ $SYSTEM_UNAME == linux ]]; then
-    alias PS='ps -elFwwwww | less'
+    alias PS='ps -elFywwwww | less'
 elif [[ $SYSTEM_UNAME == freebsd ]]; then
     alias PS='ps auxwwwww | less'
+elif [[ $SYSTEM_UNAME == solaris && -f /usr/ucb/ps ]]; then
+    alias PS='/usr/ucb/ps auxwwwww | less'
 fi
 
 # Restart the currently-running bash shell.
