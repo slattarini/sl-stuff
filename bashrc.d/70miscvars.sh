@@ -50,7 +50,7 @@ export WH_VIM WH_GVIM
 
 # Root directory of the sandboxed testing environment used by the
 # `test-in-sandbox' script.
-export SANDBOX_ENVIRONMENTS_ROOT="$HOME/src/test-in-sandbox/sandboxes/$SYSTEM_UNAME-$hostname"
+export SANDBOX_ENVIRONMENTS_ROOT="$HOME/src/sandboxed-testing/sandboxes/$SYSTEM_UNAME-$hostname"
 
 # trash directory used by my del(1) utility
 if IsHost freddy; then
