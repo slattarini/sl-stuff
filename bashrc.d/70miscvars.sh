@@ -13,7 +13,7 @@ fi
 # filters for less(1)
 W lesspipe && eval "$(lesspipe)"
 
-# location of checkedout copy of gnulib
+# location of a checked-out copy of gnulib
 [ -d "$HOME/src/gnulib" ] && export GNULIB_SRCDIR=$HOME/src/gnulib
 
 # personal config.site file, to override configure defaults
@@ -32,7 +32,7 @@ IsHost bigio && export SVN_BASEURL="https://svn.bigio/svn"
 # directory of temporary files.
 export TMPDIR='/tmp'
 
-# best pager avaible.
+# best pager available.
 export PAGER='less'
 
 # editors used by whed(1) and its links.
@@ -48,10 +48,10 @@ case $hostname in
 esac
 export WH_VIM WH_GVIM
 
-# Root directory of the sandboxed testing environment used by the
+# Root directory of the sandboxed testing environments used by the
 # `test-in-sandbox' script.
 export SANDBOX_TESTING_ENVIRONMENTS=$HOME/src/sandboxed-testing/sandboxes/$SYSTEM_UNAME-$hostname
-# Directory of the plugins used by sandboxed testing environmenta.
+# Directory of the plugins used by the sandboxed testing environments.
 export SANDBOX_TESTING_PLUGINS=$HOME/src/sandboxed-testing/test-in-sandbox/plugins
 
 # trash directory used by my del(1) utility
