@@ -50,7 +50,7 @@ export WH_VIM WH_GVIM
 
 # Root directory of the sandboxed testing environments used by the
 # `test-in-sandbox' script.
-export SANDBOX_TESTING_ENVIRONMENTS=$HOME/src/sandboxed-testing/sandboxes/$SYSTEM_UNAME-$hostname
+export SANDBOX_TESTING_ENVIRONMENTS=$HOME/src/sandboxed-testing/sandboxes/$hostname-$SYSTEM_UNAME
 # Directory of the plugins used by the sandboxed testing environments.
 export SANDBOX_TESTING_PLUGINS=$HOME/src/sandboxed-testing/test-in-sandbox/plugins
 
