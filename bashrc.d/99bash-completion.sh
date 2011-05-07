@@ -1,8 +1,5 @@
 #-*- bash -*-
 
-# NOTE: We can safely assume we are running under bash version 2.05
-#       or grater
-
 #
 # Enable advanced bash completion by loading the proper files
 #
