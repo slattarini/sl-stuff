@@ -8,6 +8,8 @@
 readonly _ps1_shellname=${BASH##*/}
 
 # Get current directory, with $HOME abbreviated with a tilde.
+# Handle also the case where $HOME is a symlink (e.g., FreeBSD).
+_ps1_real_HOME=$(cd "$HOME" && pwd -P)
 _ps1_pretty_cwd() {
     local d='' red='' std=''
     declare -i short=0
@@ -24,12 +26,14 @@ _ps1_pretty_cwd() {
         if ((short)); then
             case $d in
                 /) echo '/';;
-                $HOME) echo '~';;
+                $HOME|${_ps1_real_HOME}) echo '~';;
                 *) echo "${d##*/}";;
             esac
         else
             sed <<<"$d" -e "s|^${HOME}$|~|" \
                         -e "s|^${HOME}/|~/|" \
+                        -e "s|^${_ps1_real_HOME}$|~|" \
+                        -e "s|^${_ps1_real_HOME}/|~/|" \
                         -e 's|//*|/|g'
         fi
         return $SUCCESS
@@ -199,7 +203,7 @@ case "$TERM" in
                 *) set +x;;
               esac
             } >/dev/null 2>&1
-            echo -ne "\033]0;${USER}@${HOSTNAME}: $(_ps1_pretty_cwd)"
+            echo -ne "\033]0;${USER}@${HOSTNAME%%.*}: $(_ps1_pretty_cwd)"
             echo -ne "  §§  ${_ps1_sh_fancyname}  §§  \007"
             _ps1 --funny-string="§§" ${_ps1_last_exit_status}
             unset _ps1_last_exit_status
