@@ -42,6 +42,12 @@ if (($? != 0)); then
     return $SUCCESS
 fi
 
+# FIXME: hack to support git completion on FreeBSD; there should be a
+#        better way!
+if [ -f /usr/local/share/git-core/contrib/completion/git-completion.bash ]; then
+  . /usr/local/share/git-core/contrib/completion/git-completion.bash
+fi
+
 return $SUCCESS
 
 # vim: expandtab tabstop=4 shiftwidth=4 ft=sh
