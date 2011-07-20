@@ -20,7 +20,7 @@ W lesspipe && eval "$(lesspipe)"
 [ -d "$HOME/src/gnulib" ] && export GNULIB_SRCDIR=$HOME/src/gnulib
 
 # Override defaults for autoconf-generated configure scripts.
-export CONFIG_SITE=./config.site
+test -f $HOME/config.site && export CONFIG_SITE=$HOME/config.site
 
 # W3C (X)HTML/CSS validator.
 export HTML_VALIDATOR_URL=http://validator.w3.org/check
