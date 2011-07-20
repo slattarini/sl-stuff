@@ -10,32 +10,32 @@ if IsHost bigio; then
     unset d
 fi
 
-# filters for less(1)
+# Filters for less(1).
 W lesspipe && eval "$(lesspipe)"
 
-# location of a checked-out copy of gnulib
+# Location of a checked-out copy of gnulib.
 [ -d "$HOME/src/gnulib" ] && export GNULIB_SRCDIR=$HOME/src/gnulib
 
-# personal config.site file, to override configure defaults
+# Personal config.site file, to override configure defaults.
 export CONFIG_SITE=./config.site # always prefer local copy
 
-# W3C (X)HTML/CSS validator
+# W3C (X)HTML/CSS validator.
 export HTML_VALIDATOR_URL=http://validator.w3.org/check
 export CSS_VALIDATOR_URL=http://jigsaw.w3.org/css-validator/validator
 
-# device used by cdda2wav (with `cooked_ioctl' interface).
+# Device used by cdda2wav (with `cooked_ioctl' interface).
 IsHost bigio && export CDDA_DEVICE='/dev/dvd'
 
-# used by ~/bin/svo
+# Used by ~/bin/svo.
 IsHost bigio && export SVN_BASEURL="https://svn.bigio/svn"
 
-# directory of temporary files.
+# Directory of temporary files.
 export TMPDIR='/tmp'
 
-# best pager available.
+# Best pager available.
 export PAGER='less'
 
-# editors used by whed(1) and its links.
+# Editors used by whed(1) and its links.
 case $hostname in
   bpserv|freddy)
     WH_GVIM='vim -p'
@@ -54,9 +54,9 @@ export SANDBOX_TESTING_ENVIRONMENTS=$HOME/src/sandboxed-testing/sandboxes/$hostn
 # Directory of the plugins used by the sandboxed testing environments.
 export SANDBOX_TESTING_PLUGINS=$HOME/src/sandboxed-testing/test-in-sandbox/plugins
 
-# trash directory used by my del(1) utility
+# Trash directory used by my del(1) utility.
 if IsHost freddy; then
-    # so that the trash dir won't be uselessly backupped
+    # So that the trash dir won't be uselessly backupped.
     export TRASH_DIRECTORY="$HOME/scratch/.trash"
 else
     export TRASH_DIRECTORY="$HOME/.trash"
