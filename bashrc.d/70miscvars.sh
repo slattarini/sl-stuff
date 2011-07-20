@@ -2,6 +2,9 @@
 
 # Definitions of miscellaneous variables.
 
+export TMPDIR=/tmp
+export PAGER=less
+
 [ -f "$HOME/.bash_inputrc" ] && INPUTRC="$HOME/.bash_inputrc"
 
 if IsHost bigio; then
@@ -16,8 +19,8 @@ W lesspipe && eval "$(lesspipe)"
 # Location of a checked-out copy of gnulib.
 [ -d "$HOME/src/gnulib" ] && export GNULIB_SRCDIR=$HOME/src/gnulib
 
-# Personal config.site file, to override configure defaults.
-export CONFIG_SITE=./config.site # always prefer local copy
+# Override defaults for autoconf-generated configure scripts.
+export CONFIG_SITE=./config.site
 
 # W3C (X)HTML/CSS validator.
 export HTML_VALIDATOR_URL=http://validator.w3.org/check
@@ -28,12 +31,6 @@ IsHost bigio && export CDDA_DEVICE='/dev/dvd'
 
 # Used by ~/bin/svo.
 IsHost bigio && export SVN_BASEURL="https://svn.bigio/svn"
-
-# Directory of temporary files.
-export TMPDIR='/tmp'
-
-# Best pager available.
-export PAGER='less'
 
 # Editors used by whed(1) and its links.
 case $hostname in
