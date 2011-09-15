@@ -46,7 +46,7 @@ if test -d "$BASHRC_DIR"; then
         echo "** SHINIT: including $shrc_file"
         . "$shrc_file" || {
             echo "$0: error while loading file \`$shrc_file'" >&2
-            break
+            return 1
         }
     done
     unset shrc_file
