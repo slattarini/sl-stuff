@@ -86,7 +86,10 @@ my-install:
 .PHONY: my-install
 
 su-install:
-	@echo 'YET TO BE WRITTEN!'
+	@$(shell_setup); \
+	 [ -d $(prefixdir) ] || vrun $(MKDIR_P) $(prefixdir); \
+	 vrun $(install_data) sys-bashrc.sh $(prefixdir)/bash.bashrc; \
+	 $(shell_done)
 .PHONY: su-install
 
 fake-install:
@@ -97,8 +100,8 @@ fake-install:
 $(DISTNAME).tar.gz: dist
 dist:
 	@set -x -u; \
-	files="Makefile bash_profile.sh bashrc.sh bash_completion.sh \
-	       inputrc dir_colors"; \
+	files="Makefile bash_profile.sh sys-bashrc.sh bashrc.sh \
+		   bash_completion.sh inputrc dir_colors"; \
 	$(RM_RF) dist.tmpdir \
 	  && $(MKDIR) dist.tmpdir \
 	  && $(GNUTAR) -cf dist.tmpdir/tmp.tar $$files bashrc.d/*.sh \
