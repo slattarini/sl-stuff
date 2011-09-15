@@ -45,15 +45,15 @@ if test -d "$BASHRC_DIR"; then
     if test -f "$shrc_file"; then
         echo "** SHINIT: including $shrc_file"
         . "$shrc_file" || {
-            echo "ERROR while loading file \`$shrc_file'" >&2
+            echo "$0: error while loading file \`$shrc_file'" >&2
             break
         }
     fi
     done
     unset shrc_file
 else
-    echo "WARNING: $BASHRC_DIR: Not a directory." >&2
-    echo "No shell personalization available." >&2
+    echo "$0: $BASHRC_DIR: not a directory." >&2
+    echo "$0: no shell personalization available." >&2
     unset BASHRC_DIR
     return 1
 fi
