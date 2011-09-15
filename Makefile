@@ -90,8 +90,8 @@ su-install:
 .PHONY: su-install
 
 fake-install:
-	$(MAKE) $(MAKEFLAGS) 'DESTDIR=$(DESTDIR)' 'FAKEINSTALL=y' my-install
-	$(MAKE) $(MAKEFLAGS) 'DESTDIR=$(DESTDIR)' 'FAKEINSTALL=y' su-install
+	$(MAKE) FAKEINSTALL=y my-install
+	$(MAKE) FAKEINSTALL=y su-install
 .PHONY: fake-install
 
 $(DISTNAME).tar.gz: dist
