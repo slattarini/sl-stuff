@@ -4,10 +4,7 @@
 case "$-" in *i*) ;; *) return 0;; esac
 
 # The shell must have an associate tty.
-(
- PATH='/bin:/usr/bin'; export PATH
- LC_ALL=C tty | grep -i 'not.*tty' >/dev/null
-) && return 0
+LC_ALL=C tty | grep -i 'not.*tty' >/dev/null && return 0
 
 # The shell standard output and error must be associated to terminals.
 { test -t 1 && test -t 2; } || return 0
