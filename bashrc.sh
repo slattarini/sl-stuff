@@ -43,7 +43,7 @@ BASHRC_DIR="$HOME/.bashrc.d"
 PATH='/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin'
 export PATH
 
-# Real shell configuarion is done here.
+# Real shell configuration is done here.
 if test -d "$BASHRC_DIR"; then
     declare -rx BASHRC_DIR
     # Source the real initialization scripts.
