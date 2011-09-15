@@ -12,28 +12,23 @@ case "$-" in *i*) ;; *) return 0;; esac
 # The shell standard output and error must be associated to terminals.
 { test -t 1 && test -t 2; } || return 0
 
-# Refuse to run with shells != bash
-[ -n "${BASH-}" ] && [ -n "${BASH_VERSION-}" ] || return 0
+# Refuse to run with non-bash shells.
+if [ -z "${BASH-}" ] || [ -z "${BASH_VERSION-}" ]; then
+  echo "$0: this shell is not Bash, ~/.bashrc initialization won't" \
+       "be available" >&2
+  return 0
+fi
 
-# Provide at least a suitable prompt for all bash shells
-case "$BASH_VERSION" in
-    1.*) PS1='\u@\h[bash-'${BASH_VERSION%%[^0-9.]*}']\$ ';;
-      *) PS1='\u@\h[bash-\v]$ ';;
+# Refuse to run with older bash version.
+case $BASH_VERSION in
+  [12].*)
+    echo "$0: Bash version \`$BASH_VERSION' too old, ~/.bashrc" \
+         "initialization won't be available" >&2
+    return 0
+    ;;
 esac
 
-# NOTE: we need this weird test since older versions of bash (e.g. 1.14)
-# does not propagate correlty the exit status from an eval failed due to
-# syntax errors.
-(eval 'if >/dev/null 2>&1') >/dev/null 2>&1 && return 0
-
-# Refuse to run with too much older versions of bash.
-(eval '(
-  { unset PATH || export PATH=""; } \
-    && [[ 2 < ${BASH_VERSINFO[0]-0} \
-          || 2 == ${BASH_VERSINFO[0]-0} && 04 < ${BASH_VERSINFO[1]-00} ]] \
-    && set -o pipefail \
-    && enable printf
-) >/dev/null 2>&1') >/dev/null 2>&1 || return 0
+PS1='\u@\h[bash-\v]$'
 
 # Protect against multiple inclusion
 [ x${BASHSHRC_INCLUDED+"set"} = x"set" ] && return 0
