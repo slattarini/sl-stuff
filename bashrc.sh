@@ -11,18 +11,18 @@ LC_ALL=C tty | grep -i 'not.*tty' >/dev/null && return 0
 
 # Refuse to run with non-bash shells.
 if [ -z "${BASH-}" ] || [ -z "${BASH_VERSION-}" ]; then
-  echo "$0: this shell is not Bash, ~/.bashrc initialization won't" \
-       "be available" >&2
-  return 0
+    echo "$0: this shell is not Bash, ~/.bashrc initialization won't" \
+         "be available" >&2
+    return 0
 fi
 
 # Refuse to run with older bash version.
 case $BASH_VERSION in
-  [12].*)
-    echo "$0: Bash version \`$BASH_VERSION' too old, ~/.bashrc" \
-         "initialization won't be available" >&2
-    return 0
-    ;;
+    [12].*)
+        echo "$0: Bash version \`$BASH_VERSION' too old, ~/.bashrc" \
+             "initialization won't be available" >&2
+        return 0
+        ;;
 esac
 
 PS1='\u@\h[bash-\v]$'
@@ -42,13 +42,12 @@ if test -d "$BASHRC_DIR"; then
     declare -rx BASHRC_DIR
     # Source the real initialization scripts.
     for shrc_file in "$BASHRC_DIR"/[0-9][0-9]*.sh; do
-    if test -f "$shrc_file"; then
+        test -f "$shrc_file" || continue # In case of broken symlinks.
         echo "** SHINIT: including $shrc_file"
         . "$shrc_file" || {
             echo "$0: error while loading file \`$shrc_file'" >&2
             break
         }
-    fi
     done
     unset shrc_file
 else
