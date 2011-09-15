@@ -33,9 +33,6 @@ readonly BASHSHRC_INCLUDED=1
 
 BASHRC_DIR="$HOME/.bashrc.d"
 
-# Shell settings and function definition used by (possibly) many
-# initialization files and procedures.
-
 # Restore the PATH to a basic safe value.
 PATH='/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin'
 export PATH
