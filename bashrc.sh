@@ -53,7 +53,7 @@ if test -d "$BASHRC_DIR"; then
     unset shrc_file
 else
     echo "WARNING: $BASHRC_DIR: Not a directory." >&2
-    echo "No shell personalization avaible." >&2
+    echo "No shell personalization available." >&2
     unset BASHRC_DIR
     return 1
 fi
