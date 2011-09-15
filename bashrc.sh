@@ -25,7 +25,7 @@ case $BASH_VERSION in
         ;;
 esac
 
-PS1='\u@\h[bash-\v]$'
+PS1='\u@\h[bash-\v]$ '
 
 # Protect against multiple inclusion
 [ x${BASHSHRC_INCLUDED+"set"} = x"set" ] && return 0
