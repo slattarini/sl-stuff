@@ -69,7 +69,7 @@ bashrc.sh: bashrc.in
     fi
 	chmod a-w $@.tmp && mv -f $@.tmp $@
 
-my-install: bashrc.sh
+my-install:
 	@$(shell_setup); \
 	 cooked_homedir='$(DESTDIR)$(homedir)'; \
 	 do_link_ () \
@@ -96,7 +96,7 @@ my-install: bashrc.sh
 	 $(shell_done)
 .PHONY: my-install
 
-su-install:
+su-install: bashrc.sh
 	@$(shell_setup); \
 	 sysdir='$(DESTDIR)$(bashrcdir)'; \
 	 vrun rm -rf "$$sysdir"; \
