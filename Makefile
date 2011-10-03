@@ -108,7 +108,7 @@ su-install:
 	 done; \
 	 vrun $(MKDIR_P) "$$sysdir/bashrc.d"; \
 	 for f in sys-bashrc.d/*; do \
-	   : XXX vrun $(install_data) $$f "$$sysdir/bashrc.d"; \
+	   vrun $(install_data) $$f "$$sysdir/bashrc.d"; \
 	 done; \
 	 $(shell_done)
 .PHONY: su-install
