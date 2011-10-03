@@ -51,7 +51,7 @@ shopt -s checkwinsize
 
 PS1='\u@\h[bash-\v]$ '
 
-declare -rx SYSTEM_BASHRC_DIR="/xxx/.bashrc.d" #FIXME
+declare -rx SYSTEM_BASHRC_DIR='@bashrcdir@'
 declare -rx USER_BASHRC_DIR="$HOME/.bashrc.d"
 
 bashrc__source_dir ()

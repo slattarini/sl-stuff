@@ -60,7 +60,16 @@ help:
 	@echo "other initialization files by default!"
 .PHONY: help
 
-my-install:
+bashrc.sh: bashrc.in
+	@rm -f $@ $@.tmp
+	sed 's|@bashrcdir@|$(bashrcdir)|' $< >$@.tmp
+	@if LC_ALL=C grep '@[a-zA-Z0-9_][a-zA-Z0-9_]*@' $@.tmp; then \
+      echo "$@ contains unexpanded substitution (see lines above)"; \
+      exit 1; \
+    fi
+	chmod a-w $@.tmp && mv -f $@.tmp $@
+
+my-install: bashrc.sh
 	@$(shell_setup); \
 	 cooked_homedir='$(DESTDIR)$(homedir)'; \
 	 do_link_ () \
@@ -128,7 +137,7 @@ dist:
 .PHONY: dist
 
 clean:
-	$(RM_F) *.tmp *.tmp[0-9] $(DISTNAME).tar.gz
+	$(RM_F) bashrc.sh *.tmp *.tmp[0-9] $(DISTNAME).tar.gz
 	$(RM_RF) dist.tmpdir
 .PHONY: clean
 
