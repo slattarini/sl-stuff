@@ -79,6 +79,8 @@ if [[ $SYSTEM_UNAME == linux ]]; then
     W autogrep && alias autogrep='autogrep --color=auto'
 fi
 
+: # Don't return a spurious non-zero status.
+
 #---------------------------------------------------------------------------
 
 # vim: et ts=4 sw=4 ft=sh
