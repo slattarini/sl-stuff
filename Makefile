@@ -2,11 +2,10 @@
 
 DISTNAME = bashrc
 
-DESTDIR =
-SYSPREFIX = /usr/local
-USRPREFIX = $(HOME)
-homedir = $(DESTDIR)$(HOME)
-prefixdir = $(DESTDIR)$(PREFIX)
+homedir = $(HOME)
+sysdir = /usr/local
+libdir = $(sysdir)/lib
+bashrcdir = $(libdir)/bashrc
 
 FAKEINSTALL =
 
@@ -46,10 +45,10 @@ help:
 	@echo "Type '$(MAKE) su-install' to install system ones."
 	@echo
 	@echo "'$(MAKE) my-install' will try to install stuff in \$$HOME by"
-	@echo "default; this can be overridden by redefining 'USRPREFIX'."
+	@echo "default; this can be overridden by redefining 'homedir'."
 	@echo
 	@echo "'$(MAKE) su-install' will try to install stuff in /usr/local by"
-	@echo "default; this can be overridden by redefining 'SYSPREFIX'."
+	@echo "default; this can be overridden by redefining 'sysdir'."
 	@echo
 	@echo "The 'DESTDIR' variable is honoured."
 	@echo
@@ -63,32 +62,40 @@ help:
 
 my-install:
 	@$(shell_setup); \
-	 [ -d $(homedir) ] || vrun $(MKDIR_P) $(homedir); \
-	 vrun $(install_data) bash_profile.sh $(homedir)/.bash_profile; \
-	 vrun $(install_data) bashrc.sh $(homedir)/.bashrc; \
-	 vrun $(install_data) bash_completion.sh $(homedir)/.bash_completion; \
-	 if [ -d $(homedir)/.bashrc.d ]; then \
-	   vrun $(RM_RF) $(homedir)/.bashrc.d; \
-	 else \
-	   :; \
-	 fi; \
-	 vrun $(MKDIR) $(homedir)/.bashrc.d; \
-	 echo ' $(install_data) bashrc.d/* $(homedir)/.bashrc.d/'; \
-	 run $(install_data) bashrc.d/* $(homedir)/.bashrc.d/; \
-	 vrun $(install_data) dir_colors $(homedir)/.dir_colors; \
-	 vrun $(install_data) inputrc $(homedir)/.inputrc; \
-	 if [ -f $(homedir)/.bash_inputrc ] || \
-	    [ -h $(homedir)/.bash_inputrc ]; then \
-		 vrun $(RM_F) $(homedir)/.bash_inputrc; \
-	 fi; \
-	 vrun $(LN_S) .inputrc $(homedir)/.bash_inputrc; \
+	 cooked_homedir='$(DESTDIR)$(homedir)'; \
+	 do_link_ () \
+	   { \
+	     source='$(bashrcdir)'/$$1; : No DESTDIR here, deliberately; \
+	     target=$$cooked_homedir/$$2; \
+	     if test -f "$$target" || test -h "$$target"; then \
+	       vrun rm -f "$$target"; \
+	     fi; \
+	     vrun $(LN_S) "$$source" "$$target"; \
+	   }; \
+	 [ -d "$$cooked_homedir" ] || vrun $(MKDIR_P) "$$cooked_homedir"; \
+	 do_link_ bash_profile.sh .bash_profile; \
+	 do_link_ bashrc.sh .bashrc; \
+	 do_link_ bash_completion.sh .bash_completion; \
+	 do_link_ dir_colors .dir_colors; \
+	 do_link_ inputrc .inputrc; \
+	 do_link_ inputrc .bash_inputrc; \
 	 $(shell_done)
 .PHONY: my-install
 
 su-install:
 	@$(shell_setup); \
-	 [ -d $(prefixdir) ] || vrun $(MKDIR_P) $(prefixdir); \
-	 vrun $(install_data) sys-bashrc.sh $(prefixdir)/bash.bashrc; \
+	 dir='$(DESTDIR)$(bashrcdir)'; \
+	 vrun rm -rf "$$dir"; \
+	 vrun $(MKDIR_P) "$$dir"; \
+	 for f in bash_completion.sh bashrc.sh bash_profile.sh \
+	          dir_colors inputrc; \
+	 do \
+	   vrun $(install_data) $$f "$$dir"; \
+	 done; \
+	 vrun $(MKDIR_P) "$$dir/bashrc.d"; \
+	 for f in bashrc.d/*; do \
+	   vrun $(install_data) $$f "$$dir/bashrc.d"; \
+	 done; \
 	 $(shell_done)
 .PHONY: su-install
 

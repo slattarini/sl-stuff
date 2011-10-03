@@ -51,13 +51,14 @@ shopt -s checkwinsize
 
 PS1='\u@\h[bash-\v]$ '
 
-BASHRC_DIR="$HOME/.bashrc.d"
+SYSTEM_BASHRC_DIR="$HOME/.bashrc.d"
+#USER_BASHRC_DIR="$HOME/.bashrc.d"
 
 # Real shell configuration is done here.
-if test -d "$BASHRC_DIR"; then
-    declare -rx BASHRC_DIR
+if test -d "$SYSTEM_BASHRC_DIR"; then
+    declare -rx SYSTEM_BASHRC_DIR
     # Source the real initialization scripts.
-    for shrc_file in "$BASHRC_DIR"/[0-9][0-9]*.sh; do
+    for shrc_file in "$SYSTEM_BASHRC_DIR"/[0-9][0-9]*.sh; do
         test -f "$shrc_file" || continue # In case of broken symlinks.
         echo "** SHINIT: including $shrc_file"
         . "$shrc_file" || {
@@ -66,11 +67,6 @@ if test -d "$BASHRC_DIR"; then
         }
     done
     unset shrc_file
-else
-    echo "$0: $BASHRC_DIR: not a directory." >&2
-    echo "$0: no shell personalization available." >&2
-    unset BASHRC_DIR
-    return 1
 fi
 
 # vim: ft=sh ts=4 sw=4 et
