@@ -185,7 +185,7 @@ mkdir $t \
   && ln -s $t/f.lnk $t/f.rlnk \
   && ln -s f.txt $t/f.lnk2 \
   || {
-    warn "cannot create/setup temporary direcotry \`$t'"
+    warn "cannot create/setup temporary directory \`$t'"
     unset t
     return $FAILURE
 }
