@@ -21,8 +21,7 @@ case $BASH_VERSION in
     [12].*)
         echo "$0: Bash version \`$BASH_VERSION' too old, ~/.bashrc" \
              "initialization won't be available" >&2
-        return 0
-        ;;
+        return 0;;
 esac
 
 PS1='\u@\h[bash-\v]$ '
