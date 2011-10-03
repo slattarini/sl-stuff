@@ -15,11 +15,10 @@ declare -r bool='declare -i'
 declare -ir FALSE=0
 declare -ir TRUE=1
 
-readonly WS=' '
 readonly TAB=$'\t'
 readonly NL=$'\n'
 
-IFS=${WS}${TAB}${NL}
+IFS=" ${TAB}${NL}"
 
 enable 'printf' 'echo'  # just to be sure
 
@@ -87,7 +86,7 @@ normalize_name() {
         0) cat;;
         *) xecho "$*";;
     esac | \
-      tolower | tr "$TAB" "$WS" | \
+      tolower | tr "$TAB" " " | \
       sed -e 's/^ *//' -e 's/ *$//' -e 's/[^a-z0-9][^a-z0-9]*/-/g'
 }
 normalize_version() {
@@ -95,7 +94,7 @@ normalize_version() {
         0) cat;;
         *) xecho "$*";;
     esac | \
-      tolower | tr "$TAB" "$WS" | \
+      tolower | tr "$TAB" " " | \
       sed -e 's/^ *//' -e 's/ *$//' -e 's/[^a-z0-9.][^a-z0-9.]*/-/g'
 }
 declare -rf normalize_name normalize_version
