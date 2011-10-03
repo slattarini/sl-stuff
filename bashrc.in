@@ -54,24 +54,18 @@ PS1='\u@\h[bash-\v]$ '
 declare -rx SYSTEM_BASHRC_DIR='@bashrcdir@/bashrc.d'
 declare -rx USER_BASHRC_DIR="$HOME/.bashrc.d"
 
-bashrc__source_dir ()
-{
-  local bashrc__file bashrc__dir
-  bashrc__dir=$1
-  [ -d "$bashrc__dir" ] || return 0
-  for bashrc__file in "$bashrc__dir"/[0-9][0-9]*.sh; do
-    # Avoid spurious failure in case of broken symlinks or empty dirs.
-    [ -f "$bashrc__file" ] || continue
-    echo "** SHINIT: including $bashrc__file"
-    . "$bashrc__file" || {
-      echo "$0: error while loading file \`$bashrc__file'" >&2
-      return 1
-    }
-  done
-  return 0
-}
-
-bashrc__source_dir "$SYSTEM_BASHRC_DIR" || return 1
-bashrc__source_dir "$USER_BASHRC_DIR"   || return 1
+for bashrc__dir in "$SYSTEM_BASHRC_DIR" "$USER_BASHRC_DIR"; do
+    [ -d "$bashrc__dir" ] || continue
+    for bashrc__file in "$bashrc__dir"/[0-9][0-9]*.sh; do
+        # Avoid spurious failure in case of broken symlinks or empty dirs.
+        [ -f "$bashrc__file" ] || continue
+        echo "** SHINIT: including $bashrc__file"
+        . "$bashrc__file" || {
+            echo "$0: error while loading file \`$bashrc__file'" >&2
+            return 1
+        }
+    done
+done
+unset bashrc__file bashrc__dir
 
 # vim: ft=sh ts=4 sw=4 et
