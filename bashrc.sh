@@ -51,22 +51,27 @@ shopt -s checkwinsize
 
 PS1='\u@\h[bash-\v]$ '
 
-SYSTEM_BASHRC_DIR="$HOME/.bashrc.d"
-#USER_BASHRC_DIR="$HOME/.bashrc.d"
+declare -rx SYSTEM_BASHRC_DIR="/xxx/.bashrc.d" #FIXME
+declare -rx USER_BASHRC_DIR="$HOME/.bashrc.d"
 
-# Real shell configuration is done here.
-if test -d "$SYSTEM_BASHRC_DIR"; then
-    declare -rx SYSTEM_BASHRC_DIR
-    # Source the real initialization scripts.
-    for shrc_file in "$SYSTEM_BASHRC_DIR"/[0-9][0-9]*.sh; do
-        test -f "$shrc_file" || continue # In case of broken symlinks.
-        echo "** SHINIT: including $shrc_file"
-        . "$shrc_file" || {
-            echo "$0: error while loading file \`$shrc_file'" >&2
-            return 1
-        }
-    done
-    unset shrc_file
-fi
+bashrc__source_dir ()
+{
+  local bashrc__file bashrc__dir
+  bashrc__dir=$1
+  [ -d "$bashrc__dir" ] || return 0
+  for bashrc__file in "$bashrc__dir"/[0-9][0-9]*.sh; do
+    # Avoid spurious failure in case of broken symlinks or empty dirs.
+    [ -f "$bashrc__file" ] || continue
+    echo "** SHINIT: including $bashrc__file"
+    . "$bashrc__file" || {
+      echo "$0: error while loading file \`$shrc__file'" >&2
+      return 1
+    }
+  done
+  return 0
+}
+
+bashrc__source_dir "$SYSTEM_BASHRC_DIR" || return 1
+bashrc__source_dir "$USER_BASHRC_DIR"   || return 1
 
 # vim: ft=sh ts=4 sw=4 et

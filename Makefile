@@ -73,6 +73,11 @@ my-install:
 	     vrun $(LN_S) "$$source" "$$target"; \
 	   }; \
 	 [ -d "$$cooked_homedir" ] || vrun $(MKDIR_P) "$$cooked_homedir"; \
+	 vrun rm -rf "$$cooked_homedir/.bashrc.d"; \
+	 vrun $(MKDIR_P) "$$cooked_homedir/.bashrc.d"; \
+	 for f in usr-bashrc.d/*; do \
+	   vrun $(install_data) $$f "$$cooked_homedir/.bashrc.d"; \
+	 done; \
 	 do_link_ bash_profile.sh .bash_profile; \
 	 do_link_ bashrc.sh .bashrc; \
 	 do_link_ bash_completion.sh .bash_completion; \
@@ -84,17 +89,17 @@ my-install:
 
 su-install:
 	@$(shell_setup); \
-	 dir='$(DESTDIR)$(bashrcdir)'; \
-	 vrun rm -rf "$$dir"; \
-	 vrun $(MKDIR_P) "$$dir"; \
+	 sysdir='$(DESTDIR)$(bashrcdir)'; \
+	 vrun rm -rf "$$sysdir"; \
+	 vrun $(MKDIR_P) "$$sysdir"; \
 	 for f in bash_completion.sh bashrc.sh bash_profile.sh \
 	          dir_colors inputrc; \
 	 do \
-	   vrun $(install_data) $$f "$$dir"; \
+	   vrun $(install_data) $$f "$$sysdir"; \
 	 done; \
-	 vrun $(MKDIR_P) "$$dir/bashrc.d"; \
-	 for f in bashrc.d/*; do \
-	   vrun $(install_data) $$f "$$dir/bashrc.d"; \
+	 vrun $(MKDIR_P) "$$sysdir/bashrc.d"; \
+	 for f in sys-bashrc.d/*; do \
+	   : XXX vrun $(install_data) $$f "$$sysdir/bashrc.d"; \
 	 done; \
 	 $(shell_done)
 .PHONY: su-install
