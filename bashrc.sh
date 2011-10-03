@@ -33,10 +33,6 @@ readonly BASHSHRC_INCLUDED=1
 
 BASHRC_DIR="$HOME/.bashrc.d"
 
-# Restore the PATH to a basic safe value.
-PATH='/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin'
-export PATH
-
 # Real shell configuration is done here.
 if test -d "$BASHRC_DIR"; then
     declare -rx BASHRC_DIR
