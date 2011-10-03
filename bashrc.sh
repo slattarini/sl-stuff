@@ -64,7 +64,7 @@ bashrc__source_dir ()
     [ -f "$bashrc__file" ] || continue
     echo "** SHINIT: including $bashrc__file"
     . "$bashrc__file" || {
-      echo "$0: error while loading file \`$shrc__file'" >&2
+      echo "$0: error while loading file \`$bashrc__file'" >&2
       return 1
     }
   done
