@@ -258,7 +258,7 @@ rm -rf "$t"
 unset t d oIFS extended_path
 unset -f _readlink_works _realpath_works
 
-# If we dind't find a proper `readlink' and `realpath' program, give up...
+# If we didn't find a proper `readlink' and `realpath' program, give up...
 
 [ -n "$as_readlink" ] || {
     warn "cannot find a working \`readlink' command"
