@@ -1,16 +1,6 @@
 # -*- bash -*-
 
-W vim && VI=vim || VI=vi
-W view && VIEW=view || VIEW=$VI
-declare -rx VI VIEW
-
-W editor && EDITOR=editor || EDITOR="$VI"
-export EDITOR
-
-export SVN_EDITOR="$EDITOR" VISUAL="$EDITOR" FCEDIT="$EDITOR"
-
-# editor used by tex/latex
-export TEXEDIT="$EDITOR +%d %s"
+# FIXME: this file is an hack that would be nice to remove.
 
 if W vim; then
     if IsHost bplab; then
