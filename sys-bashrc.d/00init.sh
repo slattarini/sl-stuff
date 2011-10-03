@@ -97,16 +97,6 @@ normalize_version() {
 }
 declare -rf normalize_name normalize_version
 
-# Simple sanity checks.
-[[ -d /etc && -r /etc && -x /etc && ! -h /etc ]] || {
-    warn "/etc is not a fully readable non-symlink directory"
-    return $FAILURE
-}
-[[ -f /bin/cat && -x /bin/cat ]] || {
-    warn "/bin/cat not found as a regular executable file"
-    return $FAILURE
-}
-
 # Identify the running system.
 
 SYSTEM_UNAME=$(uname -s)
@@ -173,108 +163,52 @@ W() { which "$@" >/dev/null 2>&1; }
 
 declare -rf which W
 
-# We'll need the realpath(1) and readlink(1) programs: locate them and
-# test them thoroughly.
-
-t=/tmp/_bashrc-tst-$$-$RANDOM
-mkdir $t \
-  && echo foo > $t/f.txt \
-  && ln -s $t/f.txt $t/f.lnk \
-  && ln -s $t/f.lnk $t/f.rlnk \
-  && ln -s f.txt $t/f.lnk2 \
-  || {
-    warn "cannot create/setup temporary directory \`$t'"
-    unset t
-    return $FAILURE
-}
-
-# On non-FreeBSD ad non-Linux systems, binaries we are looking for can be
-# stashed in weird/unusual locations.
-declare -a extended_path=()
-oIFS=$IFS; IFS=:; extended_path=( $PATH ); IFS=$oIFS
-extended_path=(
-    $HOME/bin
+# On non-FreeBSD ad non-Linux systems, some binaries we are looking for
+# can be stashed in weird/unusual locations.
+declare -ra extra_gnu_path=(
+    "$HOME"/bin
+    /usr/local/bin
     /usr/local/gnu/bin
     /opt/gnu/bin
     /usr/gnu/bin
     /opt/sfw/bin
     /usr/sfw/bin
     /opt/bin
-    /usr/local/bin
-    "${extended_path[@]}"
 )
 
-# Temporary subroutines used to check readlink and realpath.
-
-_readlink_works() {
-    [[ -z $("$@" $t) ]] \
-      && [[ -z $("$@" $t/f.txt) ]] \
-      && [[ $("$@" $t/f.lnk) == $t/f.txt ]] \
-      && [[ $("$@" $t/f.lnk2) == f.txt ]] \
-      && [[ $("$@" $t/f.rlnk) == $t/f.lnk ]]
+# The given command must support the `--help' option and have the string
+# "GNU" in its help screen to be considered a GNU program.
+is_gnu_program ()
+{
+   (set -o pipefail; "$1" --help | grep GNU) </dev/null >/dev/null 2>&1
 }
 
-_realpath_works() {
-    [[ $("$@" $t) == $t ]] \
-      && [[ $("$@" /etc/../../$t/) == $t ]] \
-      && [[ $("$@" /etc/../$t/.//f.txt) == $t/f.txt ]] \
-      && [[ $("$@" /$t/f.lnk) == $t/f.txt ]] \
-      && [[ $("$@" /$t/f.lnk2) == $t/f.txt ]] \
-      && [[ $("$@" /$t/f.rlnk) == $t/f.txt ]] \
-      && [[ $("$@" //etc/../$t/./f.rlnk) == $t/f.txt ]]
+# Usage: find_better_program PROGRAM-NAME VARIABLE-NAME
+#                            [TEST-FUNCTION=is_gnu_program]
+# VARIABLE-NAME will be unconditionally clobbered.
+find_better_program ()
+{
+  case $# in
+    0|1) fwarn "too few arguments ($#)";  return $E_USAGE;;
+    2|3) ;;
+      *) fwarn "too many arguments ($#)"; return $E_USAGE;;
+  esac
+  local program=$1; shift
+  local varname=$1; shift
+  unset "$varname" || return $E_USAGE
+  local test_function=${1-is_gnu_program}; shift
+  local oIFS=$IFS
+  local IFS=:
+  local dir
+  for dir in "${extra_gnu_path[@]}" $PATH; do
+    IFS=$oIFS
+    [[ -f $dir/$program && -x $dir/$program ]] || continue
+    $test_function "$dir/$program" || continue
+    eval "$varname"='$dir/$program' || return $E_INTERNAL
+    return $SUCCESS
+  done
+  return $FAILURE
 }
-
-# Here we go with the search.
-
-as_readlink=""
-as_realpath=""
-
-for d in "${extended_path[@]}"; do
-    if [[ -f $d/readlink && -x $d/readlink ]]; then
-        if [ -z "$as_readlink" ] && _readlink_works $d/readlink; then
-            as_readlink=$d/readlink
-        fi
-        if [ -z "$as_realpath" ] && _realpath_works $d/readlink -f; then
-            as_realpath="$d/readlink -f"
-        fi
-    fi
-    [[ -n $as_readlink && -n $as_realpath ]] && break
-done
-
-if [ -z "$as_realpath" ]; then
-    for d in "${extended_path[@]}"; do
-        [[ -f $d/realpath && -x $d/realpath ]] \
-           && _realpath_works "$d/realpath" \
-           && as_realpath=$d/realpath
-        [[ -n $as_realpath ]] && break
-    done
-fi
-
-# Cleanup temporary files and variables.
-
-rm -rf "$t"
-unset t d oIFS extended_path
-unset -f _readlink_works _realpath_works
-
-# If we didn't find a proper `readlink' and `realpath' program, give up...
-
-[ -n "$as_readlink" ] || {
-    warn "cannot find a working \`readlink' command"
-    return $FAILURE
-}
-[ -n "$as_realpath" ] || {
-    warn "cannot find a working \`realpath' command"
-    return $FAILURE
-}
-
-# ... else save them.
-
-readlink() { $as_readlink "$@"; }
-realpath() { $as_realpath "$@"; }
-declare -rf realpath readlink
-readonly as_realpath as_readlink
-
-weak_realpath() { realpath "$@"; }
 
 # Let's try to set the path of our default Bourne-compatible shell to the
 # absolute path of the running bash shell.  $BASH id documented to be set
@@ -290,11 +224,21 @@ fi
 [ -n "${COLUMNS-}" ] && export COLUMNS
 [ -n "${LINES-}" ] && export LINES
 
+# Internal subroutine, used by '_fixdir_for_path()'.
+_check_realpath() { [[ $("$1" /.//../ 2>/dev/null) == / ]]; }
+if find_better_program realpath REALPATH_CMD _check_realpath; then
+  _weak_realpath() { $REALPATH_CMD "$@"; }
+else
+  _weak_realpath() { xecho "$1"; }
+fi
+unset -f _check_realpath
+declare -rf _weak_realpath
+
 # Internal subroutine, used by '_add_dir_to_path()'.
 _fixdir_for_path() {
     case "$1" in
         .|..) xecho "$1";;
-        *) weak_realpath "$1";;
+        *) _weak_realpath "$1";;
     esac
 }
 declare -rf _fixdir_for_path
