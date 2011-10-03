@@ -274,6 +274,8 @@ realpath() { $as_realpath "$@"; }
 declare -rf realpath readlink
 readonly as_realpath as_readlink
 
+weak_realpath() { realpath "$@"; }
+
 # Let's try to set the path of our default Bourne-compatible shell to the
 # absolute path of the running bash shell.  $BASH id documented to be set
 # as an absolute path, so simply use it.
@@ -292,7 +294,7 @@ fi
 _fixdir_for_path() {
     case "$1" in
         .|..) xecho "$1";;
-        *) realpath "$1";;
+        *) weak_realpath "$1";;
     esac
 }
 declare -rf _fixdir_for_path
