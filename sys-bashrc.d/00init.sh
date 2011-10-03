@@ -275,49 +275,18 @@ declare -rf realpath readlink
 readonly as_realpath as_readlink
 
 # Let's try to set the path of our default Bourne-compatible shell to the
-# absolute path of the running bash shell.
-
-if [[ $SYSTEM_UNAME == linux && -h /proc/$$/exe ]]; then
-    SHELL=$(readlink /proc/$$/exe)
-elif [[ $SYSTEM_UNAME == freebsd && -h /proc/$$/file ]]; then
-    SHELL=$(readlink /proc/$$/file)
-elif [[ $SYSTEM_UNAME == solaris && -h /proc/$$/path/a.out ]]; then
-    SHELL=$(readlink /proc/$$/path/a.out)
+# absolute path of the running bash shell.  $BASH id documented to be set
+# as an absolute path, so simply use it.
+if ! [[ ${BASH:0:1} == '/' && -f $BASH && -x $BASH ]]; then
+  mwarn "\$BASH ($BASH) is not an absolute path of an executable file"
 else
-    SHELL=$(ps hx | awk '($1==PID){print $5}' PID=$$) # rustic fallback
+  export SHELL=$BASH
 fi
-
-# If $SHELL begins with a `-' character, usually is is not part of its
-# name, but is there to means that $SHELL is a login shell; so remove
-# such a `-' character, if necessary.
-SHELL=${SHELL#-}
-
-case "$SHELL" in
-    ""|/*) ;;
-    *) SHELL=$(which "$SHELL" 2>/dev/null);;
-esac
-
-[ -n "$SHELL" ] || SHELL=/bin/sh
-
-if { [ x"${SHELL:0:1}" = x"/" ] \
-     && "$SHELL" -c 'exit 0' \
-     && "$SHELL" -c ': && exit 0;' \
-     && { "$SHELL" -c 'exit 13;'; [ $? = 13 ]; } \
-     && [[ $("$SHELL" -c 'v=foo; echo "$v";') == foo ]] \
-     && [[ $("$SHELL" -c 'echo bar | /bin/cat') == bar ]]
-   } >/dev/null 2>&1; then
-    : # ok, we got it
-else
-    SHELL=/bin/sh  # fallback to the default system shell
-fi
-
-export SHELL
 
 # This variables are set by smart terminal and passed to the shell, so
 # pass them to shell child as well.
 [ -n "${COLUMNS-}" ] && export COLUMNS
 [ -n "${LINES-}" ] && export LINES
-
 
 # Internal subroutine, used by '_add_dir_to_path()'.
 _fixdir_for_path() {
