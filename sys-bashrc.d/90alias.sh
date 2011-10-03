@@ -28,6 +28,8 @@ diff()
 
 # "Laziness" aliases.
 
+alias md='mkdir -p'
+alias rd=rmdir
 alias t=touch
 alias L=less
 alias m=more
