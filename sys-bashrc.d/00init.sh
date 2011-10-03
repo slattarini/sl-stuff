@@ -20,8 +20,6 @@ readonly NL=$'\n'
 
 IFS=" ${TAB}${NL}"
 
-enable 'printf' 'echo'  # just to be sure
-
 xecho() {
     printf '%s\n' "$*"
 }
