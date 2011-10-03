@@ -113,6 +113,14 @@ su-install: bashrc.sh
 	 $(shell_done)
 .PHONY: su-install
 
+my-uninstall:
+	cd '$(DESTDIR)$(homedir)' && rm -rf .bashrc.d \
+	  && rm -f .bash_profile .bashrc .bash_completion \
+	           .dir_colors .inputrc .bash_inputrc
+su-uninstall:
+	rm -rf '$(DESTDIR)$(bashrcdir)'
+.PHONY: my-uninstall su-uninstall
+
 fake-install:
 	$(MAKE) FAKEINSTALL=y my-install
 	$(MAKE) FAKEINSTALL=y su-install
