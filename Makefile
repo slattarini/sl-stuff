@@ -66,7 +66,7 @@ all: bashrc.sh
 
 bashrc.sh: bashrc.in
 	@rm -f $@ $@.tmp
-	sed 's|@bashrcdir@|$(bashrcdir)|' $< >$@.tmp
+	sed 's|@bashrcdir@|$(bashrcdir)|' bashrc.in >$@.tmp
 	@if LC_ALL=C grep '@[a-zA-Z0-9_][a-zA-Z0-9_]*@' $@.tmp; then \
       echo "$@ contains unexpanded substitution (see lines above)"; \
       exit 1; \
