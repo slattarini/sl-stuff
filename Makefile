@@ -41,6 +41,7 @@ shell_setup = \
 shell_done = trap 'exit $$?' 0; exit 0
 
 help:
+	@echo "Type '$(MAKE) all' to build all generated files."
 	@echo "Type '$(MAKE) my-install' to install user's files."
 	@echo "Type '$(MAKE) su-install' to install system ones."
 	@echo
@@ -60,6 +61,9 @@ help:
 	@echo "other initialization files by default!"
 .PHONY: help
 
+all: bashrc.sh
+.PHONY: all
+
 bashrc.sh: bashrc.in
 	@rm -f $@ $@.tmp
 	sed 's|@bashrcdir@|$(bashrcdir)|' $< >$@.tmp
@@ -69,7 +73,7 @@ bashrc.sh: bashrc.in
     fi
 	chmod a-w $@.tmp && mv -f $@.tmp $@
 
-my-install:
+my-install: all
 	@$(shell_setup); \
 	 cooked_homedir='$(DESTDIR)$(homedir)'; \
 	 do_link_ () \
@@ -96,7 +100,7 @@ my-install:
 	 $(shell_done)
 .PHONY: my-install
 
-su-install: bashrc.sh
+su-install: all
 	@$(shell_setup); \
 	 sysdir='$(DESTDIR)$(bashrcdir)'; \
 	 vrun rm -rf "$$sysdir"; \
