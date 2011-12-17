@@ -222,9 +222,8 @@ MakeGUI -T kompare
 if IsHost bigio; then
     MakeGUI                                                         \
        iceweasel insight smalltalk xabiword gftp k3b kdevelop bluej \
-       appletviewer galeon kmail kaddressbook kmix cssed netbeans   \
-       bittorrent civ freeciv paman heretic alsaplayer bmpx ggr     \
-       VirtualBox
+       appletviewer galeon kmail icedove kaddressbook kmix cssed    \
+       netbeans civ freeciv heretic alsaplayer bmpx ggr
     MakeGUI -h 'set -- media://dev/dvd "$@"' "kscd"
     MakeGUI -w aoss clanbomber bomberclone
 fi
