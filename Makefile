@@ -133,11 +133,11 @@ fake-install:
 $(DISTNAME).tar.gz: dist
 dist:
 	@set -x -u; \
-	files="Makefile bash_profile.sh sys-bashrc.sh bashrc.sh \
+	files="Makefile bash_profile.sh sys-bashrc.sh bashrc.in \
 		   bash_completion.sh inputrc dir_colors"; \
 	$(RM_RF) dist.tmpdir \
 	  && $(MKDIR) dist.tmpdir \
-	  && $(GNUTAR) -cf dist.tmpdir/tmp.tar $$files bashrc.d/*.sh \
+	  && $(GNUTAR) -cf dist.tmpdir/tmp.tar $$files *bashrc.d/*.sh \
 	  && cd dist.tmpdir \
 	  && $(MKDIR) $(DISTNAME) \
 	  && cd $(DISTNAME) \
