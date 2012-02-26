@@ -28,6 +28,8 @@ diff()
 
 # "Laziness" aliases.
 
+alias x='atool --extract'
+alias lx='atool --list'
 alias md='mkdir -p'
 alias rd=rmdir
 alias L=less
