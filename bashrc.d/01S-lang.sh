@@ -32,7 +32,7 @@ speak() {
         mafia|it|italiano)  set it_IT.UTF-8;;
          limey|en|english)  set en_GB.UTF-8;;
             yankee|us|usa)  set en_US.UTF-8;;
-              fr|français)  set fr_FR.UTF-8;;
+         frog|fr|français)  set fr_FR.UTF-8;;
     esac
     setlang "$1"
 }
