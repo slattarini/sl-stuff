@@ -111,8 +111,99 @@ alias la='el -lA'
 lls() { ll | less -r; }
 lla() { la | less -r; }
 
-: # Don't return a spurious non-zero status.
+# Shell implementation of nice(1) and args(1) (or a subset thereof),
+# that we will be usable also with our shell aliases and functions
+# (if not always, at least with in most circumstances).
 
-#---------------------------------------------------------------------------
+# The "smart" version can only be implemented with bash >= 4.0, and
+# if renice(1) is present.
+if [[ -n $BASHPID ]] && (test $$ != "$BASHPID") && W renice; then
+    @nice ()
+    {
+        case $#,$1 in
+            1,--help|1,--version)
+                echo "shell implementation of nice, based on renice(1)"
+                return 0
+        esac
+        local niceness=0
+        while :; do
+            case $1 in
+               -n) niceness=$2; shift;;
+              -n*) niceness=${1#-n};;
+                *) break;;
+            esac
+            shift
+        done
+        (renice -n "$niceness" $BASHPID && "$@")
+    }
+    alias nice='@nice'
+fi
+
+# Our xargs repacement cannot deal with null-separated input fields.
+# But this is not a big deal, since 99% of xargs(1) usage don't require
+# that either.
+@xargs ()
+{
+    case $#,$1 in
+    esac
+    # FIXME: be smart and try to punt on options like '-0' we cannot
+    #        truly handle?
+    # Delegate the hard work to the real xargs program; act only as a
+    # this layer around it.
+    declare -a xargs_opts=()
+    while (($# > 0)); do
+        case $1 in
+            # Make clear we are not the true xargs(1).
+            --help|--version)
+                echo "$(funcname): shell wrapper around xargs"
+                return 0
+                ;;
+            # We can't handle these.
+            -a|--arg-file|-P|--max-procs|-0|--null)
+                fwarn "cannot handle option '$1' properly, use xargs program"
+                return 1
+                ;;
+            # Explicitly ends options list.
+            --)
+                shift; break
+                ;;
+            # These requires an argument; fetch it.
+            -L|-E|-I|\
+            -d|--delimeter|\
+            -n|--max-args|\
+            -s|--max-chars)
+                xargs_opts+=( "$1" "$2" )
+                shift 2
+                ;;
+            # Pass all the other options and option clusters through.
+            -*)
+                xargs_opts+=( "$1" )
+                shift
+                ;;
+            # Non-option argument: stop option parsing.
+            *)
+                break
+                ;;
+        esac
+    done
+    if (($# == 0)); then
+        fwarn "missing argument"
+        return 2
+    else
+        xargs_cmd=$1
+        shift
+    fi
+
+    ( st=0 && set -o pipefail &&
+      command xargs "${xargs_opts[@]}" -- echo "$@" \
+        | while read -r -a lst; do
+            "$xargs_cmd" "${lst[@]}" || st=$?
+          done
+      exit $st )
+}
+
+alias xargs='@xargs'
+
+: # Don't return a spurious non-zero status.
 
 # vim: et ts=4 sw=4 ft=sh
