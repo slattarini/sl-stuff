@@ -45,7 +45,7 @@ shopt -s checkwinsize
 
 PS1='\u@\h[bash-\v]$ '
 
-declare -rx USER_BASHRC_DIR="$HOME/.bashrc.d"
+declare -rx USER_BASHRC_DIR=$HOME/.bashrc.d
 
 for bashrc__dir in "$USER_BASHRC_DIR"; do
     [ -d "$bashrc__dir" ] || continue
