@@ -49,7 +49,7 @@ declare -rx USER_BASHRC_DIR="$HOME/.bashrc.d"
 
 for bashrc__dir in "$USER_BASHRC_DIR"; do
     [ -d "$bashrc__dir" ] || continue
-    for bashrc__file in "$bashrc__dir"/[0-9][0-9]*.sh; do
+    for bashrc__file in "$bashrc__dir"/[0-9][0-9]*.sh ~/.bash_local; do
         # Avoid spurious failure in case of broken symlinks or empty dirs.
         [ -f "$bashrc__file" ] || continue
         echo "** SHINIT: including $bashrc__file"
