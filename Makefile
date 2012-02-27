@@ -108,6 +108,7 @@ dist:
 	  && $(GNUTAR) -czvf ../$(DISTNAME).tar.gz ./$(DISTNAME) \
 	  && cd .. \
 	  && $(RM_RF) dist.tmpdir
+	ls -l $(DISTNAME).tar.gz
 .PHONY: dist
 
 clean:
