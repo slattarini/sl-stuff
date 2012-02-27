@@ -71,14 +71,20 @@ if W vim; then
 fi
 
 # Grep with colors.
-# FIXME: this should be OK as long as we can find GNU grep ...
-if [[ $SYSTEM_UNAME == linux ]]; then
-    alias grep='grep --color=auto'
-    alias egrep='grep -E --color=auto'
-    alias fgrep='grep -F --color=auto'
-    alias rgrep='grep -r --color=auto'
-    W wcgrep && alias wcgrep='wcgrep --color=auto'
-    W autogrep && alias autogrep='autogrep --color=auto'
+if $have_gnu_grep; then
+    for p in '' @; do
+        case $p in @) m=always;; *) m=auto;; esac
+        alias  "${p}grep"="$gnu_grep --color=$m"
+        alias "${p}egrep"="$gnu_grep -E --color=$m"
+        alias "${p}fgrep"="$gnu_grep -F --color=$m"
+        alias "${p}rgrep"="$gnu_grep -r --color=$m"
+        for c in wcgrep autogrep; do
+            if W $c; then
+                alias $p$c='"WCGREP_GREP=$gnu_grep" '"$c--color=$m"
+            fi
+        done
+    done
+    unset c p m
 fi
 
 : # Don't return a spurious non-zero status.
