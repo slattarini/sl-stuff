@@ -116,26 +116,17 @@ if [[ $SYSTEM_UNAME == solaris && $SYSTEM_RELEASE == 5.* ]]; then
     unset t
 fi
 
-if [[ $SYSTEM_UNAME == linux ]]; then
-    SYSTEM_DISTRIBUTOR=$(lsb_release -i 2>/dev/null | \
-                           sed -n -e "s/^Distributor ID://p" | \
-                           normalize_name)
-fi
-[ -n "${SYSTEM_DISTRIBUTOR-}" ] || SYSTEM_DISTRIBUTOR=UNKNOWN
+readonly SYSTEM_UNAME SYSTEM_RELEASE
 
-readonly SYSTEM_UNAME SYSTEM_RELEASE SYSTEM_DISTRIBUTOR
-
-case $SYSTEM_UNAME,$SYSTEM_RELEASE,$SYSTEM_DISTRIBUTOR in
-  freebsd,*|solaris,10,*|linux,*,debian)
-    # System fully recognized
+case $SYSTEM_UNAME,$SYSTEM_RELEASE in
+  freebsd,*|solaris,10,*|linux,*)
+    # System recognized
     ;;
   *)
     mwarn "***"
     mwarn "*** WARNING WARNING!!!"
-    mwarn "*** ('$SYSTEM_UNAME'," \
-               "'$SYSTEM_RELEASE'," \
-               "'$SYSTEM_DISTRIBUTOR'):" \
-               "Invalid triplet (\$uname, \$release, \$distributor)"
+    mwarn "*** ('$SYSTEM_UNAME', '$SYSTEM_RELEASE')" \
+               "Invalid couple (\$uname, \$release)"
     mwarn "*** Something might not work as expected, so be careful"
     mwarn "***"
     ;;

@@ -52,9 +52,6 @@ fi
 add_to_path -B "/usr/local/opt/bin" "$HOME/bin" "$HOME/bin/utils"
 
 declare -a a=("$SYSTEM_UNAME")
-if [[ $SYSTEM_DISTRIBUTOR != UNKNOWN ]]; then
-    a=("${a[@]}" "$SYSTEM_DISTRIBUTOR")
-fi
 for x in "${a[@]}"; do
     d=$HOME/bin/$(normalize_name "$x")
     if [ -d "$d" ]; then
