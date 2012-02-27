@@ -30,8 +30,14 @@ diff()
 
 alias x='atool --extract'
 alias lx='atool --list'
+
 alias md='mkdir -p'
 alias rd=rmdir
+
+alias c+x='chmod a+x'
+alias c-x='chmod a-x'
+alias  cx='chmod a+x'
+
 alias L=less
 alias M=more
 if W sensible-pager; then
@@ -86,6 +92,24 @@ if $have_gnu_grep; then
     done
     unset c p m
 fi
+
+# ls(1) with colors, bells and whistles.
+
+if $have_gnu_ls; then
+    @ls () { $gnu_ls --color=always "$@"; }
+elif [[ $SYSTEM_UNAME == freebsd ]]; then
+    @ls () { CLICOLOR_FORCE=1 /bin/ls -G "$@"; }
+else
+    @ls () { ls "$@"; }
+fi
+
+el() { @ls -1 "$@"; [ ! -t 1 ] || echo; }
+
+alias ll='el -l'
+alias la='el -lA'
+
+lls() { ll | less -r; }
+lla() { la | less -r; }
 
 : # Don't return a spurious non-zero status.
 
