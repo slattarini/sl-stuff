@@ -28,11 +28,11 @@ clearlang() {
 
 speak() {
     case "${1-}" in
-        crucco|de|deutsch)  set de_DE.UTF-8;;
-        mafia|it|italiano)  set it_IT.UTF-8;;
-         limey|en|english)  set en_GB.UTF-8;;
-            yankee|us|usa)  set en_US.UTF-8;;
-         frog|fr|français)  set fr_FR.UTF-8;;
+        en|USA)     set en_US.UTF-8;;
+        uk|british) set en_GB.UTF-8;;
+        de|german)  set de_DE.UTF-8;;
+        fr|french)  set fr_FR.UTF-8;;
+        it|italian) set it_IT.UTF-8;;
     esac
     setlang "$1"
 }
