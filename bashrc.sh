@@ -1,12 +1,6 @@
 #-*- bash -*-
 # General-purpose .bashrc file for interactive bash(1) shells.
 #
-# This file is meant to be installed at global, system level if
-# possible, and to be used by all the users of the system (by being
-# *explicitly* sourced by their ~/.bashrc).  It can also be installed
-# in the home directory, though, fore example on systems where one
-# lacks root access.
-#
 # This file is *not* a substitute for /etc/bash.bashrc; it rather strives
 # to complement that file, by defining useful extensions, functions and
 # aliases that are either system-agnostic, or tries to adaptively work on
@@ -51,10 +45,9 @@ shopt -s checkwinsize
 
 PS1='\u@\h[bash-\v]$ '
 
-declare -rx SYSTEM_BASHRC_DIR='@bashrcdir@/bashrc.d'
 declare -rx USER_BASHRC_DIR="$HOME/.bashrc.d"
 
-for bashrc__dir in "$SYSTEM_BASHRC_DIR" "$USER_BASHRC_DIR"; do
+for bashrc__dir in "$USER_BASHRC_DIR"; do
     [ -d "$bashrc__dir" ] || continue
     for bashrc__file in "$bashrc__dir"/[0-9][0-9]*.sh; do
         # Avoid spurious failure in case of broken symlinks or empty dirs.

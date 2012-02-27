@@ -3,9 +3,6 @@
 DISTNAME = bashrc
 
 homedir = $(HOME)
-sysdir = /usr/local
-libdir = $(sysdir)/lib
-bashrcdir = $(libdir)/bashrc
 
 FAKEINSTALL =
 
@@ -23,6 +20,7 @@ MKDIR_P = $(MKDIR) -p
 GNUTAR = tar
 
 install_data = $(INSTALL) -m 444
+inst = vrun $(install_data)
 
 shell_setup = \
   set -u; set -e; (set -C) >/dev/null 2>&1 && set -C; \
@@ -41,103 +39,67 @@ shell_setup = \
 shell_done = trap 'exit $$?' 0; exit 0
 
 help:
-	@echo "Type '$(MAKE) all' to build all generated files."
-	@echo "Type '$(MAKE) my-install' to install user's files."
-	@echo "Type '$(MAKE) su-install' to install system ones."
-	@echo
-	@echo "'$(MAKE) my-install' will try to install stuff in \$$HOME by"
-	@echo "default; this can be overridden by redefining 'homedir'."
-	@echo
-	@echo "'$(MAKE) su-install' will try to install stuff in /usr/local by"
-	@echo "default; this can be overridden by redefining 'sysdir'."
-	@echo
+	@echo "Type '$(MAKE) install' to install common files."
+	@echo "Type '$(MAKE) install ALL=yes' to all files" \
+	      "(for \"stefano's\" persona)."
 	@echo "The 'DESTDIR' variable is honoured."
-	@echo
 	@echo "Try '$(MAKE) fake-install' to see what would have been" \
 	      "removed/installed."
 	@echo
-	@echo "*** BE CAREFUL! ***"
-	@echo "'$(MAKE) my-install' will overwrite your ~/.bash_profile and"
-	@echo "other initialization files by default!"
+	@echo "! This package will overwrite your ~/.bash_profile and"
+	@echo "! other initialization files by default!  Override the"
+	@echo "! DESTDIR variable or use 'fake-install' target if you"
+	@echo "! want to avoid this."
 .PHONY: help
 
 all: bashrc.sh
 .PHONY: all
 
-bashrc.sh: bashrc.in
-	@rm -f $@ $@.tmp
-	sed 's|@bashrcdir@|$(bashrcdir)|' bashrc.in >$@.tmp
-	@if LC_ALL=C grep '@[a-zA-Z0-9_][a-zA-Z0-9_]*@' $@.tmp; then \
-      echo "$@ contains unexpanded substitution (see lines above)"; \
-      exit 1; \
-    fi
-	chmod a-w $@.tmp && mv -f $@.tmp $@
-
-my-install: all
+install: all
 	@$(shell_setup); \
 	 cooked_homedir='$(DESTDIR)$(homedir)'; \
-	 do_link_ () \
-	   { \
-	     source='$(bashrcdir)'/$$1; : No DESTDIR here, deliberately; \
-	     target=$$cooked_homedir/$$2; \
-	     if test -f "$$target" || test -h "$$target"; then \
-	       vrun rm -f "$$target"; \
-	     fi; \
-	     vrun $(LN_S) "$$source" "$$target"; \
-	   }; \
 	 [ -d "$$cooked_homedir" ] || vrun $(MKDIR_P) "$$cooked_homedir"; \
 	 vrun rm -rf "$$cooked_homedir/.bashrc.d"; \
 	 vrun $(MKDIR_P) "$$cooked_homedir/.bashrc.d"; \
-	 for f in usr-bashrc.d/*; do \
-	   vrun $(install_data) $$f "$$cooked_homedir/.bashrc.d"; \
+	 cd bashrc.d; \
+	 for f in *; do \
+	   case $$f in \
+	     dir_colors|inputrc) ;; \
+	     bash_completion.sh|bashrc.sh|bash_profile.sh) ;; \
+	     [0-9][0-9]C-*.sh) ;; \
+	     [0-9][0-9]S-*.sh) test '$(ALL)' = yes || continue;; \
+	     *) echo "$@: invalid filename '$$f'" >&2; exit 1;; \
+	   esac; \
+	   $(inst) $$f "$$cooked_homedir/.bashrc.d"; \
 	 done; \
-	 do_link_ bash_profile.sh .bash_profile; \
-	 do_link_ bashrc.sh .bashrc; \
-	 do_link_ bash_completion.sh .bash_completion; \
-	 do_link_ dir_colors .dir_colors; \
-	 do_link_ inputrc .inputrc; \
-	 do_link_ inputrc .bash_inputrc; \
+	 cd ..; \
+	 $(inst) bashrc.sh          "$$cooked_homedir"/.bashrc; \
+	 $(inst) bash_profile.sh    "$$cooked_homedir"/.bash_profile; \
+	 $(inst) bash_completion.sh "$$cooked_homedir"/.bash_completion; \
+	 $(inst) dir_colors 		"$$cooked_homedir"/.dir_colors; \
+	 $(inst) inputrc            "$$cooked_homedir"/.inputrc; \
+	 $(inst) inputrc            "$$cooked_homedir"/.bash_inputrc; \
 	 $(shell_done)
-.PHONY: my-install
+.PHONY: install
 
-su-install: all
-	@$(shell_setup); \
-	 sysdir='$(DESTDIR)$(bashrcdir)'; \
-	 vrun rm -rf "$$sysdir"; \
-	 vrun $(MKDIR_P) "$$sysdir"; \
-	 for f in bash_completion.sh bashrc.sh bash_profile.sh \
-	          dir_colors inputrc; \
-	 do \
-	   vrun $(install_data) $$f "$$sysdir"; \
-	 done; \
-	 vrun $(MKDIR_P) "$$sysdir/bashrc.d"; \
-	 for f in sys-bashrc.d/*; do \
-	   vrun $(install_data) $$f "$$sysdir/bashrc.d"; \
-	 done; \
-	 $(shell_done)
-.PHONY: su-install
-
-my-uninstall:
+uninstall:
 	cd '$(DESTDIR)$(homedir)' && rm -rf .bashrc.d \
 	  && rm -f .bash_profile .bashrc .bash_completion \
 	           .dir_colors .inputrc .bash_inputrc
-su-uninstall:
-	rm -rf '$(DESTDIR)$(bashrcdir)'
-.PHONY: my-uninstall su-uninstall
+.PHONY: uninstall
 
 fake-install:
-	$(MAKE) FAKEINSTALL=y my-install
-	$(MAKE) FAKEINSTALL=y su-install
+	$(MAKE) FAKEINSTALL=y install
 .PHONY: fake-install
 
 $(DISTNAME).tar.gz: dist
 dist:
 	@set -x -u; \
-	files="Makefile bash_profile.sh sys-bashrc.sh bashrc.in \
-		   bash_completion.sh inputrc dir_colors"; \
+	files="Makefile bash_completion.sh bash_profile.sh bashrc.sh \
+	       inputrc dir_colors"; \
 	$(RM_RF) dist.tmpdir \
 	  && $(MKDIR) dist.tmpdir \
-	  && $(GNUTAR) -cf dist.tmpdir/tmp.tar $$files *bashrc.d/*.sh \
+	  && $(GNUTAR) -cf dist.tmpdir/tmp.tar $$files bashrc.d/*.sh \
 	  && cd dist.tmpdir \
 	  && $(MKDIR) $(DISTNAME) \
 	  && cd $(DISTNAME) \
@@ -149,7 +111,7 @@ dist:
 .PHONY: dist
 
 clean:
-	$(RM_F) bashrc.sh *.tmp *.tmp[0-9] $(DISTNAME).tar.gz
+	$(RM_F) *.tmp *.tmp[0-9] $(DISTNAME).tar.gz
 	$(RM_RF) dist.tmpdir
 .PHONY: clean
 
