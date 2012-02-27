@@ -141,9 +141,11 @@ case $SYSTEM_UNAME,$SYSTEM_RELEASE,$SYSTEM_DISTRIBUTOR in
     ;;
 esac
 
-# The `which' utilities on different systems have too much
-# incompatibilities between different, so use the `type' bash
-# builtin.
+# 'which' utilities on different systems have too many incompatibilities
+# between different, so use the 'type' bash builtin instead.  Also, some
+# systems (e.g., Fedora 16) pre-define a 'which' alias that interferes
+# with our usage; get rid of it beforehand.
+unalias which >/dev/null 2>&1
 
 which() {
     local opts=''
