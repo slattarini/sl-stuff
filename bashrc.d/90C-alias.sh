@@ -33,7 +33,7 @@ alias lx='atool --list'
 alias md='mkdir -p'
 alias rd=rmdir
 alias L=less
-alias m=more
+alias M=more
 if W sensible-pager; then
   alias p=sensible-pager
 else
