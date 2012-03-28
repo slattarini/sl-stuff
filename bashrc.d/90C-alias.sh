@@ -77,7 +77,7 @@ if W vim; then
 fi
 
 # Grep with colors.
-if $have_gnu_grep; then
+if have_gnu_program grep; then
     for p in '' @; do
         case $p in @) m=always;; *) m=auto;; esac
         alias  "${p}grep"="$gnu_grep --color=$m"
@@ -95,7 +95,7 @@ fi
 
 # ls(1) with colors, bells and whistles.
 
-if $have_gnu_ls; then
+if have_gnu_program ls; then
     @ls () { $gnu_ls --color=always "$@"; }
 elif [[ $SYSTEM_UNAME == freebsd ]]; then
     @ls () { CLICOLOR_FORCE=1 /bin/ls -G "$@"; }
@@ -108,8 +108,8 @@ el() { @ls -1 "$@"; [ ! -t 1 ] || echo; }
 alias ll='el -l'
 alias la='el -lA'
 
-lls() { ll | less -r; }
-lla() { la | less -r; }
+lls() { ll "$@" | less -r; }
+lla() { la "$@" | less -r; }
 
 # Shell implementation of nice(1) and args(1) (or a subset thereof),
 # that we will be usable also with our shell aliases and functions
