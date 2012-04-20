@@ -203,12 +203,12 @@ MakeGUI() {
 }
 
 MakeGUI \
-    konqueror mozilla firefox xterm ksysguard kghostview xman kdesvn kdvi \
-    khelpcenter kedit kwrite kate kdcop kview quanta idle gedit pidgin \
-    gaim openoffice oobase oodraw oofromtemplate oomath ooweb oocalc \
-    ooffice ooimpress ooo-wrapper oowriter kprof kpdf display open_url \
-    xfig gimp akregator kopete dolphin systemsettings gitk qgit hgview \
-    easytag kchmviewer anki
+    konqueror firefox xterm ksysguard kghostview xman kdesvn kdvi \
+    khelpcenter kate kdcop kview quanta idle gedit pidgin \
+    openoffice oobase oodraw oofromtemplate oomath ooweb oocalc \
+    ooffice ooimpress oowriter kprof kpdf display open_url xfig \
+    gimp akregator kopete dolphin systemsettings gitk qgit hgview \
+    easytag kchmviewer
 
 if W firefox3; then
     MakeGUI firefox3
@@ -222,8 +222,8 @@ MakeGUI -T kompare
 if IsHost bigio; then
     MakeGUI                                                         \
        iceweasel insight smalltalk xabiword gftp k3b kdevelop bluej \
-       appletviewer galeon kmail icedove kaddressbook kmix cssed    \
-       netbeans civ freeciv heretic alsaplayer bmpx ggr
+       appletviewer kmail icedove kaddressbook kmix cssed netbeans  \
+       civ freeciv heretic alsaplayer bmpx ggr
     MakeGUI -h 'set -- media://dev/dvd "$@"' "kscd"
     MakeGUI -w aoss clanbomber bomberclone
 fi
@@ -237,8 +237,7 @@ esac
 
 chc='{ set -- -geometry "$mkgui_geometry" "$@"; }'
 
-MakeGUI -h "$chc; set -- -nomail \"\$@\"" -- opera
-MakeGUI -h "$chc" -- xpdf zxpdf gv ddd {x,}emacs djview
+MakeGUI -h "$chc" -- xpdf zxpdf gv ddd emacs djview
 MakeGUI -h "$chc; set -- -s 4 \"\$@\"" -- xdvi zxdvi
 IsHost bigio && MakeGUI -h "$chc" snake4
 
