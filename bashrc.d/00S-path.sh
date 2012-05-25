@@ -51,14 +51,11 @@ fi
 
 add_to_path -B "/usr/local/opt/bin" "$HOME/bin" "$HOME/bin/utils"
 
-declare -a a=("$SYSTEM_UNAME")
-for x in "${a[@]}"; do
-    d=$HOME/bin/$(normalize_name "$x")
-    if [ -d "$d" ]; then
-        add_to_path -B "$d"
-    fi
-done
-unset a x d
+d=$HOME/bin/$(normalize_name "$SYSTEM_UNAME")
+if [ -d "$d" ]; then
+    add_to_path -B "$d"
+fi
+unset d
 
 export PATH
 
