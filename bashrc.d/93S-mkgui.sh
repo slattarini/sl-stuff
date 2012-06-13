@@ -128,12 +128,14 @@ MakeGUI() {
 
         $mkgui_action "
             $mkgui_funcname() {
-              ${mkgui_par_open}
+
                 if [ -z \"\${DISPLAY-}\" ]; then
                     fwarn '\`DISPLAY'\\'' variable not set, cannot' \\
                           'connect to screen. Is X server running?'
-                    $mkgui_return $mkgui_E_NOGUI
+                    return $mkgui_E_NOGUI
                 fi
+
+              ${mkgui_par_open}
 
                 $mkgui_added_head_code
 
@@ -149,6 +151,7 @@ MakeGUI() {
                 $mkgui_added_tail_code
 
                 $mkgui_return $mkgui_E_OK
+
               ${mkgui_par_close}
             }
         "
