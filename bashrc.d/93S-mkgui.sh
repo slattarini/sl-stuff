@@ -38,7 +38,6 @@ MakeGUI() {
     local mkgui_action='eval'
     local mkgui_program_wrapper=command
     declare -i mkgui_subify=$FALSE
-    declare -i mkgui_bg_from_terminal_only=$FALSE
     while test $# -gt 0;  do
         case "$1" in
             --)
@@ -50,9 +49,6 @@ MakeGUI() {
                 ;;
             -p)
                 mkgui_action='xecho'
-                ;;
-            -T)
-                mkgui_bg_from_terminal_only=$TRUE
                 ;;
             -h)
                 eval "$mkgui_check_arg"
@@ -129,23 +125,6 @@ MakeGUI() {
         fi
         local mkgui_as_true='1|+([yY])|[yY][eE][sS]|[tT]rue'
         local mkgui_as_false='*'
-        if ((mkgui_bg_from_terminal_only)); then
-            local mkgui_main_code="(
-                case \"\${XFUNC_VERBOSE-}\" in
-                    ($mkgui_as_true) exec 98>&1 99>&2;;
-                    ($mkgui_as_false) exec 98>/dev/null 99>/dev/null;;
-                esac
-                if test -t 1; then
-                  $mkgui_program_wrapper $mkgui_program \"\$@\" \\
-                    >&98 2>&99
-                else
-                  $mkgui_program_wrapper $mkgui_program \"\$@\" \\
-                    >&98 2>&99 &
-                fi
-                exec 98>&-
-                exec 99>&-
-            )"
-        else
             local mkgui_main_code="{
                 case \"\${XFUNC_VERBOSE-}\" in
                   ($mkgui_as_true)
@@ -156,7 +135,6 @@ MakeGUI() {
                       >/dev/null 2>&1 &
                 esac
             }"
-        fi
 
         $mkgui_action "
             $mkgui_funcname() {
