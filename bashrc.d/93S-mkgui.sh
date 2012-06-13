@@ -21,12 +21,10 @@ declare -rf _mkgui_process_added_code_in_var
 # The big, ugly, do-it-all function.
 MakeGUI() {
 
-    local mkgui_E_OK=$SUCCESS
-    local mkgui_E_FAIL=$FAILURE
     local mkgui_E_NOGUI=15
     local mkgui_added_head_code=''
     local mkgui_added_tail_code=''
-    local mkgui_exitval=${mkgui_E_OK}
+    local mkgui_exitval=$SUCCESS
 
     local mkgui_check_arg='
       if test $# -lt 2; then
@@ -89,7 +87,7 @@ MakeGUI() {
         # Does the program exist, and is it executable?
         if ! which "$mkgui_program" &>/dev/null; then
             fwarn "\`$mkgui_program': program not found"
-            mkgui_exitval=${mkgui_E_FAIL}
+            mkgui_exitval=$FAILURE
             continue
         fi
 
@@ -102,7 +100,7 @@ MakeGUI() {
           ([a-zA-Z_]*([a-zA-Z0-9_])) ;;
           (*)
             fwarn "\`$mkgui_funcname' is not a valid function identifier"
-            mkgui_exitval=${mkgui_E_FAIL}
+            mkgui_exitval=$FAILURE
             continue
             ;;
         esac
@@ -135,14 +133,14 @@ MakeGUI() {
 
                 $mkgui_added_tail_code
 
-                return $mkgui_E_OK
+                return $SUCCESS
             }
         "
 
         (($? == 0)) || {
             fwarn "$mkgui_funcname can't be declared as function," \
                   "due to an unkown error"
-            mkgui_exitval=${mkgui_E_FAIL}
+            mkgui_exitval=$FAILURE
             continue
         }
 
