@@ -10,14 +10,13 @@ IsHost bigio || IsHost bplab || return $SUCCESS
 #--------------------------------------------------------------------------
 
 # An helper subroutine.
-_mkgui_process_added_code() {
-    case $# in (0) cat;; (*) xecho "$*";; esac | \
-    sed -e "s|@FUNC@|$mkgui_funcname|g" \
-        -e "s|@PROG@|$mkgui_safe_program_path|g" |  \
-    sed -e "s|%___dot___%|.|g"
+_mkgui_process_added_code_in_var() {
+    [[ -n "${!1}" ]] || return 0
+    eval $1=\${$1//@FUNC@/\$mkgui_funcname}
+    eval $1=\${$1//@PROG@/\$mkgui_program_path}
 }
 
-declare -rf _mkgui_process_added_code
+declare -rf _mkgui_process_added_code_in_var
 
 # The big, ugly, do-it-all function.
 MakeGUI() {
@@ -117,18 +116,8 @@ MakeGUI() {
             ;;
         esac
 
-        local mkgui_safe_program_path=$(xecho "$mkgui_program_path" | \
-                                        sed -e 's|\.|%___dot___%|g')
-
-        if [ -n "$mkgui_added_head_code" ]; then
-            mkgui_added_head_code=$(
-                _mkgui_process_added_code "$mkgui_added_head_code")
-        fi
-
-        if [ -n "$mkgui_added_tail_code" ]; then
-            mkgui_added_tail_code=$(
-                _mkgui_process_added_code "$mkgui_added_tail_code")
-        fi
+        _mkgui_process_added_code_in_var 'mkgui_added_head_code'
+        _mkgui_process_added_code_in_var 'mkgui_added_tail_code'
 
         if (($mkgui_subify)); then
             local mkgui_par_open='('
