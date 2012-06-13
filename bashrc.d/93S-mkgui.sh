@@ -19,7 +19,7 @@ MakeGUI() {
 
     local mkgui_check_arg='
       if test $# -lt 2; then
-          fwarn "option \`$1'\'' require an argument" >&2
+          fwarn "option '\'\$1\'' require an argument" >&2
           return $E_USAGE
       fi'
 
@@ -51,7 +51,7 @@ MakeGUI() {
                 shift
                 ;;
             -*)
-                fwarn "\`$1': invalid option" >&2
+                fwarn "'$1': invalid option" >&2
                 return $E_USAGE
                 ;;
             *)
@@ -77,7 +77,7 @@ MakeGUI() {
 
         # Does the program exist, and is it executable?
         if ! which "$mkgui_program" &>/dev/null; then
-            fwarn "\`$mkgui_program': program not found"
+            fwarn "'$mkgui_program': program not found"
             mkgui_exitval=$FAILURE
             continue
         fi
@@ -86,11 +86,11 @@ MakeGUI() {
         mkgui_funcname=${mkgui_program##*/}
         mkgui_funcname=${mkgui_funcname%%.*}
 
-        # Is `$mkgui_funcname 'a valid function identifier?
+        # Is '$mkgui_funcname 'a valid function identifier?
         case "$mkgui_funcname" in
           ([a-zA-Z_]*([a-zA-Z0-9_])) ;;
           (*)
-            fwarn "\`$mkgui_funcname' is not a valid function identifier"
+            fwarn "'$mkgui_funcname' is not a valid function identifier"
             mkgui_exitval=$FAILURE
             continue
             ;;
@@ -114,8 +114,8 @@ MakeGUI() {
             $mkgui_funcname() {
 
                 if [ -z \"\${DISPLAY-}\" ]; then
-                    fwarn '\`DISPLAY'\\'' variable not set, cannot' \\
-                          'connect to screen. Is X server running?'
+                    fwarn \"'DISPLAY' variable not set, cannot\" \\
+                          \"connect to screen.  Is X server running?\"
                     return $mkgui_E_NOGUI
                 fi
 
