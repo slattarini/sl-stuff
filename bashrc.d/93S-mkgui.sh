@@ -26,54 +26,26 @@ declare -rf _mkgui_check_display
 # The big, ugly, do-it-all function.
 MakeGUI ()
 {
-
     local mkgui_added_head_code=''
     local mkgui_added_tail_code=''
     local mkgui_exitval=$SUCCESS
 
-    local mkgui_check_arg='
-      if test $# -lt 2; then
-          fwarn "option '\'\$1\'' require an argument" >&2
-          return $E_USAGE
-      fi'
-
     # TODO: maybe use getopts for option parsing?
     local mkgui_action='eval'
     local mkgui_program_wrapper=command
-    while test $# -gt 0;  do
-        case "$1" in
-            --)
-                shift
-                break
-                ;;
-            -p)
-                mkgui_action='xecho'
-                ;;
-            -h)
-                eval "$mkgui_check_arg"
-                mkgui_added_head_code="$mkgui_added_head_code$'\n'$2"
-                shift
-                ;;
-            -t)
-                eval "$mkgui_check_arg"
-                mkgui_added_tail_code="$mkgui_added_tail_code$'\n'$2"
-                shift
-                ;;
-            -w)
-                eval "$mkgui_check_arg"
-                mkgui_program_wrapper="$2"
-                shift
-                ;;
-            -*)
-                fwarn "'$1': invalid option" >&2
-                return $E_USAGE
-                ;;
-            *)
-                break
-                ;;
-        esac
-        shift
+    local OPTION OPTARG OPTIND
+    while getopts ':-ph:t:w:' OPTION; do
+      case $OPTION in
+        p) mkgui_action='xecho';;
+        h) mkgui_added_head_code=$mkgui_added_head_code$'\n'$OPTARG;;
+        t) mkgui_added_tail_code=$mkgui_added_tail_code$'\n'$OPTARG;;
+        w) mkgui_program_wrapper=$OPTARG;;
+        -) break;;
+        :) fwarn "'-$OPTARG': argument required" >&2; return $E_USAGE;;
+        *) fwarn "'-$OPTARG': invalid option" >&2; return $E_USAGE;;
+      esac
     done
+    shift $((OPTIND - 1))
 
     if (($# == 0)); then
         fwarn "missing argument"
