@@ -203,12 +203,12 @@ MakeGUI() {
 }
 
 MakeGUI \
-    konqueror firefox xterm ksysguard kghostview xman kdesvn kdvi \
-    khelpcenter kate kdcop kview quanta idle gedit pidgin \
-    openoffice oobase oodraw oofromtemplate oomath ooweb oocalc \
-    ooffice ooimpress oowriter kprof kpdf display open_url xfig \
-    gimp akregator kopete dolphin systemsettings gitk qgit hgview \
-    easytag kchmviewer
+    konqueror firefox xterm kghostview xman kdvi khelpcenter kate \
+    kdcop kview quanta openoffice oobase oodraw oofromtemplate \
+    oomath ooweb oocalc ooffice ooimpress oowriter kpdf gimp kopete \
+    dolphin systemsettings gitk qgit hgview easytag kchmviewer \
+    gnomebaker
+
 
 if W firefox3; then
     MakeGUI firefox3
@@ -220,10 +220,9 @@ fi
 MakeGUI -T kompare
 
 if IsHost bigio; then
-    MakeGUI                                                         \
-       iceweasel insight smalltalk xabiword gftp k3b kdevelop bluej \
-       appletviewer kmail icedove kaddressbook kmix cssed netbeans  \
-       civ freeciv heretic alsaplayer bmpx ggr
+    MakeGUI \
+       iceweasel insight smalltalk gftp kdevelop bluej appletviewer \
+       icedove kmix cssed netbeans civ freeciv heretic alsaplayer ggr
     MakeGUI -h 'set -- media://dev/dvd "$@"' "kscd"
     MakeGUI -w aoss clanbomber bomberclone
 fi
