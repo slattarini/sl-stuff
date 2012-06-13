@@ -13,7 +13,7 @@ IsHost bigio || IsHost bplab || return $SUCCESS
 _mkgui_process_added_code_in_var() {
     [[ -n "${!1}" ]] || return 0
     eval $1=\${$1//@FUNC@/\$mkgui_funcname}
-    eval $1=\${$1//@PROG@/\$mkgui_program_path}
+    eval $1=\${$1//@PROG@/\$mkgui_program}
 }
 
 declare -rf _mkgui_process_added_code_in_var
@@ -36,7 +36,7 @@ MakeGUI() {
 
     # TODO: maybe use getopts for option parsing?
     local mkgui_action='eval'
-    local mkgui_program_wrapper=''
+    local mkgui_program_wrapper=command
     declare -i mkgui_subify=$FALSE
     declare -i mkgui_bg_from_terminal_only=$FALSE
     while test $# -gt 0;  do
@@ -95,8 +95,7 @@ MakeGUI() {
         [ -z "$mkgui_program" ] && continue
 
         # Does the program exist, and is it executable?
-        local mkgui_program_path=$(which "$mkgui_program")
-        if [ -z "$mkgui_program_path" ]; then
+        if ! which "$mkgui_program" &>/dev/null; then
             fwarn "\`$mkgui_program': program not found"
             mkgui_exitval=${mkgui_E_FAIL}
             continue
@@ -137,10 +136,10 @@ MakeGUI() {
                     ($mkgui_as_false) exec 98>/dev/null 99>/dev/null;;
                 esac
                 if test -t 1; then
-                  $mkgui_program_wrapper $mkgui_program_path \"\$@\" \\
+                  $mkgui_program_wrapper $mkgui_program \"\$@\" \\
                     >&98 2>&99
                 else
-                  $mkgui_program_wrapper $mkgui_program_path \"\$@\" \\
+                  $mkgui_program_wrapper $mkgui_program \"\$@\" \\
                     >&98 2>&99 &
                 fi
                 exec 98>&-
@@ -150,10 +149,10 @@ MakeGUI() {
             local mkgui_main_code="{
                 case \"\${XFUNC_VERBOSE-}\" in
                   ($mkgui_as_true)
-                    $mkgui_program_wrapper $mkgui_program_path \"\$@\" &
+                    $mkgui_program_wrapper $mkgui_program \"\$@\" &
                     ;;
                   ($mkgui_as_false)
-                    $mkgui_program_wrapper $mkgui_program_path \"\$@\" \\
+                    $mkgui_program_wrapper $mkgui_program \"\$@\" \\
                       >/dev/null 2>&1 &
                 esac
             }"
