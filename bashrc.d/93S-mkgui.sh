@@ -37,15 +37,11 @@ MakeGUI() {
     # TODO: maybe use getopts for option parsing?
     local mkgui_action='eval'
     local mkgui_program_wrapper=command
-    declare -i mkgui_subify=$FALSE
     while test $# -gt 0;  do
         case "$1" in
             --)
                 shift
                 break
-                ;;
-            -S)
-                mkgui_subify=$TRUE
                 ;;
             -p)
                 mkgui_action='xecho'
@@ -114,15 +110,9 @@ MakeGUI() {
         _mkgui_process_added_code_in_var 'mkgui_added_head_code'
         _mkgui_process_added_code_in_var 'mkgui_added_tail_code'
 
-        if (($mkgui_subify)); then
-            local mkgui_par_open='('
-            local mkgui_par_close=')'
-            local mkgui_return='exit'
-        else
             local mkgui_par_open=''
             local mkgui_par_close=''
             local mkgui_return='return'
-        fi
         local mkgui_as_true='1|+([yY])|[yY][eE][sS]|[tT]rue'
         local mkgui_as_false='*'
 
