@@ -125,16 +125,6 @@ MakeGUI() {
         fi
         local mkgui_as_true='1|+([yY])|[yY][eE][sS]|[tT]rue'
         local mkgui_as_false='*'
-            local mkgui_main_code="{
-                case \"\${XFUNC_VERBOSE-}\" in
-                  ($mkgui_as_true)
-                    $mkgui_program_wrapper $mkgui_program \"\$@\" &
-                    ;;
-                  ($mkgui_as_false)
-                    $mkgui_program_wrapper $mkgui_program \"\$@\" \\
-                      >/dev/null 2>&1 &
-                esac
-            }"
 
         $mkgui_action "
             $mkgui_funcname() {
@@ -147,7 +137,14 @@ MakeGUI() {
 
                 $mkgui_added_head_code
 
-                $mkgui_main_code
+                case \"\${XFUNC_VERBOSE-}\" in
+                  ($mkgui_as_true)
+                    $mkgui_program_wrapper $mkgui_program \"\$@\" &
+                    ;;
+                  ($mkgui_as_false)
+                    $mkgui_program_wrapper $mkgui_program \"\$@\" \\
+                      >/dev/null 2>&1 &
+                esac
 
                 $mkgui_added_tail_code
 
