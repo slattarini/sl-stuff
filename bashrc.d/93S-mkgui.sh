@@ -203,10 +203,6 @@ if W firefox3; then
     W firefox || firefox() { firefox3 "$@"; }
 fi
 
-# The `kompare' subroutine *must* not to go in background is standard
-# input is not a tty.
-MakeGUI -T kompare
-
 if IsHost bigio; then
     MakeGUI \
        iceweasel insight smalltalk gftp kdevelop bluej appletviewer \
