@@ -48,12 +48,12 @@ MakeGUI() {
                 ;;
             -h)
                 eval "$mkgui_check_arg"
-                mkgui_added_head_code="$mkgui_added_head_code$NL$2"
+                mkgui_added_head_code="$mkgui_added_head_code$'\n'$2"
                 shift
                 ;;
             -t)
                 eval "$mkgui_check_arg"
-                mkgui_added_tail_code="$mkgui_added_tail_code$NL$2"
+                mkgui_added_tail_code="$mkgui_added_tail_code$'\n'$2"
                 shift
                 ;;
             -w)
