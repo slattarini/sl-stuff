@@ -24,7 +24,8 @@ _mkgui_check_display ()
 declare -rf _mkgui_check_display
 
 # The big, ugly, do-it-all function.
-MakeGUI() {
+MakeGUI ()
+{
 
     local mkgui_added_head_code=''
     local mkgui_added_tail_code=''
@@ -124,7 +125,8 @@ MakeGUI() {
         fi
 
         $mkgui_action "
-            $mkgui_funcname() {
+            $mkgui_funcname ()
+            {
 
                 _mkgui_check_display || return \$?
 
