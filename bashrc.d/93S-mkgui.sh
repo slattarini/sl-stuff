@@ -110,9 +110,6 @@ MakeGUI() {
         _mkgui_process_added_code_in_var 'mkgui_added_head_code'
         _mkgui_process_added_code_in_var 'mkgui_added_tail_code'
 
-            local mkgui_par_open=''
-            local mkgui_par_close=''
-            local mkgui_return='return'
         local mkgui_as_true='1|+([yY])|[yY][eE][sS]|[tT]rue'
         local mkgui_as_false='*'
 
@@ -124,8 +121,6 @@ MakeGUI() {
                           'connect to screen. Is X server running?'
                     return $mkgui_E_NOGUI
                 fi
-
-              ${mkgui_par_open}
 
                 $mkgui_added_head_code
 
@@ -140,9 +135,7 @@ MakeGUI() {
 
                 $mkgui_added_tail_code
 
-                $mkgui_return $mkgui_E_OK
-
-              ${mkgui_par_close}
+                return $mkgui_E_OK
             }
         "
 
