@@ -9,15 +9,6 @@ IsHost bigio || IsHost bplab || return $SUCCESS
 
 #--------------------------------------------------------------------------
 
-# An helper subroutine.
-_mkgui_process_added_code_in_var() {
-    [[ -n "${!1}" ]] || return 0
-    eval $1=\${$1//@FUNC@/\$mkgui_funcname}
-    eval $1=\${$1//@PROG@/\$mkgui_program}
-}
-
-declare -rf _mkgui_process_added_code_in_var
-
 # The big, ugly, do-it-all function.
 MakeGUI() {
 
@@ -105,11 +96,19 @@ MakeGUI() {
             ;;
         esac
 
-        _mkgui_process_added_code_in_var 'mkgui_added_head_code'
-        _mkgui_process_added_code_in_var 'mkgui_added_tail_code'
-
         local mkgui_as_true='1|+([yY])|[yY][eE][sS]|[tT]rue'
         local mkgui_as_false='*'
+
+        # So that these values can be accessed by user-specified code in
+        # $mkgui_added_head_code and $mkgui_added_tail_code, if needed.
+        if [[ -n "$mkgui_added_head_code$mkgui_added_tail_code" ]]; then
+            local mkgui_setup_names="
+                local mkgui_funcname=$mkgui_funcname
+                local mkgui_progname=$mkgui_progname
+            "
+        else
+            local mkgui_setup_names=''
+        fi
 
         $mkgui_action "
             $mkgui_funcname() {
@@ -120,6 +119,7 @@ MakeGUI() {
                     return $mkgui_E_NOGUI
                 fi
 
+                $mkgui_setup_names
                 $mkgui_added_head_code
 
                 case \"\${XFUNC_VERBOSE-}\" in
