@@ -60,7 +60,7 @@ MakeGUI() {
                 shift
                 ;;
             -*)
-                fwarn "\`$1': unknwon option" >&2
+                fwarn "\`$1': invalid option" >&2
                 return $E_USAGE
                 ;;
             *)
