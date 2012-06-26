@@ -122,7 +122,8 @@ if [[ -n $BASHPID ]] && (test $$ != "$BASHPID") && W renice; then
     {
         case $#,$1 in
             1,--help|1,--version)
-                echo "shell implementation of nice, based on renice(1)"
+                echo "$(funcname): shell implementation of nice."
+                echo "Uses either nice(1) or renice(1)"
                 return 0
         esac
         local niceness=0
@@ -134,7 +135,16 @@ if [[ -n $BASHPID ]] && (test $$ != "$BASHPID") && W renice; then
             esac
             shift
         done
-        (renice -n "$niceness" $BASHPID && "$@")
+        local cmd=$1; shift
+        local typ=$(type -t "$cmd")
+        case $typ in
+          "") fwarn "$cmd: command not found"; return 127;;
+          # Extra quoting for nice to avoid triggering the 'nice' alias,
+          # which is aliased to the present '@nice' function -- so that
+          # its use would cause infinite loop.
+          file) "nice" -n"$niceness" "$cmd" "$@";;
+          *) (renice -n "$niceness" $BASHPID && "$cmd" "$@");;
+        esac
     }
     alias nice='@nice'
 fi
