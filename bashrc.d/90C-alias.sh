@@ -41,9 +41,9 @@ alias  cx='chmod a+x'
 alias L=less
 alias M=more
 if W sensible-pager; then
-  alias p=sensible-pager
+    alias p=sensible-pager
 else
-  alias p=less
+    alias p=less
 fi
 
 # Print exit status of last command, without losing it.
@@ -80,7 +80,7 @@ fi
 if have_gnu_program grep; then
     for p in '' @; do
         case $p in @) m=always;; *) m=auto;; esac
-        alias  "${p}grep"="$gnu_grep --color=$m"
+        alias "${p}grep"="$gnu_grep --color=$m"
         alias "${p}egrep"="$gnu_grep -E --color=$m"
         alias "${p}fgrep"="$gnu_grep -F --color=$m"
         alias "${p}rgrep"="$gnu_grep -r --color=$m"
@@ -125,6 +125,7 @@ if [[ -n $BASHPID ]] && (test $$ != "$BASHPID") && W renice; then
                 echo "$(funcname): shell implementation of nice."
                 echo "Uses either nice(1) or renice(1)"
                 return 0
+                ;;
         esac
         local niceness=0
         while :; do
@@ -135,30 +136,30 @@ if [[ -n $BASHPID ]] && (test $$ != "$BASHPID") && W renice; then
             esac
             shift
         done
-        local cmd=$1; shift
-        local typ=$(type -t "$cmd")
-        case $typ in
-          "")
-            fwarn "$cmd: command not found"
+        local nice_cmd=$1; shift
+        local nice_cmd_type=$(type -t "$nice_cmd")
+        case $nice_cmd_type in
+        "")
+            fwarn "$nice_cmd: command not found"
             return 127
             ;;
-          file)
+        file)
             # Extra quoting for nice to avoid triggering the 'nice' alias,
             # which is aliased to the present '@nice' function -- so that
             # its use would cause infinite loop.
-            "nice" -n"$niceness" "$cmd" "$@"
+            "nice" -n"$niceness" "$nice_cmd" "$@"
             return $?
             ;;
-          *)
-             ( if [[ $typ == alias ]]; then
-                 # A dirty trick to force aliases to be expanded.  It should
-                 # operate recursively, in case the alias references other
-                 # aliases.
-                 eval "@nice@helper () { $cmd \"\$@\"; }" || return 255
-                 cmd="@nice@helper"
-               fi
-               renice -n "$niceness" $BASHPID && "$cmd" "$@" )
-             ;;
+        *)
+          ( if [[ $nice_cmd_type == alias ]]; then
+                # A dirty trick to force aliases to be expanded.  It should
+                # operate recursively, in case the alias references other
+                # aliases.
+                eval "@nice@helper () { $nice_cmd \"\$@\"; }" || exit 255
+                nice_cmd="@nice@helper"
+            fi
+            renice -n "$niceness" $BASHPID && "$nice_cmd" "$@" )
+            ;;
         esac
     }
     alias nice='@nice'
@@ -218,7 +219,7 @@ fi
     local xargs_cmd_type=$(type -t "$xargs_cmd")
     case $xargs_cmd_type in
         "")
-            fwarn "$cmd: command not found"
+            fwarn "$xargs_cmd: command not found"
             return 127
             ;;
         file)
@@ -229,20 +230,22 @@ fi
             return $?
             ;;
         *)
-          ( st=0 && set -o pipefail || return 255
+          ( set -o pipefail || exit 255
             if [[ $xargs_cmd_type == alias ]]; then
               # A dirty trick to force aliases to be expanded.  It should
               # operate recursively, in case the alias references other
               # aliases.
-              eval "@xargse@helper () { $cmd \"\$@\"; }" || return 255
+              eval "@xargs@helper () { $xargs_cmd \"\$@\"; }" || exit 255
               xargs_cmd="@xargs@helper"
             fi
             # See comments above for why we use 'command' here.
             command xargs "${xargs_opts[@]}" -- echo -E "$@" \
-              | while read -r -a lst; do
-                  "$xargs_cmd" "${lst[@]}" || st=$?
-                done
-             return $st )
+              | ( st=0
+                  while read -r -a lst; do
+                    "$xargs_cmd" "${lst[@]}" || st=$?
+                  done
+                  exit $st ) )
+             return $?
            ;;
    esac
    return 255 # NOTREACHED
