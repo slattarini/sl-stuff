@@ -149,7 +149,7 @@ if [[ -n $BASHPID ]] && (test $$ != "$BASHPID") && W renice; then
     alias nice='@nice'
 fi
 
-# Our xargs repacement cannot deal with null-separated input fields.
+# Our xargs replacement cannot deal with null-separated input fields.
 # But this is not a big deal, since 99% of xargs(1) usage don't require
 # that either.
 @xargs ()
@@ -159,7 +159,7 @@ fi
     # FIXME: be smart and try to punt on options like '-0' we cannot
     #        truly handle?
     # Delegate the hard work to the real xargs program; act only as a
-    # this layer around it.
+    # thin layer around it.
     declare -a xargs_opts=()
     while (($# > 0)); do
         case $1 in
