@@ -215,12 +215,37 @@ fi
         shift
     fi
 
-    ( st=0 && set -o pipefail &&
-      command xargs "${xargs_opts[@]}" -- echo "$@" \
-        | while read -r -a lst; do
-            "$xargs_cmd" "${lst[@]}" || st=$?
-          done
-      exit $st )
+    local xargs_cmd_type=$(type -t "$xargs_cmd")
+    case $xargs_cmd_type in
+        "")
+            fwarn "$cmd: command not found"
+            return 127
+            ;;
+        file)
+            # Use 'command' to avoid triggering the 'xargs' alias, which
+            # is defined to point to the present '@xargs' function -- so
+            # that its use would cause infinite loop.
+            command xargs "${xargs_opts[@]}" -- "$xargs_cmd" "$@"
+            return $?
+            ;;
+        *)
+          ( st=0 && set -o pipefail || return 255
+            if [[ $xargs_cmd_type == alias ]]; then
+              # A dirty trick to force aliases to be expanded.  It should
+              # operate recursively, in case the alias references other
+              # aliases.
+              eval "@xargse@helper () { $cmd \"\$@\"; }" || return 255
+              xargs_cmd="@xargs@helper"
+            fi
+            # See comments above for why we use 'command' here.
+            command xargs "${xargs_opts[@]}" -- echo -E "$@" \
+              | while read -r -a lst; do
+                  "$xargs_cmd" "${lst[@]}" || st=$?
+                done
+             return $st )
+           ;;
+   esac
+   return 255 # NOTREACHED
 }
 
 alias xargs='@xargs'
