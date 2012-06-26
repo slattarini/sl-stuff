@@ -138,12 +138,27 @@ if [[ -n $BASHPID ]] && (test $$ != "$BASHPID") && W renice; then
         local cmd=$1; shift
         local typ=$(type -t "$cmd")
         case $typ in
-          "") fwarn "$cmd: command not found"; return 127;;
-          # Extra quoting for nice to avoid triggering the 'nice' alias,
-          # which is aliased to the present '@nice' function -- so that
-          # its use would cause infinite loop.
-          file) "nice" -n"$niceness" "$cmd" "$@";;
-          *) (renice -n "$niceness" $BASHPID && "$cmd" "$@");;
+          "")
+            fwarn "$cmd: command not found"
+            return 127
+            ;;
+          file)
+            # Extra quoting for nice to avoid triggering the 'nice' alias,
+            # which is aliased to the present '@nice' function -- so that
+            # its use would cause infinite loop.
+            "nice" -n"$niceness" "$cmd" "$@"
+            return $?
+            ;;
+          *)
+             ( if [[ $typ == alias ]]; then
+                 # A dirty trick to force aliases to be expanded.  It should
+                 # operate recursively, in case the alias references other
+                 # aliases.
+                 eval "@nice@helper () { $cmd \"\$@\"; }" || return 255
+                 cmd="@nice@helper"
+               fi
+               renice -n "$niceness" $BASHPID && "$cmd" "$@" )
+             ;;
         esac
     }
     alias nice='@nice'
