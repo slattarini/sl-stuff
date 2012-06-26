@@ -169,8 +169,6 @@ fi
 # that either.
 @xargs ()
 {
-    # FIXME: be smart and try to punt on options like '-0' we cannot
-    #        truly handle?
     # Delegate the hard work to the real xargs program; act only as a
     # thin layer around it.
     declare -a xargs_opts=()
