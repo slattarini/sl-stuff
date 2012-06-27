@@ -55,7 +55,7 @@ ok() { local ok_val=$?; echo $ok_val; return $ok_val; }
 # than we'd like.
 if [[ $SYSTEM_UNAME == linux ]]; then
     alias PS='ps -elFywwwww | less'
-elif [[ $SYSTEM_UNAME == freebsd ]]; then
+elif [[ $SYSTEM_UNAME == *bsd ]]; then
     alias PS='ps auxwwwww | less'
 elif [[ $SYSTEM_UNAME == solaris && -f /usr/ucb/ps ]]; then
     alias PS='/usr/ucb/ps auxwwwww | less'
@@ -97,7 +97,7 @@ fi
 
 if have_gnu_program ls; then
     @ls () { $gnu_ls --color=always "$@"; }
-elif [[ $SYSTEM_UNAME == freebsd ]]; then
+elif [[ $SYSTEM_UNAME == *bsd ]]; then
     @ls () { CLICOLOR_FORCE=1 /bin/ls -G "$@"; }
 else
     @ls () { ls "$@"; }
