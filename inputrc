@@ -31,7 +31,7 @@
 "	": complete
 
 # These are required to get readline to display accents and/or umlauts,
-# i.e. to be put into "8 bit" mode.  SOme systems (e.g. FreeBSD) really
+# i.e. to be put into "8 bit" mode.  Some systems (e.g. FreeBSD) really
 # require this.
 set input-meta on
 set output-meta on
