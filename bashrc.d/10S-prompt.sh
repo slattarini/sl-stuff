@@ -211,7 +211,7 @@ case "$TERM" in
         ;;
 
     *)
-        # NOTE: the first assignement of PS1 is necessary on FreeBSD,
+        # NOTE: the first assignment of PS1 is necessary on FreeBSD,
         # otherwise PROMPT_COMMAND won't work
         PROMPT_COMMAND='_ps1 --funny-string="%%" $?'
         eval "$PROMPT_COMMAND"
