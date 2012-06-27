@@ -97,7 +97,8 @@ fi
 
 if have_gnu_program ls; then
     @ls () { $gnu_ls --color=always "$@"; }
-elif [[ $SYSTEM_UNAME == *bsd ]]; then
+elif (CLICOLOR_FORCE=1 /bin/ls -G . | grep '') >/dev/null 2>&1; then
+    # FreeBSD systems, usually.
     @ls () { CLICOLOR_FORCE=1 /bin/ls -G "$@"; }
 else
     @ls () { ls "$@"; }
