@@ -19,10 +19,6 @@ if [[ $SYSTEM_UNAME == solaris ]]; then
 fi
 
 add_to_path -B \
-    /usr/X11R6/bin \
-    /usr/bin/X11R6 \
-    /usr/X11/bin \
-    /usr/bin/X11 \
     /usr/games \
     /opt/java/sun-java/bin \
     /opt/bin \
