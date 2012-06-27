@@ -20,6 +20,7 @@ fi
 
 add_to_path -B \
     /usr/games \
+    /usr/pkg/bin \
     /opt/java/sun-java/bin \
     /opt/bin \
     /usr/local64/bin \
