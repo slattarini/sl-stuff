@@ -2,12 +2,6 @@
 # Personal bash completion file.  Should get automatically sourced by
 # /etc/bash_completion (or similar).
 
-# Sanity checks
-[[ -n $UNAME ]] || {
-  echo "${BASH_SOURCE[1]}: \$UNAME unset or empty" >&2
-  return 1
-}
-
 declare -F have &>/dev/null || {
   echo "${BASH_SOURCE[1]}: have() function undefined" >&2
   return 1
