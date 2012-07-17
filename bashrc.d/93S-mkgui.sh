@@ -136,7 +136,7 @@ MakeGUI \
     konqueror firefox xterm kghostview xman kdvi khelpcenter kate \
     kdcop kview quanta openoffice oobase oodraw oofromtemplate \
     oomath ooweb oocalc ooffice ooimpress oowriter kpdf gimp kopete \
-    dolphin systemsettings gitk qgit hgview easytag kchmviewer \
+    pidgin dolphin systemsettings gitk qgit hgview easytag kchmviewer \
     gnomebaker
 
 
