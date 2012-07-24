@@ -2,7 +2,7 @@
 
 readonly print_stripe=$(which 'print_stripe' 2>/dev/null || echo ':')
 
-reset
+tput reset
 clear
 
 if W fortune && IsHost bigio; then
