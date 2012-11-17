@@ -133,11 +133,8 @@ MakeGUI ()
 }
 
 MakeGUI \
-    konqueror firefox xterm kghostview xman kdvi khelpcenter kate \
-    kdcop kview quanta openoffice oobase oodraw oofromtemplate \
-    oomath ooweb oocalc ooffice ooimpress oowriter kpdf gimp kopete \
-    pidgin dolphin systemsettings gitk qgit hgview easytag kchmviewer \
-    gnomebaker
+    firefox xterm xman libreoffice  pidgin vuze easytag \
+    gitk qgit hgview
 
 
 if W firefox3; then
@@ -147,13 +144,10 @@ fi
 
 if IsHost bigio; then
     MakeGUI \
-       iceweasel insight smalltalk gftp kdevelop bluej appletviewer \
-       icedove kmix cssed netbeans civ freeciv heretic alsaplayer ggr
-    MakeGUI -h 'set -- media://dev/dvd "$@"' "kscd"
+       iceweasel icedove smalltalk bluej appletviewer \
+       cssed netbeans civ freeciv heretic alsaplayer ggr
     MakeGUI -w aoss clanbomber bomberclone
 fi
-
-MakeGUI -h '[ $# -eq 0 ] && set -- --profile stefano;' konqueror
 
 case $hostname in
    bplab) mkgui_geometry='1280x940';;
@@ -165,23 +159,6 @@ chc='{ set -- -geometry "$mkgui_geometry" "$@"; }'
 MakeGUI -h "$chc" -- xpdf zxpdf gv ddd emacs djview
 MakeGUI -h "$chc; set -- -s 4 \"\$@\"" -- xdvi zxdvi
 IsHost bigio && MakeGUI -h "$chc" snake4
-
-# A dirty hack for kile(1).
-MakeGUI -h '
-    case $# in
-        0)
-            if (shopt -s failglob && : *.kilepr) >/dev/null 2>&1; then
-                set -- *.kilepr
-                if (($# > 1)); then
-                    fwarn "Too many project files: $*"
-                    return $FAILURE
-                fi
-            fi
-            ;;
-        *)
-            [[ "$*" == "-" ]] && set --
-    esac
-' kile
 
 return $SUCCESS
 
