@@ -146,7 +146,11 @@ _ps1() {
 
     # The small coloured prompt which is on the same line where command is
     # entered.
-    local mini_prompt=" ${ps1_smiley} \$ "
+    local mini_prompt=${ps1_smiley}
+    case $BLEEDING_WITNESS in
+      [yY]es) mini_prompt="${mini_prompt} ${_ps1_red}\$${_ps1_raw} ";;
+           *) mini_prompt="${mini_prompt} \$ ";;
+    esac
 
     # Try to display the most fitting prompt, depending on the size of the
     # screen.
