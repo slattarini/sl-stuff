@@ -125,26 +125,11 @@ _ps1() {
            *) mini_prompt="${mini_prompt} \$ ";;
     esac
 
-    # Try to display the most fitting prompt, depending on the size of the
-    # screen.
-    if ! [ 0 -lt "${COLUMNS-0}" ] >/dev/null 2>&1; then
-        # COLUMNS  variable seems broken, do not rely on it
-        PS1=""
-    elif [ $COLUMNS -gt 94 ]; then
-        local _ps1_cwd="${_ps1_U}$(_ps1_pretty_cwd --color)${_ps1_u}"
-        PS1="\
-$_ps1_raw
-$uh [${_ps1_cwd}] \\D{%T}"
-        if [ -n "$VIRTUAL_ENV" ]; then
-            local _ps1_venv="${_ps1_B}${VIRTUAL_ENV}${_ps1_b}"
-            PS1=$PS1$'\n'"virtualenv --> ${_ps1_venv}"
-        fi
-    elif [ $COLUMNS -gt 50 ]; then
-        local _ps1_cwd="${_ps1_U}$(_ps1_pretty_cwd -s -c)${_ps1_u}"
-        PS1="$_ps1_raw"$'\n'"$uh [${_ps1_cwd}]"
-        if [ -n "$VIRTUAL_ENV" ]; then
-            PS1="${PS1} (${_ps1_B}$(basename "$VIRTUAL_ENV")${_ps1_b})"
-        fi
+    local _ps1_cwd="${_ps1_U}$(_ps1_pretty_cwd --color)${_ps1_u}"
+    PS1=$_ps1_raw$'\n'"$uh [${_ps1_cwd}] \\D{%T}"
+    if [ -n "$VIRTUAL_ENV" ]; then
+        local _ps1_venv="${_ps1_B}${VIRTUAL_ENV}${_ps1_b}"
+        PS1=${PS1}$'\n'"virtualenv --> ${_ps1_venv}"
     fi
     PS1=${PS1}$'\n'${mini_prompt}
 
