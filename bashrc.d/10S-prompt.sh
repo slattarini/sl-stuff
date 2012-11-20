@@ -179,21 +179,10 @@ case "$TERM" in
     xterm*|rxvt*)
         PROMPT_COMMAND='
             _ps1_last_exit_status=$?
-            {
-              case $- in
-                *x*) _ps1_reset_x="set -x";;
-                *) _ps1_reset_x=":";;
-              esac
-              case "$PROMPT_COMMAND_DEBUG" in
-                1|[yY]*|[tT]rue|TRUE) ;;
-                *) set +x;;
-              esac
-            } >/dev/null 2>&1
             echo -ne "\033]0;${USER}@${HOSTNAME%%.*}: $(_ps1_pretty_cwd)"
             echo -ne "  §§  ${_ps1_sh_fancyname}  §§  \007"
             _ps1 --funny-string="§§" ${_ps1_last_exit_status}
-            unset _ps1_last_exit_status
-            ${_ps1_reset_x}'
+            unset _ps1_last_exit_status'
         ;;
     *)
         # NOTE: the first assignment of PS1 is necessary on FreeBSD,
