@@ -212,9 +212,6 @@ esac
 
 #--------------------------------------------------------------------------
 
-# Old prompt.
-readonly _PS1_OLD="$PS1"
-
 # Minimal prompt , loadable with the 'mip' (as in "MInimal Prompt") command.
 readonly _PS1_MINIMAL="${_ps1_sh_fancyname}\$ "
 
@@ -222,7 +219,6 @@ readonly _PS1_MINIMAL="${_ps1_sh_fancyname}\$ "
 
 myp() { PS1=@HACKME; HACKED_PS1=yes; }
 mip() { HACKED_PS1=no; PS1=$_PS1_MINIMAL; }
-op()  { HACKED_PS1=no; PS1=$_PS1_OLD; }
 
 # Default prompt: bells and whistles and chrome!
 myp
