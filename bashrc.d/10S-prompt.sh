@@ -148,7 +148,7 @@ _ps1() {
     elif [ $COLUMNS -gt 94 ]; then
         PS1="\
 $_ps1_raw
-$uh  $s  $sh  $s  \\D{%T  %A %d %B %Y}  $s"
+$uh  $s $sh $s \\D{%T  %A %d %B %Y} $s"
         if [ -n "$VIRTUAL_ENV" ]; then
             local _ps1_venv="${_ps1_B}${VIRTUAL_ENV}${_ps1_b}"
             PS1=$PS1$'\n'"virtualenv --> ${_ps1_venv}"
