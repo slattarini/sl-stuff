@@ -128,8 +128,8 @@ _ps1() {
 
     # Get a colorful smiley that (should) represent the exit status of the
     # last command.
-    local ps1_smiley                     # willl be set by...
-    _ps1_smiley ${_ps1_last_exit_status} # ... this
+    local ps1_smiley                     # Will be set by...
+    _ps1_smiley ${_ps1_last_exit_status} # ... this.
 
     # The string "user@host", underlined.
     local uh="${_ps1_U}\\u@\\h${_ps1_u}"
