@@ -210,15 +210,8 @@ case "$TERM" in
 
 esac
 
-#--------------------------------------------------------------------------
-
-# Minimal prompt , loadable with the 'mip' (as in "MInimal Prompt") command.
-readonly _PS1_MINIMAL="${_ps1_sh_fancyname}\$ "
-
-#--------------------------------------------------------------------------
-
 myp() { PS1=@HACKME; HACKED_PS1=yes; }
-mip() { HACKED_PS1=no; PS1=$_PS1_MINIMAL; }
+mip() { HACKED_PS1=no; PS1='$ '; }
 
 # Default prompt: bells and whistles and chrome!
 myp
