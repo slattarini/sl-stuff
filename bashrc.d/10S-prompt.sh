@@ -26,9 +26,9 @@ _ps1_pretty_cwd()
             esac
         else
             sed <<<"$d" -e "s|^${HOME}$|~|" \
-                        -e "s|^${HOME}/|~/|" \
+                        -e "s|^${HOME}/||" \
                         -e "s|^${_ps1_real_HOME}$|~|" \
-                        -e "s|^${_ps1_real_HOME}/|~/|" \
+                        -e "s|^${_ps1_real_HOME}/||" \
                         -e 's|//*|/|g'
         fi
         return $SUCCESS
