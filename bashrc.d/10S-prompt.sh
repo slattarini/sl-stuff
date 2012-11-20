@@ -89,12 +89,6 @@ readonly _ps1_magenta=$(_ps1_escape '1;35')
 # Set to red foreground
 readonly _ps1_red=$(_ps1_escape '1;31')
 
-# Fancy string reporting the shell name (yellow on green)
-readonly _ps1_colored_shellname="\
-$(_ps1_escape '1;33;42')\
-[$(xecho "${_ps1_sh_fancyname}" | toupper)]\
-${_ps1_raw}"
-
 #--------------------------------------------------------------------------
 
 # Be happy or sad depending on the previous exit status (or to the given
@@ -152,7 +146,7 @@ _ps1() {
 
     # The small coloured prompt which is on the same line where command is
     # entered.
-    local mini_prompt="${_ps1_colored_shellname} ${ps1_smiley} \$ "
+    local mini_prompt=" ${ps1_smiley} \$ "
 
     # Try to display the most fitting prompt, depending on the size of the
     # screen.
