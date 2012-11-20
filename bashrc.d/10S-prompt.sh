@@ -10,7 +10,8 @@ readonly _ps1_shellname=${BASH##*/}
 # Get current directory, with $HOME abbreviated with a tilde.
 # Handle also the case where $HOME is a symlink (e.g., FreeBSD).
 _ps1_real_HOME=$(cd "$HOME" && pwd -P)
-_ps1_pretty_cwd() {
+_ps1_pretty_cwd()
+{
     local d='' red='' std=''
     declare -i short=0
     while (($#)); do
@@ -61,7 +62,8 @@ esac
 # Real terminal escape character mess up *badly* the command line
 # editing, so we use only escape sequence that will be suitably
 # interpreted by bash itself when drawing the prompt.
-_ps1_escape() {
+_ps1_escape()
+{
     printf '%s' "\\[\\e[${1}m\\]"
 }
 declare -rf _ps1_escape
