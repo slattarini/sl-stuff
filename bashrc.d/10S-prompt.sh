@@ -129,9 +129,6 @@ _ps1() {
     # The string "user@host", underlined.
     local uh="${_ps1_U}\\u@\\h${_ps1_u}"
 
-    # The detailed name of the running shell, underlined.
-    local sh="${_ps1_U}${_ps1_sh_version}${_ps1_u}"
-
     # The small coloured prompt which is on the same line where command is
     # entered.
     local mini_prompt=${ps1_smiley}
@@ -148,7 +145,7 @@ _ps1() {
     elif [ $COLUMNS -gt 94 ]; then
         PS1="\
 $_ps1_raw
-$uh  $s $sh $s \\D{%T} $s"
+$uh $s \\D{%T} $s"
         if [ -n "$VIRTUAL_ENV" ]; then
             local _ps1_venv="${_ps1_B}${VIRTUAL_ENV}${_ps1_b}"
             PS1=$PS1$'\n'"virtualenv --> ${_ps1_venv}"
