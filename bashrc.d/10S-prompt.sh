@@ -7,37 +7,23 @@ _ps1_real_HOME=$(cd "$HOME" && pwd -P)
 _ps1_pretty_cwd()
 {
     local d='' red='' std=''
-    declare -i short=0
     while (($#)); do
         case $1 in
             -c|--color*) red=${_ps1_red} std=${_ps1_std};;
-            -s|--short*) short=1;;
             *) break;;
         esac
         shift
     done
     d=$(pwd -L 2>/dev/null)
     if [[ $? -eq 0 && -n "$d" ]]; then
-        if ((short)); then
-            case $d in
-                /) echo '/';;
-                $HOME|${_ps1_real_HOME}) echo '~';;
-                *) echo "${d##*/}";;
-            esac
-        else
-            sed <<<"$d" -e "s|^${HOME}$|~|" \
-                        -e "s|^${HOME}/||" \
-                        -e "s|^${_ps1_real_HOME}$|~|" \
-                        -e "s|^${_ps1_real_HOME}/||" \
-                        -e 's|//*|/|g'
-        fi
+        sed <<<"$d" -e "s|^${HOME}$|~|" \
+                    -e "s|^${HOME}/||" \
+                    -e "s|^${_ps1_real_HOME}$|~|" \
+                    -e "s|^${_ps1_real_HOME}/||" \
+                    -e 's|//*|/|g'
         return $SUCCESS
     else
-        if ((short)); then
-            xecho "$red[INVALID DIR]$std"
-        else
-            xecho "$red[INVALID DIR${PWD:+" -- $PWD"}]$std"
-        fi
+        xecho "$red[INVALID DIR${PWD:+" -- $PWD"}]$std"
         return $FAILURE
     fi
 }
