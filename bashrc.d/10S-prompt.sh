@@ -210,11 +210,11 @@ case "$TERM" in
 
 esac
 
-myp() { PS1=@HACKME; HACKED_PS1=yes; }
-mip() { HACKED_PS1=no; PS1='$ '; }
+function @myp { PS1=@HACKME; HACKED_PS1=yes; }
+function @mip { HACKED_PS1=no; PS1='$ '; }
 
 # Default prompt: bells and whistles and chrome!
-myp
+@myp
 
 #=#=#----------------------------------------------------------------------
 
