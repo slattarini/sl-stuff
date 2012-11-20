@@ -175,11 +175,6 @@ $uh  $s  $sh  PID $$  $s  \\D{%T  %A %d %B %Y}  $s"
 }
 declare -rf _ps1
 
-#--------------------------------------------------------------------------
-
-#
-# If this is an xterm set the title to user@host:dir
-#
 case "$TERM" in
     xterm*|rxvt*)
         PROMPT_COMMAND='
@@ -200,14 +195,12 @@ case "$TERM" in
             unset _ps1_last_exit_status
             ${_ps1_reset_x}'
         ;;
-
     *)
         # NOTE: the first assignment of PS1 is necessary on FreeBSD,
         # otherwise PROMPT_COMMAND won't work
         PROMPT_COMMAND='_ps1 --funny-string="%%" $?'
         eval "$PROMPT_COMMAND"
         ;;
-
 esac
 
 function @myp { PS1=@HACKME; HACKED_PS1=yes; }
