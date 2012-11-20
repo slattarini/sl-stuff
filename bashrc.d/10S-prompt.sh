@@ -54,10 +54,6 @@ _ps1_escape()
 readonly _ps1_B=$(_ps1_escape 1)
 # End bold text.
 readonly _ps1_b=$(_ps1_escape 22)
-# Start underlined text.
-readonly _ps1_U=$(_ps1_escape 4)
-# End underlined text.
-readonly _ps1_u=$(_ps1_escape 24)
 # Restore normal text
 readonly _ps1_raw=$(_ps1_escape 0)
 # Restore normal color
