@@ -46,9 +46,6 @@ _ps1_pretty_cwd()
 }
 declare -rf _ps1_pretty_cwd
 
-# The detailed name of the running shell.
-_ps1_sh_version=${BASH_VERSINFO[0]}.${BASH_VERSINFO[1]}
-
 # Real terminal escape character mess up *badly* the command line
 # editing, so we use only escape sequence that will be suitably
 # interpreted by bash itself when drawing the prompt.
@@ -168,8 +165,7 @@ case "$TERM" in
     xterm*|rxvt*)
         PROMPT_COMMAND='
             _ps1_last_exit_status=$?
-            echo -ne "\033]0;${USER}@${HOSTNAME%%.*}: $(_ps1_pretty_cwd)"
-            echo -ne "  §§  ${_ps1_sh_version}  §§  \007"
+            echo -ne "\033]0;${USER}@${HOSTNAME%%.*}: $(_ps1_pretty_cwd)\007"
             _ps1 --funny-string="§§" ${_ps1_last_exit_status}
             unset _ps1_last_exit_status'
         ;;
