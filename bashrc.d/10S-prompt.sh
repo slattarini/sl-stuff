@@ -51,13 +51,6 @@ declare -rf _ps1_pretty_cwd
 
 # The detailed name of the running shell.
 _ps1_sh_version=${BASH_VERSINFO[0]}.${BASH_VERSINFO[1]}
-_ps1_sh_fancyname="${_ps1_shellname}"
-# Some shells are installed with version number in the executable name, so
-# it is pointless to repeat it.
-case ${_ps1_sh_fancyname} in
-    *"${_ps1_sh_version}") ;;
-    *) _ps1_sh_fancyname="${_ps1_sh_fancyname}-${_ps1_sh_version}";;
-esac
 
 # Real terminal escape character mess up *badly* the command line
 # editing, so we use only escape sequence that will be suitably
@@ -137,7 +130,7 @@ _ps1() {
     local uh="${_ps1_U}\\u@\\h${_ps1_u}"
 
     # The detailed name of the running shell, underlined.
-    local sh="${_ps1_U}${_ps1_sh_fancyname}${_ps1_u}"
+    local sh="${_ps1_U}${_ps1_sh_version}${_ps1_u}"
 
     # The small coloured prompt which is on the same line where command is
     # entered.
@@ -182,7 +175,7 @@ case "$TERM" in
         PROMPT_COMMAND='
             _ps1_last_exit_status=$?
             echo -ne "\033]0;${USER}@${HOSTNAME%%.*}: $(_ps1_pretty_cwd)"
-            echo -ne "  §§  ${_ps1_sh_fancyname}  §§  \007"
+            echo -ne "  §§  ${_ps1_sh_version}  §§  \007"
             _ps1 --funny-string="§§" ${_ps1_last_exit_status}
             unset _ps1_last_exit_status'
         ;;
