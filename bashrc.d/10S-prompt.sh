@@ -101,12 +101,6 @@ declare -rf _ps1_smiley
 
 _ps1() {
 
-    local s='##'
-    case "${1-}" in
-        --funny-string=*) s=${1#*=}; shift;;
-        --funny-string) s=$2; shift 2;;
-    esac
-
     # The exit status of the last command (hopefully).
     _ps1_last_exit_status=${1-$?}
 
@@ -139,7 +133,7 @@ _ps1() {
     elif [ $COLUMNS -gt 94 ]; then
         PS1="\
 $_ps1_raw
-$uh $s \\D{%T} $s"
+$uh (\\D{%T})"
         if [ -n "$VIRTUAL_ENV" ]; then
             local _ps1_venv="${_ps1_B}${VIRTUAL_ENV}${_ps1_b}"
             PS1=$PS1$'\n'"virtualenv --> ${_ps1_venv}"
@@ -166,13 +160,13 @@ case "$TERM" in
         PROMPT_COMMAND='
             _ps1_last_exit_status=$?
             echo -ne "\033]0;${USER}@${HOSTNAME%%.*}: $(_ps1_pretty_cwd)\007"
-            _ps1 --funny-string="§§" ${_ps1_last_exit_status}
+            _ps1 ${_ps1_last_exit_status}
             unset _ps1_last_exit_status'
         ;;
     *)
         # NOTE: the first assignment of PS1 is necessary on FreeBSD,
         # otherwise PROMPT_COMMAND won't work
-        PROMPT_COMMAND='_ps1 --funny-string="%%" $?'
+        PROMPT_COMMAND='_ps1 $?'
         eval "$PROMPT_COMMAND"
         ;;
 esac
