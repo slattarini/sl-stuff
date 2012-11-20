@@ -93,9 +93,9 @@ _ps1()
     # The exit status of the last command (hopefully).
     _ps1_last_exit_status=${1-$?}
 
-    case "${HACKED_PS1-}" in
-        ""|0|[nN]o|[Ff]alse) return;; # rely on PS1 defined by the user
-        *) ;; # go ahead: we have to reset PS1 properly
+    case ${HACKED_PS1-} in
+        [nN]o) return;; # Rely on PS1 defined by the user.
+            *) ;;       # Go ahead: we have to reset PS1 properly.
     esac
 
     # Get a colorful smiley that (should) represent the exit status of the
@@ -104,7 +104,6 @@ _ps1()
     _ps1_smiley ${_ps1_last_exit_status} # ... this.
 
     # The string "user@host", underlined.
-    local uh="${_ps1_U}\\u@\\h${_ps1_u}"
 
     # The small coloured prompt which is on the same line where command is
     # entered.
@@ -114,8 +113,9 @@ _ps1()
            *) mini_prompt="${mini_prompt} \$ ";;
     esac
 
+    local _ps1_who_where="${_ps1_U}\\u@\\h${_ps1_u}"
     local _ps1_cwd="${_ps1_U}$(_ps1_pretty_cwd --color)${_ps1_u}"
-    PS1=$_ps1_raw$'\n'"$uh [${_ps1_cwd}] \\D{%T}"
+    PS1=$_ps1_raw$'\n'"$_ps1_who_where [${_ps1_cwd}] \\D{%T}"
     if [ -n "$VIRTUAL_ENV" ]; then
         local _ps1_venv="${_ps1_B}${VIRTUAL_ENV}${_ps1_b}"
         PS1=${PS1}$'\n'"virtualenv --> ${_ps1_venv}"
@@ -128,7 +128,7 @@ _ps1()
 }
 declare -rf _ps1
 
-case "$TERM" in
+case $TERM in
     xterm*|rxvt*)
         PROMPT_COMMAND='
             _ps1_last_exit_status=$?
