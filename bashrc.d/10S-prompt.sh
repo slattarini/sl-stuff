@@ -134,7 +134,7 @@ _ps1() {
         local _ps1_cwd="${_ps1_U}$(_ps1_pretty_cwd --color)${_ps1_u}"
         PS1="\
 $_ps1_raw
-$uh (\\D{%T}) | ${_ps1_cwd}"
+$uh [${_ps1_cwd}] \\D{%T}"
         if [ -n "$VIRTUAL_ENV" ]; then
             local _ps1_venv="${_ps1_B}${VIRTUAL_ENV}${_ps1_b}"
             PS1=$PS1$'\n'"virtualenv --> ${_ps1_venv}"
