@@ -66,10 +66,6 @@ _ps1_escape() {
 }
 declare -rf _ps1_escape
 
-# TTY basename: it's static, so we calculate it here once and for all,
-# rather then again and again in subroutine `_ps1()'.
-readonly _ps1_tty=$(tty | sed 's,^/dev/,,')
-
 # Start bold text.
 readonly _ps1_B=$(_ps1_escape 1)
 # End bold text.
@@ -138,9 +134,6 @@ _ps1() {
     # The string "user@host", underlined.
     local uh="${_ps1_U}\\u@\\h${_ps1_u}"
 
-    # The tty user is logged on.
-    local tty="${_ps1_tty}" # cached
-
     # The detailed name of the running shell, underlined.
     local sh="${_ps1_U}${_ps1_sh_fancyname}${_ps1_u}"
 
@@ -160,7 +153,7 @@ _ps1() {
     elif [ $COLUMNS -gt 94 ]; then
         PS1="\
 $_ps1_raw
-$uh  $s  $sh  on $tty, PID $$  $s  \\D{%T  %A %d %B %Y}  $s"
+$uh  $s  $sh  PID $$  $s  \\D{%T  %A %d %B %Y}  $s"
         if [ -n "$VIRTUAL_ENV" ]; then
             local _ps1_venv="${_ps1_B}${VIRTUAL_ENV}${_ps1_b}"
             PS1=$PS1$'\n'"virtualenv --> ${_ps1_venv}"
