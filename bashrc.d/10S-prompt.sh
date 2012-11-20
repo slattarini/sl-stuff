@@ -212,16 +212,13 @@ esac
 
 #--------------------------------------------------------------------------
 
-# Vecchio prompt della shell, caricabile con il comando
-# `op' ("Old Prompt")
+# Old prompt.
 readonly _PS1_OLD="$PS1"
 
-# Prompt minimale, caricabile con il comando `mip' ("MInimal Prompt")
+# Minimal prompt , loadable with the 'mip' (as in "MInimal Prompt") command.
 readonly _PS1_MINIMAL="${_ps1_sh_fancyname}\$ "
 
 #--------------------------------------------------------------------------
-
-# Alcune funzioni per modificare in fretta il prompt della shell
 
 myp() { PS1=@HACKME; HACKED_PS1=yes; }
 mip() { HACKED_PS1=no; PS1=$_PS1_MINIMAL; }
