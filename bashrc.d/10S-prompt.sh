@@ -111,8 +111,7 @@ _ps1()
     esac
 
     local _ps1_who_where="\\u@\\h"
-    local _ps1_cwd=$(_ps1_pretty_cwd --color)
-    PS1="$_ps1_raw\n$_ps1_who_where [${_ps1_cwd}] \A"
+    PS1="$_ps1_raw\n$_ps1_who_where [$(_ps1_pretty_cwd --color)] \A"
     if [ -n "$VIRTUAL_ENV" ]; then
         local _ps1_venv="${_ps1_B}${VIRTUAL_ENV}${_ps1_b}"
         PS1="${PS1}\nvirtualenv --> ${_ps1_venv}"
