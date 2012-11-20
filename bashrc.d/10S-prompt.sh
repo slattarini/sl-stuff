@@ -4,9 +4,6 @@
 ##  CUSTOMIZATION OF COMMAND PROMPT FOR BASH  ##
 ##--------------------------------------------##
 
-# Basename of the running bash.
-readonly _ps1_shellname=${BASH##*/}
-
 # Get current directory, with $HOME abbreviated with a tilde.
 # Handle also the case where $HOME is a symlink (e.g., FreeBSD).
 _ps1_real_HOME=$(cd "$HOME" && pwd -P)
