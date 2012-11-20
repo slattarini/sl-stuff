@@ -115,7 +115,7 @@ _ps1()
 
     local _ps1_who_where="${_ps1_U}\\u@\\h${_ps1_u}"
     local _ps1_cwd="${_ps1_U}$(_ps1_pretty_cwd --color)${_ps1_u}"
-    PS1=$_ps1_raw$'\n'"$_ps1_who_where [${_ps1_cwd}] \\D{%T}"
+    PS1=$_ps1_raw$'\n'"$_ps1_who_where [${_ps1_cwd}] \\A"
     if [ -n "$VIRTUAL_ENV" ]; then
         local _ps1_venv="${_ps1_B}${VIRTUAL_ENV}${_ps1_b}"
         PS1=${PS1}$'\n'"virtualenv --> ${_ps1_venv}"
