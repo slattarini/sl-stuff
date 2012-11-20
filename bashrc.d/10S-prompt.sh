@@ -124,7 +124,6 @@ _ps1()
 
     # Return the exit status of the command which preceded us.
     return ${_ps1_last_exit_status}
-
 }
 declare -rf _ps1
 
