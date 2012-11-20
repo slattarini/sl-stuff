@@ -60,6 +60,8 @@ readonly _ps1_raw=$(_ps1_escape 0)
 readonly _ps1_std=$(_ps1_escape '')
 # Set to cyan foreground
 readonly _ps1_cyan=$(_ps1_escape '1;36')
+# Set to yellow foreground
+readonly _ps1_yellow=$(_ps1_escape '1;33')
 # Set to magenta foreground
 readonly _ps1_magenta=$(_ps1_escape '1;35')
 # Set to red foreground
@@ -107,6 +109,9 @@ _ps1()
     esac
 
     local _ps1_who_where="\\u@\\h"
+    if [[ -n $SSH_CONNECTION ]]; then
+      _ps1_who_where=${_ps1_yellow}${_ps1_who_where}${_ps1_raw}
+    fi
     PS1="$_ps1_raw\n$_ps1_who_where [$(_ps1_pretty_cwd --color)] \A"
     if [ -n "$VIRTUAL_ENV" ]; then
         local _ps1_venv="${_ps1_B}${VIRTUAL_ENV}${_ps1_b}"
