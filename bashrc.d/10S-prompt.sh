@@ -131,15 +131,14 @@ _ps1() {
         # COLUMNS  variable seems broken, do not rely on it
         PS1=""
     elif [ $COLUMNS -gt 94 ]; then
+        local _ps1_cwd="${_ps1_U}$(_ps1_pretty_cwd --color)${_ps1_u}"
         PS1="\
 $_ps1_raw
-$uh (\\D{%T})"
+$uh (\\D{%T}) | ${_ps1_cwd}"
         if [ -n "$VIRTUAL_ENV" ]; then
             local _ps1_venv="${_ps1_B}${VIRTUAL_ENV}${_ps1_b}"
             PS1=$PS1$'\n'"virtualenv --> ${_ps1_venv}"
         fi
-        local _ps1_cwd="${_ps1_U}$(_ps1_pretty_cwd --color)${_ps1_u}"
-        PS1=$PS1$'\n'"dir --> ${_ps1_cwd}"
     elif [ $COLUMNS -gt 50 ]; then
         local _ps1_cwd="${_ps1_U}$(_ps1_pretty_cwd -s -c)${_ps1_u}"
         PS1="$_ps1_raw"$'\n'"$uh [${_ps1_cwd}]"
