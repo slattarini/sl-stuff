@@ -41,7 +41,6 @@ _ps1_pretty_cwd()
         return $FAILURE
     fi
 }
-declare -rf _ps1_pretty_cwd
 
 # Real terminal escape character mess up *badly* the command line
 # editing, so we use only escape sequence that will be suitably
@@ -50,7 +49,6 @@ _ps1_escape()
 {
     printf '%s' "\\[\\e[${1}m\\]"
 }
-declare -rf _ps1_escape
 
 # Start bold text.
 readonly _ps1_B=$(_ps1_escape 1)
@@ -86,7 +84,6 @@ _ps1_smiley()
     fi
     ps1_smiley="${ps1_smiley}${_ps1_raw}"
 }
-declare -rf _ps1_smiley
 
 _ps1()
 {
@@ -125,7 +122,6 @@ _ps1()
     # Return the exit status of the command which preceded us.
     return ${_ps1_last_exit_status}
 }
-declare -rf _ps1
 
 case $TERM in
     xterm*|rxvt*)
