@@ -1,8 +1,5 @@
 # -*- bash -*-
-
-##--------------------------------------------##
-##  CUSTOMIZATION OF COMMAND PROMPT FOR BASH  ##
-##--------------------------------------------##
+# Customization of command prompt for bash. 
 
 # Get current directory, with $HOME abbreviated with a tilde.
 # Handle also the case where $HOME is a symlink (e.g., FreeBSD).
@@ -74,8 +71,6 @@ readonly _ps1_magenta=$(_ps1_escape '1;35')
 # Set to red foreground
 readonly _ps1_red=$(_ps1_escape '1;31')
 
-#--------------------------------------------------------------------------
-
 # Be happy or sad depending on the previous exit status (or to the given
 # parameter, if any).
 # Only for internal use in prompt drawing.
@@ -93,14 +88,8 @@ _ps1_smiley()
 }
 declare -rf _ps1_smiley
 
-#--------------------------------------------------------------------------
-
-#
-# The huge complex function that will draw our prompt.
-#
-
-_ps1() {
-
+_ps1()
+{
     # The exit status of the last command (hopefully).
     _ps1_last_exit_status=${1-$?}
 
@@ -160,7 +149,5 @@ function @mip { HACKED_PS1=no; PS1='$ '; }
 
 # Default prompt: bells and whistles and chrome!
 @myp
-
-#=#=#----------------------------------------------------------------------
 
 # vim: ft=sh ts=4 sw=4 et
