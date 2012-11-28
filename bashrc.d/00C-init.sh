@@ -11,14 +11,10 @@ declare -ir FAILURE=1
 declare -ir E_USAGE=2
 declare -ir E_INTERNAL=100
 
-declare -r bool='declare -i'
 declare -ir FALSE=0
 declare -ir TRUE=1
 
-readonly TAB=$'\t'
-readonly NL=$'\n'
-
-IFS=" ${TAB}${NL}"
+IFS=' '$'\t'$'\n'
 
 xecho() {
     printf '%s\n' "$*"
@@ -84,7 +80,7 @@ normalize_name() {
         0) cat;;
         *) xecho "$*";;
     esac | \
-      tolower | tr "$TAB" " " | \
+      tolower | tr $'\t' ' ' | \
       sed -e 's/^ *//' -e 's/ *$//' -e 's/[^a-z0-9][^a-z0-9]*/-/g'
 }
 normalize_version() {
@@ -92,7 +88,7 @@ normalize_version() {
         0) cat;;
         *) xecho "$*";;
     esac | \
-      tolower | tr "$TAB" " " | \
+      tolower | tr $'\t' ' ' | \
       sed -e 's/^ *//' -e 's/ *$//' -e 's/[^a-z0-9.][^a-z0-9.]*/-/g'
 }
 declare -rf normalize_name normalize_version
@@ -197,7 +193,7 @@ find_better_program ()
     IFS=$oIFS
     [[ -f $dir/$program && -x $dir/$program ]] || continue
     $test_function "$dir/$program" || continue
-    eval "$varname"='$dir/$program' || return $E_INTERNAL
+    eval "$varname"='$dir/$program' || return $FAILURE
     return $SUCCESS
   done
   return $FAILURE
@@ -239,7 +235,7 @@ declare -rf _fixdir_for_path
 # Internal subroutine, used by 'add_to_path()'.
 # Usage: _add_dir_to_path [-B] DIRECTORY [PATH-VARIABLE='PATH'] [PATHSEP=:]
 _add_dir_to_path () {
-    $bool prepend=$FALSE
+    declare -i prepend=$FALSE
     if [ x"${1-}" = x'-B' ]; then
         prepend=$TRUE
         shift

@@ -10,10 +10,6 @@
 
 # Escape character.
 ESC=""
-# Carriage return.
-LF=""
-# Line Feed / Newline.
-LF="$NL"
 
 #--------------------------------------------------------------------------
 
@@ -112,7 +108,7 @@ set_term_color()
         3) _term_foreground_color="$1";; # global var
         4) _term_background_color="$1";; # global var
         *) fwarn "INTERNAL ERROR: bad \${_term_ground}"
-           return $E_INTERNAL;;
+           return $E_FAILURE;;
     esac
     return $SUCCESS
 }
