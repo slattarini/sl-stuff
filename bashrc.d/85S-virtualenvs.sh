@@ -54,7 +54,7 @@ alias activate=activate_virtualenv
 
 export VIRTUAL_ENV_DISABLE_PROMPT=yes
 
-add_to_path -B -p VIRTUALENV_PATH ~/virtualenvs ~/virtualenvs/$SYSTEM_UNAME
+add_to_path -B -p VIRTUALENV_PATH ~/virtualenvs
 
 atexit 'if declare -F deactivate &>/dev/null; then deactivate; fi'
 
