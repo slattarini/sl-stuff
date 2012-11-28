@@ -52,6 +52,7 @@ activate_virtualenv()
 # e.g. the /sbin/activate command.
 alias activate=activate_virtualenv
 
+# We tweak our prompt by ourselves, thank you very much.
 export VIRTUAL_ENV_DISABLE_PROMPT=yes
 
 add_to_path -B -p VIRTUALENV_PATH ~/virtualenvs
