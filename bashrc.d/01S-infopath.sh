@@ -1,15 +1,11 @@
 # -*- bash -*-
-
-#
 # Set INFOPATH variable (for search of documentation in info format).
-#
 
 if W info; then
     INFOPATH=""
     add_to_path -B -p 'INFOPATH' \
       /usr/info /usr/share/info /usr/local/info /usr/local/share/info \
-      /opt/info "$HOME"/info "$HOME"/share/info \
-    2>/dev/null
+      /opt/info "$HOME"/info "$HOME"/share/info
     if [ -n "$INFOPATH" ]; then
         export INFOPATH
     else
