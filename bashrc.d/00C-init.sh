@@ -301,10 +301,16 @@ add_to_path()
 
     local d
     for d in "$@"; do
-        if [[ "$d" == *"$path_sep"* ]]; then
+        if [[ ! -e $d ]]; then
+            # It's not unusual, when having to work on several different
+            # systems, to try to add a directory that only exists on few
+            # of those systems.  Printing a warning in such cases is
+            # mostly just noise.
+            continue
+        elif [[ "$d" == *"$path_sep"* ]]; then
             fwarn "'$d': directory name contains the path separator" \
                   "'$path_sep'"
-        elif ! [[ -d $d ]]; then
+        elif [[ ! -d $d ]]; then
             fwarn "'$d': not a directory."
         elif ! [[ -r $d && -x $d ]]; then
             fwarn "'$d': directory not fully readable."
