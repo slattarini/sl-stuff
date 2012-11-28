@@ -75,24 +75,6 @@ toupper() {
 }
 declare -rf tolower toupper
 
-normalize_name() {
-    case $# in
-        0) cat;;
-        *) xecho "$*";;
-    esac | \
-      tolower | tr $'\t' ' ' | \
-      sed -e 's/^ *//' -e 's/ *$//' -e 's/[^a-z0-9][^a-z0-9]*/-/g'
-}
-normalize_version() {
-    case $# in
-        0) cat;;
-        *) xecho "$*";;
-    esac | \
-      tolower | tr $'\t' ' ' | \
-      sed -e 's/^ *//' -e 's/ *$//' -e 's/[^a-z0-9.][^a-z0-9.]*/-/g'
-}
-declare -rf normalize_name normalize_version
-
 # 'which' utilities on different systems have too many incompatibilities
 # between different, so use the 'type' bash builtin instead.  Also, some
 # systems (e.g., Fedora 16) pre-define a 'which' alias that interferes
