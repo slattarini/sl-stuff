@@ -1,8 +1,5 @@
 # -*- bash -*-
-
-#
 # Common shell initialization.
-#
 
 shopt -s extglob
 

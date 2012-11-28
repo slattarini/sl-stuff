@@ -27,20 +27,6 @@ if [[ -f /usr/local/sbin/pkg_which ]]; then
     add_to_path -B /usr/local/sbin
 fi
 
-if [[ -n "$KDE_FULL_SESSION" && -n "$KDE_SESSION_VERSION" ]]; then
-    if [ -d "/usr/local/kde$KDE_SESSION_VERSION/bin" ]; then
-        add_to_path -B "/usr/local/kde$KDE_SESSION_VERSION/bin"
-    fi
-    if W kde4-config; then
-        d="$(kde4-config --qt-binaries)"
-        case ":$PATH:" in
-            *:$d:*);;
-            *) add_to_path -B "$d";;
-        esac
-        unset d
-    fi
-fi
-
 add_to_path -B "/usr/local/opt/bin" "$HOME/bin" "$HOME/bin/utils"
 
 export PATH
