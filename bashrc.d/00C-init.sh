@@ -19,7 +19,6 @@ IFS=' '$'\t'$'\n'
 xecho() {
     printf '%s\n' "$*"
 }
-declare -rf xecho
 
 shell_quote() {
     case $* in
@@ -27,37 +26,30 @@ shell_quote() {
         *) xecho "$*";;
     esac | sed -e "s/'/'\\\\''/" -e "s/^/'/" -e "s/$/'/"
 }
-declare -rf shell_quote
 
 warn() {
     xecho "$0: $*" >&2
 }
-declare -rf warn
 
 mwarn() {
     xecho "$(modulname 2): $*" >&2
 }
-declare -rf mwarn
 
 fwarn() {
     xecho "$(funcname 2): $*" >&2
 }
-declare -rf fwarn
 
 funcname() {
     xecho "${FUNCNAME[${1-1}]:-(main)}"
 }
-declare -rf funcname
 
 modulname() {
     xecho "${BASH_SOURCE[${1-1}]:-$0}"
 }
-declare -rf funcname
 
 is_function() {
     declare -F "$1" >/dev/null 2>&1
 }
-declare -rf is_function
 
 # Abstraction layer for lowercase/uppercase conversions.  Mostly meant
 # for systems with limited 'tr' utility.
@@ -73,7 +65,6 @@ toupper() {
         *) xecho "$*";;
     esac | tr abcdefghijklmnopqrstuvwxyz ABCDEFGHIJKLMNOPQRSTUVWXYZ
 }
-declare -rf tolower toupper
 
 # 'which' utilities on different systems have too many incompatibilities
 # between different, so use the 'type' bash builtin instead.  Also, some
@@ -96,8 +87,6 @@ which () {
 }
 
 W() { which "$@" >/dev/null 2>&1; }
-
-declare -rf which W
 
 # On non-FreeBSD and non-Linux systems, some binaries we are looking for
 # can be stashed in weird/unusual locations.
@@ -168,7 +157,6 @@ else
   _weak_realpath() { xecho "$1"; }
 fi
 unset -f _check_realpath
-declare -rf _weak_realpath
 
 # Internal subroutine, used by '_add_dir_to_path()'.
 _fixdir_for_path() {
@@ -177,7 +165,6 @@ _fixdir_for_path() {
         *) _weak_realpath "$1";;
     esac
 }
-declare -rf _fixdir_for_path
 
 # Internal subroutine, used by 'add_to_path()'.
 # Usage: _add_dir_to_path [-B] DIRECTORY [PATH-VARIABLE='PATH'] [PATHSEP=:]
@@ -220,7 +207,6 @@ _add_dir_to_path () {
         esac
     fi
 }
-declare -rf _add_dir_to_path
 
 # Usage: add_to_path [-B] [-c PATH-SEPARATOR] [-B PATH-VARIABLE] [DIRS]
 # Append (or prepend, if given '-B' option) '$2', ... '$n' to the search
@@ -266,7 +252,6 @@ add_to_path()
         fi
     done
 }
-declare -rf add_to_path
 
 return $SUCCESS
 
