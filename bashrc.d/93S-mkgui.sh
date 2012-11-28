@@ -136,8 +136,7 @@ MakeGUI ()
 
 MakeGUI \
     firefox xterm xman libreoffice  pidgin vuze easytag \
-    gitk qgit hgview xpdf xdvi gv ddd emacs \
-    djview snake4
+    gitk qgit hgview xpdf xdvi gv ddd emacs djview snake4
 
 if W firefox3; then
     MakeGUI firefox3
