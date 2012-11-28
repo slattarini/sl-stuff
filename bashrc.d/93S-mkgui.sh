@@ -11,8 +11,6 @@ MakeGUI ()
     local mkgui_added_head_code=''
     local mkgui_added_tail_code=''
     local mkgui_exitval=$SUCCESS
-
-    # TODO: maybe use getopts for option parsing?
     local mkgui_action='eval'
     local mkgui_program_wrapper=command
     local OPTION OPTARG OPTIND
