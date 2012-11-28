@@ -22,11 +22,11 @@ exit_trap() {
         for ((i = 0; i < 5000; i++)); do
             echo
         done
+        # Reset terminal defaults.
+        tput reset || exit_status=$FAILURE
     fi
     # Clear history file.
     : > "${HISTFILE-"$HOME/.bash_history"}" || exit_status=$FAILURE
-    # Reset terminal defaults.
-    tput reset || exit_status=$FAILURE
     exit $exit_status
 
 }
