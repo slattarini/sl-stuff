@@ -135,19 +135,15 @@ MakeGUI ()
 }
 
 MakeGUI \
-    firefox xterm xman libreoffice  pidgin vuze easytag \
-    gitk qgit hgview xpdf xdvi gv ddd emacs djview snake4
+    firefox xterm xman libreoffice  pidgin vuze easytag emacs \
+    gitk qgit hgview xpdf xdvi gv ddd djview iceweasel icedove \
+    smalltalk bluej cssed civ freeciv heretic alsaplayer
+
+MakeGUI -w aoss -- clanbomber bomberclone
 
 if W firefox3; then
     MakeGUI firefox3
     W firefox || firefox() { firefox3 "$@"; }
-fi
-
-if IsHost bigio; then
-    MakeGUI \
-       iceweasel icedove smalltalk bluej appletviewer \
-       cssed netbeans civ freeciv heretic alsaplayer ggr
-    MakeGUI -w aoss clanbomber bomberclone
 fi
 
 return $SUCCESS
