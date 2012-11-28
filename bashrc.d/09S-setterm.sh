@@ -74,24 +74,29 @@ _term_color_to_code ()
 
 set_term_color ()
 {
-    local _term_ground
-    case "${2-foreground}" in
-        f|F|[fF]oreground) _term_ground=3;; # set the color as foreground
-        b|B|[bB]ackground) _term_ground=4;; # set the color as background
-        *) fwarn "Invalid second argument '$2'"; return $E_USAGE;;
+    local _term_ground _term_color
+    case ${2-foreground} in
+        f|F|[fF]oreground)
+            # Set the color as foreground
+            _term_foreground_color=$1 # global var
+            _term_ground=3            # local var
+            ;;
+        b|B|[bB]ackground)
+            # Set the color as background.
+            _term_ground=4            # local var
+            _term_background_color=$1 # global var
+            ;;
+        *)
+            fwarn "invalid second argument '$2'"
+            return $E_USAGE
+            ;;
     esac
     if (($# == 0)); then
         fwarn "No color name given"
-        return $FAILURE
+        return $E_USAGE
     fi
     _term_color=$(_term_color_to_code "$1") || return $FAILURE
     _set_term_color "${_term_color}" "${_term_ground}"
-    case ${_term_ground} in
-        3) _term_foreground_color=$1;; # global var
-        4) _term_background_color=$1;; # global var
-        *) fwarn "INTERNAL ERROR: bad \${_term_ground}"
-           return $E_FAILURE;;
-    esac
     return $SUCCESS
 }
 
