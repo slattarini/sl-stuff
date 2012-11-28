@@ -134,8 +134,8 @@ MakeGUI ()
 
 MakeGUI \
     firefox xterm xman libreoffice  pidgin vuze easytag \
-    gitk qgit hgview
-
+    gitk qgit hgview xpdf zxpdf xdvi zxdvi gv ddd emacs \
+    djview snake4
 
 if W firefox3; then
     MakeGUI firefox3
@@ -148,17 +148,6 @@ if IsHost bigio; then
        cssed netbeans civ freeciv heretic alsaplayer ggr
     MakeGUI -w aoss clanbomber bomberclone
 fi
-
-case $hostname in
-   bplab) mkgui_geometry='1280x940';;
-   bigio) mkgui_geometry='1152x840';;
-esac
-
-chc='{ set -- -geometry "$mkgui_geometry" "$@"; }'
-
-MakeGUI -h "$chc" -- xpdf zxpdf gv ddd emacs djview
-MakeGUI -h "$chc; set -- -s 4 \"\$@\"" -- xdvi zxdvi
-IsHost bigio && MakeGUI -h "$chc" snake4
 
 return $SUCCESS
 
