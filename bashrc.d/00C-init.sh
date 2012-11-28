@@ -307,7 +307,7 @@ add_to_path()
             # of those systems.  Printing a warning in such cases is
             # mostly just noise.
             continue
-        elif [[ "$d" == *"$path_sep"* ]]; then
+        elif [[ $d == *"$path_sep"* ]]; then
             fwarn "'$d': directory name contains the path separator" \
                   "'$path_sep'"
         elif [[ ! -d $d ]]; then

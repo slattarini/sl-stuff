@@ -46,10 +46,10 @@ _setterm_bolding_saved=0
 _setterm_underlining_saved=0
 _setterm_reversing_saved=0
 _setterm_blinking_saved=0
-_term_foreground_color="WHITE"
-_term_background_color="BLACK"
-_term_foreground_color_saved="${_term_foreground_color}"
-_term_background_color_saved="${_term_background_color}"
+_term_foreground_color=WHITE
+_term_background_color=BLACK
+_term_foreground_color_saved=${_term_foreground_color}
+_term_background_color_saved=${_term_background_color}
 
 #--------------------------------------------------------------------------
 
@@ -60,7 +60,7 @@ declare -rf _set_term_color
 
 _term_color_to_code()
 {
-    case "${1-}" in
+    case ${1-} in
         WHITE|[wW]hite)
             echo "${_TERM_WHITE}";;
         BLACK|[bB]lack)
@@ -201,16 +201,16 @@ declare -rf get_term_columns
 #--------------------------------------------------------------------------
 
 save_term_colors() {
-    _term_background_color_saved="${_term_background_color}"
-    _term_foreground_color_saved="${_term_foreground_color}"
+    _term_background_color_saved=${_term_background_color}
+    _term_foreground_color_saved=${_term_foreground_color}
 }
 declare -rf save_term_colors
 
 save_term_text_settings() {
-    _setterm_bolding_saved="${_setterm_bolding}"
-    _setterm_underlining_saved="${_setterm_underlining}"
-    _setterm_reversing_saved="${_setterm_reversing}"
-    _setterm_blinking_saved="${_setterm_blinking}"
+    _setterm_bolding_saved=${_setterm_bolding}
+    _setterm_underlining_saved=${_setterm_underlining}
+    _setterm_reversing_saved=${_setterm_reversing}
+    _setterm_blinking_saved=${_setterm_blinking}
 }
 declare -rf save_term_text_settings
 
@@ -221,18 +221,18 @@ save_term_settings() {
 declare -rf save_term_settings
 
 restore_term_colors() {
-    _term_background_color="${_term_background_color_saved}"
-    _term_foreground_color="${_term_foreground_color_saved}"
+    _term_background_color=${_term_background_color_saved}
+    _term_foreground_color=${_term_foreground_color_saved}
     set_term_foreground_color "${_term_foreground_color}"
     set_term_background_color "${_term_background_color}"
 }
 declare -rf restore_term_colors
 
 restore_term_text_settings() {
-    _setterm_bolding="${_setterm_bolding_saved}"
-    _setterm_underlining="${_setterm_underlining_saved}"
-    _setterm_reversing="${_setterm_reversing_saved}"
-    _setterm_blinking="${_setterm_blinking_saved}"
+    _setterm_bolding=${_setterm_bolding_saved}
+    _setterm_underlining=${_setterm_underlining_saved}
+    _setterm_reversing=${_setterm_reversing_saved}
+    _setterm_blinking=${_setterm_blinking_saved}
     _set_current_term_settings;
 }
 declare -rf restore_term_text_settings
