@@ -2,7 +2,7 @@
 # Personal aliases.
 
 # To quickly start listening Radio Classica Bresciana.
-IsHost bigio && alias H=listen-radioclassica
+alias H=listen-radioclassica
 
 # Laziness aliases.
 W scons && alias scons='scons -Q'
