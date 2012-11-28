@@ -19,7 +19,6 @@ readonly _TERM_WHITE=9
 
 # Escape a string to feed it to terminal.
 term_escape () { printf '%s' "$ESC[$*"; }
-declare -rf term_escape
 
 # Some internal variables which must remain shared between subroutines
 _setterm_bolding=0
@@ -37,8 +36,10 @@ _term_background_color_saved=${_term_background_color}
 
 #--------------------------------------------------------------------------
 
-_set_term_color () { echo -ne "${ESC}[${2}${1}m"; }
-declare -rf _set_term_color
+_set_term_color ()
+{
+  echo -ne "${ESC}[${2}${1}m"
+}
 
 _term_color_to_code ()
 {
@@ -70,7 +71,6 @@ _term_color_to_code ()
     esac
     return $SUCCESS
 }
-declare -rf _term_color_to_code
 
 set_term_color ()
 {
@@ -94,12 +94,9 @@ set_term_color ()
     esac
     return $SUCCESS
 }
-declare -rf set_term_color
 
 set_term_foreground_color () { set_term_color "$1" foreground; }
-declare -rf set_term_foreground_color
 set_term_background_color () { set_term_color "$1" background; }
-declare -rf set_term_background_color
 
 #--------------------------------------------------------------------------
 
@@ -110,72 +107,59 @@ _set_current_term_settings ()
     set_term_background_color "${_term_background_color}"
     set_term_foreground_color "${_term_foreground_color}"
 }
-declare -rf _set_current_term_settings
-
-term_default () { tput sgr0; }
-declare -rf term_default
 
 term_reverse ()
 {
     _setterm_reversing=1
     _set_current_term_settings
 }
-declare -rf term_reverse
 
 term_unreverse ()
 {
     _setterm_reversing=0
     _set_current_term_settings
 }
-declare -rf term_unreverse
 
 term_bold ()
 {
     _setterm_bolding=1
     _set_current_term_settings
 }
-declare -rf term_bold
 
 term_unbold ()
 {
     _setterm_bolding=0
     _set_current_term_settings
 }
-declare -rf term_unbold
 
 term_underline ()
 {
     _setterm_underlining=1
     _set_current_term_settings
 }
-declare -rf term_underline
 
 term_ununderline ()
 {
     _setterm_underlining=0
     _set_current_term_settings
 }
-declare -rf term_ununderline
 
 term_blink ()
 {
     _setterm_blinking=1
     _set_current_term_settings
 }
-declare -rf term_blink
 
 term_unblink ()
 {
     _setterm_blinking=0
     _set_current_term_settings
 }
-declare -rf term_unblink
+
+term_default () { tput sgr0; }
 
 get_term_lines () { tput lines; }
-declare -rf get_term_lines
-
 get_term_columns () { tput cols; }
-declare -rf get_term_columns
 
 #--------------------------------------------------------------------------
 
@@ -184,7 +168,6 @@ save_term_colors ()
     _term_background_color_saved=${_term_background_color}
     _term_foreground_color_saved=${_term_foreground_color}
 }
-declare -rf save_term_colors
 
 save_term_text_settings ()
 {
@@ -193,14 +176,12 @@ save_term_text_settings ()
     _setterm_reversing_saved=${_setterm_reversing}
     _setterm_blinking_saved=${_setterm_blinking}
 }
-declare -rf save_term_text_settings
 
 save_term_settings ()
 {
     save_term_colors
     save_term_text_settings
 }
-declare -rf save_term_settings
 
 restore_term_colors ()
 {
@@ -209,7 +190,6 @@ restore_term_colors ()
     set_term_foreground_color "${_term_foreground_color}"
     set_term_background_color "${_term_background_color}"
 }
-declare -rf restore_term_colors
 
 restore_term_text_settings ()
 {
@@ -219,14 +199,12 @@ restore_term_text_settings ()
     _setterm_blinking=${_setterm_blinking_saved}
     _set_current_term_settings;
 }
-declare -rf restore_term_text_settings
 
 restore_term_settings ()
 {
     restore_term_text_settings
     restore_term_colors
 }
-declare -rf restore_term_settings
 
 #--------------------------------------------------------------------------
 
