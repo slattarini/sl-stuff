@@ -122,7 +122,7 @@ MakeGUI ()
 
         (($? == 0)) || {
             fwarn "$mkgui_funcname can't be declared as function," \
-                  "due to an unkown error"
+                  "due to an unknown error"
             mkgui_exitval=$FAILURE
             continue
         }
