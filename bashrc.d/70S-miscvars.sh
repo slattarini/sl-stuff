@@ -19,19 +19,6 @@ W lesspipe && eval "$(lesspipe)"
 # Override defaults for autoconf-generated configure scripts.
 [[ -f $HOME/config.site ]] && export CONFIG_SITE=$HOME/config.site
 
-# Editors used by whed(1) and its links.
-case $hostname in
-  bpserv|freddy)
-    WH_GVIM='vim -p'
-    WH_VIM='vim -p'
-    ;;
-  bigio|bplab)
-    WH_GVIM='gvim -p'
-    WH_VIM='vim -p'
-    ;;
-esac
-export WH_VIM WH_GVIM
-
 # Trash directory used by my del(1) utility.
 if [[ -d $HOME/scratch/.trash ]]; then
     # Avoid backup pf deleted files on systems having a dedicated
