@@ -103,26 +103,17 @@ SYSTEM_UNAME=${SYSTEM_UNAME/SunOS/Solaris}
 # normalize the name
 SYSTEM_UNAME=$(xecho "$SYSTEM_UNAME" | normalize_name)
 
-SYSTEM_RELEASE=$(uname -r | normalize_version)
-# Newer Solaris systems drop the major version, e.g. Solaris 5.7
-# is known simply as "Solaris 7", etc.
-if [[ $SYSTEM_UNAME == solaris && $SYSTEM_RELEASE == 5.* ]]; then
-    t=${SYSTEM_RELEASE#5.}
-    [ 7 -le "$t" ] >/dev/null 2>&1 && SYSTEM_RELEASE=$t
-    unset t
-fi
+readonly SYSTEM_UNAME
 
-readonly SYSTEM_UNAME SYSTEM_RELEASE
-
-case $SYSTEM_UNAME,$SYSTEM_RELEASE in
-  freebsd,*|solaris,10,*|linux,*)
+case $SYSTEM_UNAME in
+  freebsd,*|solaris,*|linux,*)
     # System recognized
     ;;
   *)
     mwarn "***"
     mwarn "*** WARNING WARNING!!!"
-    mwarn "*** ('$SYSTEM_UNAME', '$SYSTEM_RELEASE')" \
-               "Invalid couple (\$uname, \$release)"
+    mwarn "*** ('$SYSTEM_UNAME')" \
+               "Invalid \$uname"
     mwarn "*** Something might not work as expected, so be careful"
     mwarn "***"
     ;;
@@ -134,7 +125,7 @@ esac
 # with our usage; get rid of it beforehand.
 unalias which >/dev/null 2>&1
 
-which() {
+which () {
     local opts=''
     while (($#)); do
         case $1 in
