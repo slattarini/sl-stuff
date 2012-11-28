@@ -1,7 +1,6 @@
 # -*- bash -*-
-
-# Permette di definire ed estendere dinamicamente le azioni da
-# intraprendere all'uscita dalla shell.
+# C-like atexit: allow definition of actions to be performed when the
+# shell exits.
 
 declare -a EXEC_ON_EXIT_ACTIONS=(":")
 
