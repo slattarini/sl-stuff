@@ -1,66 +1,58 @@
 # -*- bash -*-
 
-#--------------------------------------------------------------------------
-
-# Funzione per mantenere settate opportunamente certe opzioni
-# della shell (adatte quando si opera in maniera interattiva).
-RestoreDefualtInteractiveShellOptions()
+set_defualt_shell_options ()
 {
 
-    # do not mark variables which are modified or created for export
+    # Do not mark variables which are modified or created for export.
     set +a
 
-    # do *not* notify of job termination immediately
-    # (that is really irritating!)
+    # Do *not* notify of job termination immediately (that is
+    # really irritating!)
     set +b
 
-    # the shell will perform brace expansion
+    # The shell will perform brace expansion.
     set -B
 
-    # allow existing regular files to be overwritten
-    # by redirection of output
+    # Allow existing regular files to be overwritten by redirection
+    # of output
     set +C
 
-    # do not exit immediately if a command exits with a non-zero status
+    # Do not exit immediately if a command exits with a non-zero status.
     set +e
 
-    # enable file name generation (globbing)
+    # Enable file name generation (globbing).
     set +f
 
-    # do *not* remember the location of commands as they are looked up
+    # Do *not* remember the location of commands as they are looked up.
     set +h
 
-    # enable ! style history substitution
+    # Enable !-style history substitution.
     set -H
 
-    # enable job control
+    # Enable job control.
     set -m
 
-    # follow symbolic links when executing commands
-    # (such as cd) which change the current directory
+    # Follow symbolic links when executing commands (such as cd)
+    # which change the current directory.
     set +P
 
-    # do not treat unset variables as an error when substituting
+    # Do not treat unset variables as an error when substituting.
     set +u
 
-    # do not print shell input lines as they are read
+    # Do not print shell input lines as they are read.
     set +v
 
-    # do not print commands and their arguments as they are executed
-    #   set +x
+    # Do not print commands and their arguments as they are executed.
+    set +x
 
-    # do not exit when an eof is read from terminal.
+    # Do not exit when an EOF is read from terminal.
     set -o ignoreeof
 
-    # the return value of a pipeline is the status of  the last command
+    # The return value of a pipeline is the status of the last command
     # to exit with a non-zero status, or zero if no command exited with
-    # a non-zero status
+    # a non-zero status.
     set -o pipefail
 
-    # do not wan user about new mails
-    set +o mailwarn
-
-    # various `shopt' options
     shopt -u cdable_vars
     shopt -u cdspell
     shopt -u checkhash
@@ -72,7 +64,7 @@ RestoreDefualtInteractiveShellOptions()
     shopt -u extdebug
     shopt -s extglob
     shopt -s extquote
-    shopt -u failglob  # does not compels if a glob expansion fails
+    shopt -u failglob  # Doesn't complain if a glob expansion fails
     shopt -s force_fignore
     shopt -u gnu_errfmt
     shopt -u histreedit
@@ -94,23 +86,18 @@ RestoreDefualtInteractiveShellOptions()
     shopt -s sourcepath
     shopt -u xpg_echo
 
-    # history behaviour
+    # History behaviour.
     HISTIGNORE="&:[el]l:ls:[bf]g:exit"
 
-    # $HISTSIZE: numero di comandi "ricordati" dalla shell in runtime.
+    # Number of commands remembered by the shell at runtime.
     HISTSIZE=5000
-    # $HISTSIZE: numero di comandi "ricordati" dalla shell su disco.
+    # Number of commands remembered on the history file on disk.
     HISTFILESIZE=0
-    # $HISTFILE: dove i comandi della history vengono salvati su disco.
-    HISTFILE="$HOME/.bash_history"
-
+    # File where to save shell history.
+    HISTFILE=$HOME/.bash_history
 }
 
-declare -rf RestoreDefualtInteractiveShellOptions
-
-#--------------------------------------------------------------------------
-
 # Set default options.
-RestoreDefualtInteractiveShellOptions
+set_defualt_shell_options
 
 # vim: ft=sh et sw=4 ts=4
