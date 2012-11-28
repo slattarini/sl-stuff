@@ -1,12 +1,15 @@
 # -*- bash -*-
 
-if ! IsHost bigio; then
-    # ssh-agent machinery is not to be run
-    return $SUCCESS
-elif [[ ${SSH_AGENT_PID+set} == set ]]; then
-    # ssh-agent machinery has been already started
+# ssh-agent machinery is not to be run be default.
+if [ ! -f ~/.ssh-agent-is-to-be-run ]; then
+  return $SUCCESS
+fi
+
+# ssh-agent machinery might have already been started.
+if [[ ${SSH_AGENT_PID+set} == set ]]; then
     return $SUCCESS
 fi
+
 eval "$(ssh-agent -s)" || return $FAILURE;
 atexit 'eval "$(ssh-agent -k)"' || { ssh-agent -k; return $FAILURE; }
 
