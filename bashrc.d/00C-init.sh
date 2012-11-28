@@ -11,9 +11,6 @@ declare -ir FAILURE=1
 declare -ir E_USAGE=2
 declare -ir E_INTERNAL=100
 
-declare -ir FALSE=0
-declare -ir TRUE=1
-
 IFS=' '$'\t'$'\n'
 
 xecho () { printf '%s\n' "$*"; }
@@ -153,9 +150,9 @@ _fixdir_for_path() {
 # Internal subroutine, used by 'add_to_path()'.
 # Usage: _add_dir_to_path [-B] DIRECTORY [PATH-VARIABLE='PATH'] [PATHSEP=:]
 _add_dir_to_path () {
-    declare -i prepend=$FALSE
+    declare -i prepend=0
     if [ x"${1-}" = x'-B' ]; then
-        prepend=$TRUE
+        prepend=1
         shift
     fi
     # Be sure to use the "real" path of the directory to add.
