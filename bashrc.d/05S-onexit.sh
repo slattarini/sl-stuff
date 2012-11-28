@@ -4,7 +4,8 @@
 
 declare -a EXEC_ON_EXIT_ACTIONS=(":")
 
-exit_trap() {
+exit_trap()
+{
     # No need to bother with local variables here; we will soon exit.
     exit_status=$?
     unset PS1 PS2 PS3 PS4 PROMPT_COMMAND
@@ -23,18 +24,19 @@ exit_trap() {
         tput reset || exit_status=$FAILURE
     fi
     # Clear history file.
-    : > "${HISTFILE-"$HOME/.bash_history"}" || exit_status=$FAILURE
+    : > "${HISTFILE-$HOME/.bash_history}" || exit_status=$FAILURE
     exit $exit_status
-
 }
 
 trap exit_trap EXIT HUP QUIT ABRT PIPE TERM
 
-atexit() {
+atexit()
+{
     EXEC_ON_EXIT_ACTIONS=("$@" "${EXEC_ON_EXIT_ACTION[@]}")
 }
 
-atexit_clear() {
+atexit_clear()
+{
     EXEC_ON_EXIT_ACTIONS=(":")
 }
 
