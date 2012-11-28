@@ -62,9 +62,11 @@ MakeGUI ()
         [ -z "$mkgui_program" ] && continue
 
         # Does the program exist, and is it executable?
-        if ! which "$mkgui_program" &>/dev/null; then
-            fwarn "'$mkgui_program': program not found"
-            mkgui_exitval=$FAILURE
+        if ! W "$mkgui_program"; then
+            if [[ ${MKGUI_VERBOSE_ON_MISSING_PROGRAMS-} == [yY]* ]]; then
+              fwarn "'$mkgui_program': program not found"
+              mkgui_exitval=$FAILURE
+            fi
             continue
         fi
 
