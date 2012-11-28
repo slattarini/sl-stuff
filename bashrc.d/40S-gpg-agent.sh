@@ -1,10 +1,10 @@
 # -*- bash -*-
 
-# gpg-agent machinery is not to be run be default
+# gpg-agent machinery is not to be run be default.
 [ -f ~/.gpg-agent-is-to-be-run ] || return $SUCCESS
 
 if [[ ${GPG_AGENT_INFO+set} == set ]]; then
-    # gpg-agent machinery has been already started
+    # gpg-agent machinery has been already started.
     mwarn "Not starting gpg-agent machinery: it is already active"
     mwarn "GPG_AGENT_INFO=$GPG_AGENT_INFO"
     # This is required, if we open an xterm in an X session already

@@ -1,5 +1,5 @@
 # -*- bash -*-
-# Look for GNU versions of some common programs
+# Look for GNU versions of some common programs.
 
 have_gnu_program ()
 {
