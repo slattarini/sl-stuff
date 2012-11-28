@@ -51,14 +51,17 @@ fi
 # about the exit status of the last executed command.
 ok() { local ok_val=$?; echo $ok_val; return $ok_val; }
 
-# Detailed information on all process.  This is more system-independent
+# Detailed information on all process.  This is more system-dependent
 # than we'd like.
-if [[ $SYSTEM_UNAME == linux ]]; then
+if (ps -elFywww | grep " $USER  *$$ ") &>/dev/null; then
+    # Prefer Linux-like options and format, if avaiable.
     alias PS='ps -elFywwwww | less'
-elif [[ $SYSTEM_UNAME == *bsd ]]; then
-    alias PS='ps auxwwwww | less'
-elif [[ $SYSTEM_UNAME == solaris && -f /usr/ucb/ps ]]; then
+elif [ -f /usr/ucb/ps ]; then
+    # Hack for Solaris, mostly.
     alias PS='/usr/ucb/ps auxwwwww | less'
+else
+    # Fall back to BSD syntax, hopefully that's good enough.
+    alias PS='ps auxwwwww | less'
 fi
 
 # Restart the currently-running bash shell.
