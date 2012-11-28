@@ -1,33 +1,31 @@
 # -*- readline -*-
-# Configurazione personale per GNU Readline.
-#
+# Personal configuration for GNU readline.
 
-# Rilegge questo file.
 "\C-x\C-r": re-read-init-file
 
-# Vai all'inizio della riga con <Home> (era C-a)
+# <Home> (was C-a)
 "\e[H": beginning-of-line
-# Vai alla fine della riga con <End> (era C-e)
+# <End> (was C-e)
 "\e[F": end-of-line
-# Vai indietro di una parola con <PageUp> (era M-b)
+# <PageUp> (was M-b)
 "\e[5~": backward-word
-# Vai avanti di una parola con <PageDown> (era M-f).
+# <PageDown> (was M-f).
 "\e[6~": forward-word
-# Vai indietro di una parola con <Control> + <Left> (era M-b).
+# <Ctrl> + <Left> (was M-b).
 "\e[1;5D": backward-word
-# Vai avanti di una parola con <Control> + <Right> (era M-f).
+# <Ctrl> + <Right> (was M-f).
 "\e[1;5C": forward-word
-# Cancella un carattere a destra con <Del>.
+# <Del>.
 "\e[3~": delete-char
+# <Ctrl>  + D
 "\C-d":  delete-char
 
-# Con <Ins> passiamo dalla modalita` inserimento alla modalita`
-# sostituzione.
+# <Ins>
 "\e[2~": overwrite-mode
 
-# Inserisce un carattere di tabulazione letterale.
+# <Ctrl> + <Space> => literal tabulation character
 "\C- ": tab-insert
-# Tentare una command completion  --  <Tab>.
+# <Tab> => command completion
 "	": complete
 
 # These are required to get readline to display accents and/or umlauts,
@@ -39,11 +37,12 @@ set convert-meta off
 
 $if Bash
 
-   # Tentare una command completion  --  <F1>.
+   # <F1> => command completion
    "\eOP": complete
 
-   # Un aiuto per completare le opzioni lunghe (deal with a minor
-   # botch of bash completion)  --  <F2> e <Meta>+"-"
+   # <F2> as well as <Meta> + "-"
+   # Help completing long options (deal with a minor botch of bash
+   # completion)
    # XXX: "\M--" doesn't work; why?
    "\e-": "\C-b\C-b\C-b\C-d\C-f"
    "\eOQ": "\C-b\C-b\C-b\C-d\C-f"
@@ -52,9 +51,9 @@ $if Bash
    # XXX: "\M--" doesn't work; why?
    "\e+": "    \C-b\C-b\C-b\C-d\C-f"
    "\e[15~": " \C-b\C-b\C-b\C-d\C-f"
-   # Vedere i possibili completamenti di un comando  --  <F3>.
+   # <F3>
    "\eOR": possible-completions
-   # Completamento "a menu" di un comando  --  <F4>.
+   # <F4>
    "\eOS": menu-complete
 
    # Stampa un bel fortune.
