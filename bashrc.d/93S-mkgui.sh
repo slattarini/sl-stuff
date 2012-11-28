@@ -5,12 +5,12 @@
 # No point sourcing this if we are not in an X session.
 [ -n "$DISPLAY" ] || return $SUCCESS
 
-# The big, ugly, do-it-all function.
 MakeGUI ()
 {
+    local mkgui_program # Will be looped on later.
+    local mkgui_exitval=$SUCCESS
     local mkgui_added_head_code=''
     local mkgui_added_tail_code=''
-    local mkgui_exitval=$SUCCESS
     local mkgui_action='eval'
     local mkgui_program_wrapper=command
     local OPTION OPTARG OPTIND
@@ -21,20 +21,12 @@ MakeGUI ()
         t) mkgui_added_tail_code=$mkgui_added_tail_code$'\n'$OPTARG;;
         w) mkgui_program_wrapper=$OPTARG;;
         -) break;;
-        :) fwarn "'-$OPTARG': argument required" >&2; return $E_USAGE;;
-        *) fwarn "'-$OPTARG': invalid option" >&2; return $E_USAGE;;
+        :) fwarn "'-$OPTARG': argument required"; return $E_USAGE;;
+        *) fwarn "'-$OPTARG': invalid option"; return $E_USAGE;;
       esac
     done
     shift $((OPTIND - 1))
-
-    if (($# == 0)); then
-        fwarn "missing argument"
-        return $E_USAGE
-    fi
-
-    # Here we go...
-
-    local mkgui_program
+    (($#)) || { fwarn "missing argument"; return $E_USAGE; }
 
     for mkgui_program in "$@"; do
 
@@ -99,12 +91,12 @@ MakeGUI ()
             }
         "
 
-        (($? == 0)) || {
+        if (($? != 0)); then
             fwarn "$mkgui_funcname can't be declared as function," \
                   "due to an unknown error"
             mkgui_exitval=$FAILURE
             continue
-        }
+        fi
 
     done
 
@@ -112,7 +104,7 @@ MakeGUI ()
 }
 
 MakeGUI \
-    firefox xterm xman libreoffice  pidgin vuze easytag emacs \
+    firefox xterm xman libreoffice pidgin vuze easytag emacs \
     gitk qgit hgview xpdf xdvi gv ddd djview iceweasel icedove \
     smalltalk bluej cssed civ freeciv heretic alsaplayer
 
