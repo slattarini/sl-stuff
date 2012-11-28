@@ -1,13 +1,9 @@
 # -*- bash -*-
-
-#
 # Build "alias functions" to launch GUI commands from a shell (in an
 # X-Terminal).
-#
 
-IsHost bigio || IsHost bplab || return $SUCCESS
-
-#--------------------------------------------------------------------------
+# No point sourcing this if we are not in an X session.
+[ -n "$DISPLAY" ] || return $SUCCESS
 
 readonly mkgui_E_NOGUI=15
 
