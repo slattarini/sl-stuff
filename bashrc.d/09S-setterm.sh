@@ -216,7 +216,7 @@ restore_term_settings ()
 # Initialize the terminal properties with our defaults.
 export LINES=$(get_term_lines)
 export COLUMNS=$(get_term_columns)
-_set_current_term_settings
+term_default
 
 #--------------------------------------------------------------------------
 
