@@ -16,9 +16,7 @@ declare -ir TRUE=1
 
 IFS=' '$'\t'$'\n'
 
-xecho() {
-    printf '%s\n' "$*"
-}
+xecho () { printf '%s\n' "$*"; }
 
 shell_quote() {
     case $* in
@@ -27,39 +25,26 @@ shell_quote() {
     esac | sed -e "s/'/'\\\\''/" -e "s/^/'/" -e "s/$/'/"
 }
 
-warn() {
-    xecho "$0: $*" >&2
-}
+warn ()  { xecho "$0: $*" >&2; }
+mwarn () { xecho "$(modulname 2): $*" >&2; }
+fwarn () { xecho "$(funcname 2): $*" >&2; }
 
-mwarn() {
-    xecho "$(modulname 2): $*" >&2
-}
+funcname()  { xecho "${FUNCNAME[${1-1}]:-(main)}"; }
+modulname() { xecho "${BASH_SOURCE[${1-1}]:-$0}"; }
 
-fwarn() {
-    xecho "$(funcname 2): $*" >&2
-}
-
-funcname() {
-    xecho "${FUNCNAME[${1-1}]:-(main)}"
-}
-
-modulname() {
-    xecho "${BASH_SOURCE[${1-1}]:-$0}"
-}
-
-is_function() {
-    declare -F "$1" >/dev/null 2>&1
-}
+is_function() { declare -F "$1" &>/dev/null; }
 
 # Abstraction layer for lowercase/uppercase conversions.  Mostly meant
 # for systems with limited 'tr' utility.
-tolower() {
+tolower()
+{
     case $# in
         0) cat;;
         *) xecho "$*";;
     esac | tr ABCDEFGHIJKLMNOPQRSTUVWXYZ abcdefghijklmnopqrstuvwxyz
 }
-toupper() {
+toupper()
+{
     case $# in
         0) cat;;
         *) xecho "$*";;
@@ -70,9 +55,10 @@ toupper() {
 # between different, so use the 'type' bash builtin instead.  Also, some
 # systems (e.g., Fedora 16) pre-define a 'which' alias that interferes
 # with our usage; get rid of it beforehand.
-unalias which >/dev/null 2>&1
+unalias which &>/dev/null
 
-which () {
+which ()
+{
     local opts=''
     while (($#)); do
         case $1 in
@@ -149,13 +135,18 @@ fi
 [ -n "${COLUMNS-}" ] && export COLUMNS
 [ -n "${LINES-}" ] && export LINES
 
-# Internal subroutine, used by '_fixdir_for_path()'.
-_check_realpath() { [[ $("$1" /.//../ 2>/dev/null) == / ]]; }
+# Temporary subroutine, used by the check right below.
+_check_realpath()
+{
+  [[ $("$1" /.//../ 2>/dev/null) == / ]]
+}
+# Internal subroutine '_weak_realpath', used by '_fixdir_for_path'.
 if find_better_program realpath REALPATH_CMD _check_realpath; then
   _weak_realpath() { $REALPATH_CMD "$@"; }
 else
   _weak_realpath() { xecho "$1"; }
 fi
+# Get rid of this temporary subroutine.
 unset -f _check_realpath
 
 # Internal subroutine, used by '_add_dir_to_path()'.
