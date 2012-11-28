@@ -18,13 +18,6 @@ IFS=' '$'\t'$'\n'
 
 xecho () { printf '%s\n' "$*"; }
 
-shell_quote() {
-    case $* in
-        0) cat;;
-        *) xecho "$*";;
-    esac | sed -e "s/'/'\\\\''/" -e "s/^/'/" -e "s/$/'/"
-}
-
 warn ()  { xecho "$0: $*" >&2; }
 mwarn () { xecho "$(modulname 2): $*" >&2; }
 fwarn () { xecho "$(funcname 2): $*" >&2; }
