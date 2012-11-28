@@ -105,20 +105,6 @@ SYSTEM_UNAME=$(xecho "$SYSTEM_UNAME" | normalize_name)
 
 readonly SYSTEM_UNAME
 
-case $SYSTEM_UNAME in
-  freebsd,*|solaris,*|linux,*)
-    # System recognized
-    ;;
-  *)
-    mwarn "***"
-    mwarn "*** WARNING WARNING!!!"
-    mwarn "*** ('$SYSTEM_UNAME')" \
-               "Invalid \$uname"
-    mwarn "*** Something might not work as expected, so be careful"
-    mwarn "***"
-    ;;
-esac
-
 # 'which' utilities on different systems have too many incompatibilities
 # between different, so use the 'type' bash builtin instead.  Also, some
 # systems (e.g., Fedora 16) pre-define a 'which' alias that interferes
