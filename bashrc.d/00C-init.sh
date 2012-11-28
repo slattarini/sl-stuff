@@ -60,7 +60,7 @@ is_function() {
 declare -rf is_function
 
 # Abstraction layer for lowercase/uppercase conversions.  Mostly meant
-# for systems with limited `tr' utility.
+# for systems with limited 'tr' utility.
 tolower() {
     case $# in
         0) cat;;
@@ -165,7 +165,7 @@ declare -ra extra_gnu_path=(
     /opt/bin
 )
 
-# The given command must support the `--help' option and have the string
+# The given command must support the '--help' option and have the string
 # "GNU" in its help screen to be considered a GNU program.
 is_gnu_program ()
 {
@@ -276,8 +276,8 @@ _add_dir_to_path () {
 declare -rf _add_dir_to_path
 
 # Usage: add_to_path [-B] [-c PATH-SEPARATOR] [-B PATH-VARIABLE] [DIRS]
-# Append (or prepend, if given `-B' option) `$2', ... `$n' to the search
-# path whose variable name is given by the `-p' option (default to 'PATH').
+# Append (or prepend, if given '-B' option) '$2', ... '$n' to the search
+# path whose variable name is given by the '-p' option (default to 'PATH').
 # The path separator is assumed to be ':', unless differently specified by
 # the '-c' option.
 add_to_path()
@@ -302,12 +302,12 @@ add_to_path()
     local d
     for d in "$@"; do
         if [[ "$d" == *"$path_sep"* ]]; then
-            fwarn "\`$d': directory name contains the path separator" \
-                  "\`$path_sep'"
+            fwarn "'$d': directory name contains the path separator" \
+                  "'$path_sep'"
         elif ! [[ -d $d ]]; then
-            fwarn "\`$d': not a directory."
+            fwarn "'$d': not a directory."
         elif ! [[ -r $d && -x $d ]]; then
-            fwarn "\`$d': directory not fully readable."
+            fwarn "'$d': directory not fully readable."
         else
             _add_dir_to_path $prepend_opt "$d" "$path_var" "$path_sep"
         fi
