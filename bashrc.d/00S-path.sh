@@ -1,5 +1,4 @@
 # -*- bash -*-
-
 # Set PATH variable (for search of executable files).
 
 tPATH=''
@@ -7,18 +6,14 @@ add_to_path -p tPATH -B /usr/ucb /sbin /bin /usr/sbin /usr/bin
 PATH=$tPATH
 unset tPATH
 
-if [[ $SYSTEM_UNAME == solaris ]]; then
-    add_to_path -B \
-        /usr/xpg4/bin \
-        /usr/xpg6/bin \
-        /usr/ccs/bin
-        /usr/sfw/bin \
-        /opt/sfw/bin \
-        /opt/SUNWspro/bin \
-        /opt/SUNWspro/extra/bin
-fi
-
 add_to_path -B \
+    /usr/xpg4/bin \
+    /usr/xpg6/bin \
+    /usr/ccs/bin \
+    /usr/sfw/bin \
+    /opt/sfw/bin \
+    /opt/SUNWspro/bin \
+    /opt/SUNWspro/extra/bin
     /usr/games \
     /usr/pkg/bin \
     /opt/java/sun-java/bin \
@@ -28,8 +23,8 @@ add_to_path -B \
 
 # On FreeBSD, /usr/local/sbin contains important binaries like pkg_which,
 # which should be easily available also to non-root users.
-if [[ $SYSTEM_UNAME == freebsd ]]; then
-    add_to_path -B '/usr/local/sbin'
+if [[ -f /usr/local/sbin/pkg_which ]]; then
+    add_to_path -B /usr/local/sbin
 fi
 
 if [[ -n "$KDE_FULL_SESSION" && -n "$KDE_SESSION_VERSION" ]]; then
@@ -47,12 +42,6 @@ if [[ -n "$KDE_FULL_SESSION" && -n "$KDE_SESSION_VERSION" ]]; then
 fi
 
 add_to_path -B "/usr/local/opt/bin" "$HOME/bin" "$HOME/bin/utils"
-
-d=$HOME/bin/$(normalize_name "$SYSTEM_UNAME")
-if [ -d "$d" ]; then
-    add_to_path -B "$d"
-fi
-unset d
 
 export PATH
 
