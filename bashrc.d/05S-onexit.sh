@@ -6,19 +6,17 @@
 declare -a EXEC_ON_EXIT_ACTIONS=(":")
 
 exit_trap() {
-    local exit_status=$?
-    local i exit_action
+    # No need to bother with local variables here; we will soon exit.
+    exit_status=$?
     unset PS1 PS2 PS3 PS4 PROMPT_COMMAND
     trap - EXIT
     # Execute planned cleanup actions in the proper order.
-    local exit_action
     for exit_action in "${EXEC_ON_EXIT_ACTIONS[@]}"; do
         eval "$exit_action" || exit_status=$FAILURE
     done
     # Really clear screen, so that even page-up commands cannot show
     # it anymore.
     if [[ 1 -eq $SHLVL && -z ${DISPLAY-} && -z ${SSH_CONNECTION-} ]]; then
-        declare -i i
         for ((i = 0; i < 5000; i++)); do
             echo
         done
