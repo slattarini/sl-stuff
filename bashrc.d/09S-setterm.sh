@@ -161,7 +161,8 @@ term_unblink ()
     _set_current_term_settings
 }
 
-term_default () { tput sgr0; }
+# It seems "tput sgr0" doesn't work on FreeBSD 8.
+term_default () { tput sgr0 || reset; }
 
 get_term_lines () { tput lines; }
 get_term_columns () { tput cols; }
