@@ -35,12 +35,6 @@ case $hostname in
 esac
 export WH_VIM WH_GVIM
 
-# Root directory of the sandboxed testing environments used by the
-# `test-in-sandbox' script.
-#export SANDBOX_TESTING_ENVIRONMENTS=$HOME/src/sandboxed-testing/sandboxes/$hostname-$SYSTEM_UNAME
-# Directory of the plugins used by the sandboxed testing environments.
-#export SANDBOX_TESTING_PLUGINS=$HOME/src/sandboxed-testing/test-in-sandbox/plugins
-
 # Trash directory used by my del(1) utility.
 if IsHost freddy; then
     # So that the trash dir won't be uselessly backupped.
