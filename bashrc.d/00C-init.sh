@@ -93,18 +93,6 @@ normalize_version() {
 }
 declare -rf normalize_name normalize_version
 
-# Identify the running system.
-
-SYSTEM_UNAME=$(uname -s)
-# strip OS type and version under Cygwin (e.g. CYGWIN_NT-5.1 => Cygwin)
-SYSTEM_UNAME=${SYSTEM_UNAME/CYGWIN_*/Cygwin}
-# Prefer Solaris over SunOS as system name
-SYSTEM_UNAME=${SYSTEM_UNAME/SunOS/Solaris}
-# normalize the name
-SYSTEM_UNAME=$(xecho "$SYSTEM_UNAME" | normalize_name)
-
-readonly SYSTEM_UNAME
-
 # 'which' utilities on different systems have too many incompatibilities
 # between different, so use the 'type' bash builtin instead.  Also, some
 # systems (e.g., Fedora 16) pre-define a 'which' alias that interferes
