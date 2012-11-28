@@ -27,18 +27,15 @@ exit_trap() {
     exit $exit_status
 
 }
-declare -rf exit_trap
 
 trap exit_trap EXIT HUP QUIT ABRT PIPE TERM
 
 atexit() {
     EXEC_ON_EXIT_ACTIONS=("$@" "${EXEC_ON_EXIT_ACTION[@]}")
 }
-declare -rf atexit
 
 atexit_clear() {
     EXEC_ON_EXIT_ACTIONS=(":")
 }
-declare -rf atexit_clear
 
 # vim: ft=sh et sw=4 ts=4
