@@ -6,8 +6,6 @@ alias H=listen-radioclassica
 
 # Laziness aliases.
 W scons && alias scons='scons -Q'
-W kview && alias kv=kview
-W konqueror && alias k=konqueror
 
 : # Don't return spurious error.
 
