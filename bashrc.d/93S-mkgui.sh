@@ -5,20 +5,6 @@
 # No point sourcing this if we are not in an X session.
 [ -n "$DISPLAY" ] || return $SUCCESS
 
-readonly mkgui_E_NOGUI=15
-
-_mkgui_check_display ()
-{
-    if [[ -z ${DISPLAY-} ]]; then
-        fwarn "'DISPLAY' variable not set, cannot connect to screen." \
-              " Is the X server running?"
-        return $mkgui_E_NOGUI
-    else
-        return $SUCCESS
-    fi
-}
-declare -rf _mkgui_check_display
-
 # The big, ugly, do-it-all function.
 MakeGUI ()
 {
@@ -97,9 +83,6 @@ MakeGUI ()
         $mkgui_action "
             $mkgui_funcname ()
             {
-
-                _mkgui_check_display || return \$?
-
                 $mkgui_setup_names
                 $mkgui_added_head_code
 
