@@ -128,8 +128,8 @@ declare -rf set_term_background_color
 
 _set_current_term_settings()
 {
-    tput sgr ${_setterm_reversing} ${_setterm_underlining} \
-             0 ${_setterm_blinking} 0 ${_setterm_bolding}
+    tput sgr "${_setterm_reversing}" "${_setterm_underlining}" \
+             0 "${_setterm_blinking}" 0 "${_setterm_bolding}"
     set_term_background_color "${_term_background_color}"
     set_term_foreground_color "${_term_foreground_color}"
 }
