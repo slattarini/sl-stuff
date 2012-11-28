@@ -25,7 +25,7 @@ if [[ -z $BASH_COMPLETION ]]; then
 fi
 
 if [[ ! -f $BASH_COMPLETION || ! -r $BASH_COMPLETION ]]; then
-    mwarn "  expected bash completion file \`$BASH_COMPLETION"
+    mwarn "  expected bash completion file '$BASH_COMPLETION"
     mwarn "  does not exist or is not a regular readable file."
     mwarn "  Bash advanced completion features won't be avaible."
     return $SUCCESS
@@ -34,7 +34,7 @@ fi
 . "$BASH_COMPLETION"
 if (($? != 0)); then
     mwarn "some errors occurred while loading bash completion file" \
-          "\`$BASH_COMPLETION'"
+          "'$BASH_COMPLETION'"
     mwarn "Some bash's advanced completion features may not be avaible."
     return $SUCCESS
 fi

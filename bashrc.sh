@@ -26,7 +26,7 @@ fi
 # Refuse to run with older bash version.
 case $BASH_VERSION in
     [12].*)
-        echo "$0: Bash version \`$BASH_VERSION' too old, ~/.bashrc" \
+        echo "$0: Bash version '$BASH_VERSION' too old, ~/.bashrc" \
              "initialization won't be available" >&2
         return 0;;
 esac
@@ -52,7 +52,7 @@ for bashrc__file in "$USER_BASHRC_DIR"/[0-9][0-9]*.sh ~/.bash_local; do
     [ -f "$bashrc__file" ] || continue
     echo "** SHINIT: including $bashrc__file"
     . "$bashrc__file" || {
-        echo "$0: error while loading file \`$bashrc__file'" >&2
+        echo "$0: error while loading file '$bashrc__file'" >&2
         return 1
     }
 done

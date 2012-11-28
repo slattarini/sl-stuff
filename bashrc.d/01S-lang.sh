@@ -3,7 +3,7 @@
 # I18N and L10N
 
 W nlang || {
-    mwarn "Missing program \`nlang'" >&2
+    mwarn "Missing program 'nlang'" >&2
     mwarn "Fancy localization functions won't be available" >&2
     return $SUCCESS
 }

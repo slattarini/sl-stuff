@@ -43,10 +43,10 @@ unset -v x
 # Wrapper/aliases civclient program.
 copy_completion civclient civ freeciv
 
-# `chdir' is aliased to `cd'.
+# 'chdir' is aliased to 'cd'.
 copy_completion cd chdir
 
-# Aliases for gzip and bzip2: `gz' and `bz2'.
+# Aliases for gzip and bzip2: 'gz' and 'bz2'.
 copy_completion gzip gz
 copy_completion bzip2 bz2
 
@@ -56,15 +56,15 @@ copy_completion gvim g
 copy_completion view vw
 copy_completion gview gw
 
-# Wrappers around `man'.
+# Wrappers around 'man'.
 copy_completion man cman mman
-# Wrappers around `info'.
+# Wrappers around 'info'.
 copy_completion info cinfo minfo
-# "Extensions" for `ls'.
+# "Extensions" for 'ls'.
 copy_completion ls la ll lls
-# Alias for builtin `command'.
+# Alias for builtin 'command'.
 copy_completion command cmd
-# "Extensions" for `cp', `mv' and `rm'.
+# "Extensions" for 'cp', 'mv' and 'rm'.
 copy_completion cp cpf
 copy_completion mv mvf
 copy_completion rm rmf
@@ -77,7 +77,7 @@ have kview && complete -o dirnames -f -X '!*.@(gif|jp?(e)g|miff|tif?(f)|pn[gm]|p
 copy_completion kview kv
 
 # Is not unusual for the shell to run files that does not end with
-# the `.sh' extension, but the completion subroutine offered by the
+# the '.sh' extension, but the completion subroutine offered by the
 # bash-completion package does not recognize that :-(
 # We need a fix.
 eval "$(declare -f _sh | sed 's/^ *_filedir  *sh *$/_filedir/')"
