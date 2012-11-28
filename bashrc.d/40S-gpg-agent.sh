@@ -14,10 +14,10 @@ if [[ ${GPG_AGENT_INFO+set} == set ]]; then
     return $SUCCESS
 fi
 
-kill_gpg_agent() {
+kill_gpg_agent()
+{
     [ -z "${GPG_AGENT_PID-}" ] || kill $GPG_AGENT_PID
 }
-declare -rf kill_gpg_agent
 
 eval "$(gpg-agent --daemon --sh)" \
   && GPG_AGENT_PID=${GPG_AGENT_INFO%:*} \
