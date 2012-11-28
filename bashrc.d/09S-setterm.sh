@@ -105,8 +105,8 @@ set_term_color()
     _term_color=$(_term_color_to_code "$1") || return $FAILURE
     _set_term_color "${_term_color}" "${_term_ground}"
     case ${_term_ground} in
-        3) _term_foreground_color="$1";; # global var
-        4) _term_background_color="$1";; # global var
+        3) _term_foreground_color=$1;; # global var
+        4) _term_background_color=$1;; # global var
         *) fwarn "INTERNAL ERROR: bad \${_term_ground}"
            return $E_FAILURE;;
     esac
