@@ -13,7 +13,7 @@ add_to_path -B \
     /usr/sfw/bin \
     /opt/sfw/bin \
     /opt/SUNWspro/bin \
-    /opt/SUNWspro/extra/bin
+    /opt/SUNWspro/extra/bin \
     /usr/games \
     /usr/pkg/bin \
     /opt/java/sun-java/bin \
