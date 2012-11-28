@@ -4,7 +4,7 @@
 export TMPDIR=/tmp
 export PAGER=less
 
-[ -f "$HOME/.bash_inputrc" ] && export INPUTRC="$HOME/.bash_inputrc"
+[[ -f $HOME/.bash_inputrc ]] && export INPUTRC=$HOME/.bash_inputrc
 
 d=/var/local/cache/radio-classica-bresciana.cache
 [[ -d $d ]] && export RADIO_CLASSICA_BRESCIANA_CACHE=$d
@@ -14,10 +14,10 @@ unset d
 W lesspipe && eval "$(lesspipe)"
 
 # Location of a checked-out copy of gnulib.
-[ -d "$HOME/src/gnulib" ] && export GNULIB_SRCDIR=$HOME/src/gnulib
+[[ -d $HOME/src/gnulib ]] && export GNULIB_SRCDIR=$HOME/src/gnulib
 
 # Override defaults for autoconf-generated configure scripts.
-test -f $HOME/config.site && export CONFIG_SITE=$HOME/config.site
+[[ -f $HOME/config.site ]] && export CONFIG_SITE=$HOME/config.site
 
 # Editors used by whed(1) and its links.
 case $hostname in
@@ -33,7 +33,7 @@ esac
 export WH_VIM WH_GVIM
 
 # Trash directory used by my del(1) utility.
-if [[ -d "$HOME/scratch/.trash" ]]; then
+if [[ -d $HOME/scratch/.trash ]]; then
     # Avoid backup pf deleted files on systems having a dedicated
     # scratch area.
     export TRASH_DIRECTORY=$HOME/scratch/.trash
