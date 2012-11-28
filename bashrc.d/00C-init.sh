@@ -152,7 +152,7 @@ W() { which "$@" >/dev/null 2>&1; }
 
 declare -rf which W
 
-# On non-FreeBSD ad non-Linux systems, some binaries we are looking for
+# On non-FreeBSD and non-Linux systems, some binaries we are looking for
 # can be stashed in weird/unusual locations.
 declare -ra extra_gnu_path=(
     "$HOME"/bin
