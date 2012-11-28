@@ -36,11 +36,12 @@ esac
 export WH_VIM WH_GVIM
 
 # Trash directory used by my del(1) utility.
-if IsHost freddy; then
-    # So that the trash dir won't be uselessly backupped.
-    export TRASH_DIRECTORY="$HOME/scratch/.trash"
+if [[ -d "$HOME/scratch/.trash" ]]; then
+    # Avoid backup pf deleted files on systems having a dedicated
+    # scratch area.
+    export TRASH_DIRECTORY=$HOME/scratch/.trash
 else
-    export TRASH_DIRECTORY="$HOME/.trash"
+    export TRASH_DIRECTORY=$HOME/.trash
 fi
 
 # vim: ft=sh et sw=4 ts=4
