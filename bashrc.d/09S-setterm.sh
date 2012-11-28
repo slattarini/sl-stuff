@@ -202,7 +202,7 @@ restore_term_text_settings ()
     _setterm_underlining=${_setterm_underlining_saved}
     _setterm_reversing=${_setterm_reversing_saved}
     _setterm_blinking=${_setterm_blinking_saved}
-    _set_current_term_settings;
+    _set_current_term_settings
 }
 
 restore_term_settings ()
