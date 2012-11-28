@@ -3,12 +3,10 @@
 # gpg-agent machinery is not to be run be default.
 [ -f ~/.gpg-agent-is-to-be-run ] || return $SUCCESS
 
+# gpg-agent machinery might have already been started.
 if [[ ${GPG_AGENT_INFO+set} == set ]]; then
-    # gpg-agent machinery has been already started.
-    mwarn "Not starting gpg-agent machinery: it is already active"
-    mwarn "GPG_AGENT_INFO=$GPG_AGENT_INFO"
-    # This is required, if we open an xterm in an X session already
-    # wrapped by gpg-agent.
+    # This is required, if we open an xterm in an X session
+    # already wrapped by gpg-agent.
     export GPG_TTY=$(tty)
     # Nothing more to do.
     return $SUCCESS
