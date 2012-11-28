@@ -1,17 +1,14 @@
 # -*- bash -*-
-
 # Definitions of miscellaneous variables.
 
 export TMPDIR=/tmp
 export PAGER=less
 
-[ -f "$HOME/.bash_inputrc" ] && INPUTRC="$HOME/.bash_inputrc"
+[ -f "$HOME/.bash_inputrc" ] && export INPUTRC="$HOME/.bash_inputrc"
 
-if IsHost bigio; then
-    d=/var/local/cache/radio-classica-bresciana.cache
-    [ -d "$d" ] && export RADIO_CLASSICA_BRESCIANA_CACHE=$d
-    unset d
-fi
+d=/var/local/cache/radio-classica-bresciana.cache
+[[ -d $d ]] && export RADIO_CLASSICA_BRESCIANA_CACHE=$d
+unset d
 
 # Filters for less(1).
 W lesspipe && eval "$(lesspipe)"
