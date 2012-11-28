@@ -46,18 +46,9 @@ $if Bash
    # XXX: "\M--" doesn't work; why?
    "\e-": "\C-b\C-b\C-b\C-d\C-f"
    "\eOQ": "\C-b\C-b\C-b\C-d\C-f"
-   # Un aiuto per completare le optzioni lunghe (deal with a minor
-   # botch of bash completion)  --  <F5> e <Meta>+"+"
-   # XXX: "\M--" doesn't work; why?
-   "\e+": "    \C-b\C-b\C-b\C-d\C-f"
-   "\e[15~": " \C-b\C-b\C-b\C-d\C-f"
    # <F3>
    "\eOR": possible-completions
    # <F4>
    "\eOS": menu-complete
 
-   # Stampa un bel fortune.
-   "\C-\M-w": "\C-a\C-kdeclare -F welcome &>/dev/null && welcome\C-o\C-a\C-k"
-
 $endif
-
