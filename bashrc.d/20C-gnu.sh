@@ -34,4 +34,6 @@ look_for_gnu_program ()
 look_for_gnu_program ls
 look_for_gnu_program grep
 
+:
+
 # vim: ft=sh et ts=4 sw=4
