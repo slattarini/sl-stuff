@@ -27,7 +27,7 @@ if [[ -f /usr/local/sbin/pkg_which ]]; then
     add_to_path -B /usr/local/sbin
 fi
 
-add_to_path -B "/usr/local/opt/bin" "$HOME/bin" "$HOME/bin/utils"
+add_to_path -B "/usr/local/opt/bin" "$HOME/bin" "$HOME/bin/local"
 
 export PATH
 
