@@ -6,17 +6,8 @@ homedir = $(HOME)
 
 FAKEINSTALL =
 
-RM = rm
-RM_F = $(RM) -f
-RM_RF = $(RM) -rf
-MV = mv
-MV_F = $(MV) -f
-CP = cp
-LN = ln
-LN_S = $(LN) -s
 INSTALL = install -c
-MKDIR = mkdir
-MKDIR_P = $(MKDIR) -p
+MKDIR_P = mkdir -p
 GNUTAR = tar
 
 install_data = $(INSTALL) -m 444
@@ -97,23 +88,23 @@ dist:
 	@set -x -u; \
 	files="Makefile bash_completion.sh bash_profile.sh bashrc.sh \
 	       inputrc dir_colors"; \
-	$(RM_RF) dist.tmpdir \
-	  && $(MKDIR) dist.tmpdir \
+	rm -rf dist.tmpdir \
+	  && mkdir dist.tmpdir \
 	  && $(GNUTAR) -cf dist.tmpdir/tmp.tar $$files bashrc.d/*.sh \
 	  && cd dist.tmpdir \
-	  && $(MKDIR) $(DISTNAME) \
+	  && mkdir $(DISTNAME) \
 	  && cd $(DISTNAME) \
 	  && $(GNUTAR) -xf ../tmp.tar \
 	  && cd .. \
 	  && $(GNUTAR) -czvf ../$(DISTNAME).tar.gz ./$(DISTNAME) \
 	  && cd .. \
-	  && $(RM_RF) dist.tmpdir
+	  && rm -rf dist.tmpdir
 	ls -l $(DISTNAME).tar.gz
 .PHONY: dist
 
 clean:
-	$(RM_F) *.tmp *.tmp[0-9] $(DISTNAME).tar.gz
-	$(RM_RF) dist.tmpdir
+	rm -f *.tmp *.tmp[0-9] $(DISTNAME).tar.gz
+	rm -rf dist.tmpdir
 .PHONY: clean
 
 # vim: ft=make sw=4 ts=4 noet
