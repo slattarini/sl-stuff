@@ -2,6 +2,11 @@
 
 DISTNAME = bashrc
 
+# Paranoid sanity check.
+ifndef HOME
+$(error cannot use this makefile with $$HOME unset or empty)
+endif
+
 homedir = $(HOME)
 
 FAKEINSTALL =
@@ -86,7 +91,7 @@ fake-install:
 $(DISTNAME).tar.gz: dist
 dist:
 	@set -x -u; \
-	files="Makefile bash_completion.sh bash_profile.sh bashrc.sh \
+	files="GNUmakefile bash_completion.sh bash_profile.sh bashrc.sh \
 	       inputrc dir_colors"; \
 	rm -rf dist.tmpdir \
 	  && mkdir dist.tmpdir \
