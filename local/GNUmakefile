@@ -27,7 +27,7 @@ endif
 
 # Little hack: I identify a "personal account on a personal system"
 # by the use of Thunderbird (or Icedove, as it's called on Debian).
-we_are_home := $(if $(wildcard $(HOME)/.icedove $(HOME)/.tunderbird),yes)
+we_are_at_home := $(if $(wildcard $(HOME)/.icedove $(HOME)/.tunderbird),yes)
 
 bindir = $(HOME)/bin
 
