@@ -19,7 +19,8 @@ endif
 
 .DEFAULT_GOAL := all
 
-UTILS = XXX
+UTILS = strerror
+CLEANFILES = $(UTILS)
 
 all: $(UTILS)
 
@@ -27,8 +28,18 @@ install: all
 	$(MKDIR_P) $(DESTDIR)$(bindir)
 	$(INSTALL_EXEC) $^ $(DESTDIR)$(bindir)
 
+clean:
+	rm -f $(CLEANFILES)
+
+.PHONY: all clean install
+
 # -*-*-
 
-# TODO: compiler C programs.
+CC ?= gcc
+CFLAGS ?= -Wall -Werror
+
+# Compile and link C programs.
+%: %.c
+	$(CC) $(CPPFLAGS) $(CFLAGS) $< -o$@ $(LDFLAGS)
 
 # TODO: pre-process Bash scripts.
