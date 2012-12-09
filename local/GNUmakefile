@@ -1,6 +1,9 @@
 # -*- makefile -*-
 
-UTILS = P
+UTILS = \
+  P \
+  listen-radioclassica
+
 bindir = $(HOME)/bin
 
 include ../common.mk

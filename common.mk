@@ -17,8 +17,7 @@ INSTALL_DATA = $(INSTALL) -m 444
 INSTALL_EXEC = $(INSTALL) -m 555
 MKDIR_P = mkdir -p
 
-# Automatically set just below.  The user can override this, of course.
-BASH_SHELL =
+# The Bourne-Again shell.
 ifndef BASH_SHELL
 ifeq ($(wildcard /bin/bash),/bin/bash)
 BASH_SHELL = /bin/bash
@@ -26,6 +25,18 @@ else
 BASH_SHELL = /usr/bin/env bash
 endif
 endif
+
+# A POSIX shell.  The /bin/sh shell is not always POSIX-conforming
+# (e.g., on Solaris 10).
+is_posix = \
+  $(shell $1 -c '[ $$(echo x) = x ]' 2>/dev/null && echo yes)
+maybe_set_posix_shell = \
+  $(if $(POSIX_SHELL),,$(if $(call is_posix,$1),$(eval POSIX_SHELL = $1)))
+$(call maybe_set_posix_shell,/bin/dash)
+$(call maybe_set_posix_shell,/bin/sh)
+$(call maybe_set_posix_shell,/usr/xpg4/bin/sh)
+$(call maybe_set_posix_shell,/bin/ksh)
+$(call maybe_set_posix_shell,/usr/bin/bash)
 
 # Paranoid sanity check.
 ifndef HOME
@@ -54,6 +65,12 @@ clean:
 %: %.bash
 	rm -f $@ $@-t
 	sed '1s|#!.*|#!$(BASH_SHELL)|' $< >$@-t
+	chmod a-w $@-t && mv -f $@-t $@
+
+# Pre-process posix shell scripts.
+%: %.sh
+	rm -f $@ $@-t
+	sed '1s|#!.*|#!$(POSIX_SHELL)|' $< >$@-t
 	chmod a-w $@-t && mv -f $@-t $@
 
 # Compile and link C programs.
