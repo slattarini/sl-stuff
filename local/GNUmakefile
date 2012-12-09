@@ -9,6 +9,17 @@ INSTALL_DATA = $(INSTALL) -m 444
 INSTALL_EXEC = $(INSTALL) -m 555
 MKDIR_P = mkdir -p
 
+# Automatically set below.  The user can override this, of course.
+BASH_SHELL =
+
+ifndef BASH_SHELL
+ifeq ($(wildcard /bin/bash),/bin/bash)
+BASH_SHELL = /bin/bash
+else
+BASH_SHELL = /usr/bin/env bash
+endif
+endif
+
 # Paranoid sanity check.
 ifndef HOME
 $(error cannot use this makefile with $${HOME} unset or empty)
@@ -22,9 +33,11 @@ bindir = $(HOME)/bin
 
 .DEFAULT_GOAL := all
 
-UTILS = XXX
+UTILS = P
 
 all: $(UTILS)
+
+CLEANFILES = $(UTILS)
 
 install: all
 ifdef we_are_at_home
@@ -35,10 +48,16 @@ else
 	exit 1
 endif
 
-.PHONY: install all
+clean:
+	rm -f $(CLEANFILES)
+
+.PHONY: all clean install
 
 # -*-*-
 
-# TODO: compiler C programs.
+# Pre-process bash
+%: %.bash
+	rm -f $@ $@-t
+	sed '1s|#!.*|#!$(BASH_SHELL)|' $< >$@-t
+	chmod a-w $@-t && mv -f $@-t $@
 
-# TODO: pre-process Bash scripts.

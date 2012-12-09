@@ -40,6 +40,8 @@ CFLAGS ?= -Wall -Werror
 
 # Compile and link C programs.
 %: %.c
-	$(CC) $(CPPFLAGS) $(CFLAGS) $< -o$@ $(LDFLAGS)
+	rm -f $@-t $@
+	$(CC) $(CPPFLAGS) $(CFLAGS) $< -o$@-t $(LDFLAGS)
+	chmod a-w $@-t && mv -f $@-t $@
 
 # TODO: pre-process Bash scripts.
