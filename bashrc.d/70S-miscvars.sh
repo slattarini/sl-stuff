@@ -14,7 +14,10 @@ unset d
 W lesspipe && eval "$(lesspipe)"
 
 # Location of a checked-out copy of gnulib.
-[[ -d $HOME/src/gnulib ]] && export GNULIB_SRCDIR=$HOME/src/gnulib
+if [[ -d $HOME/src/gnulib ]]; then
+  export GNULIB_SRCDIR=$HOME/src/gnulib
+  export GNULIB_TOOL=$GNULIB_SRCDIR/gnulib-tool
+fi
 
 # Override defaults for autoconf-generated configure scripts.
 [[ -f $HOME/config.site ]] && export CONFIG_SITE=$HOME/config.site
