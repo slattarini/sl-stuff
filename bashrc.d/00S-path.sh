@@ -10,8 +10,6 @@ add_to_path -B \
     /usr/xpg4/bin \
     /usr/xpg6/bin \
     /usr/ccs/bin \
-    /usr/sfw/bin \
-    /opt/sfw/bin \
     /opt/SUNWspro/bin \
     /opt/SUNWspro/extra/bin \
     /usr/games \
