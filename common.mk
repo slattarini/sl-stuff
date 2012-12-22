@@ -17,6 +17,9 @@ INSTALL_DATA = $(INSTALL) -m 444
 INSTALL_EXEC = $(INSTALL) -m 555
 MKDIR_P = mkdir -p
 
+# A python interpreter invocation.
+PYTHON_CMD = /usr/bin/env python
+
 # The Bourne-Again shell.
 ifndef BASH_SHELL
 ifeq ($(wildcard /bin/bash),/bin/bash)
@@ -71,6 +74,12 @@ clean:
 %: %.sh
 	rm -f $@ $@-t
 	sed '1s|#!.*|#!$(POSIX_SHELL)|' $< >$@-t
+	chmod a-w,a+x $@-t && mv -f $@-t $@
+
+# Pre-process python scripts.
+%: %.py
+	rm -f $@ $@-t
+	sed '1s|#!.*|#!$(PYTHON_CMD)|' $< >$@-t
 	chmod a-w,a+x $@-t && mv -f $@-t $@
 
 # Compile and link C programs.
