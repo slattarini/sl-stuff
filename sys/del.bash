@@ -136,7 +136,6 @@ delete() {
 
 
 Ask='n'
-suffix=''
 
 case ${1-} in 
   --help) print_help; exit $?;;
