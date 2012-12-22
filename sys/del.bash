@@ -64,15 +64,6 @@ usage_error ()
   exit $E_USAGE
 }
 
-IsYes()
-{
-    local bool=
-    case "${*-}" in
-        true|TRUE|[yY]*) return 0;;
-        *) return 1;;
-    esac
-}
-
 exists ()
 {
   [[ -e "$1" || -h "$1" ]]
