@@ -121,15 +121,12 @@ delete()
     fi
 }
 
-case ${1-} in 
-  --help) print_help; exit $?;;
-  --version) print_version; exit $?;;
-esac
-
 declare -i ask=0
 while [ $# -gt 0 ]; do
   case $1 in
-    -i) ask=1;;
+    --help) print_help; exit $?;;
+    --version) print_version; exit $?;;
+    -i|--ask) ask=1;;
     --) shift; break;;
     -*) usage_error "'$1': unrecognized option";;
      *) break;;
