@@ -11,7 +11,8 @@ UTILS = \
   zap \
   del \
   pf \
-  nolocale
+  nolocale \
+  vis
 
 ifeq ($(shell test `id -u` -eq 0 && echo yes),yes)
   bindir = /usr/local/bin
