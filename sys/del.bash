@@ -95,11 +95,11 @@ delete()
 {
     local file="$1"
     
-    if IsYes "$Ask"; then
+    if ((ask)); then
         local reply
-        echo -n "Delete '$file'? (y/n) [N] " >&2
+        printf "Delete '$file'? (y/n) [N] " >&2
         read reply
-        IsYes "$reply" || return 0  # stop
+        case $reply in [yY]*);; *) return 0;; esac
     fi
     
     local destfile=$(trashname "$file")
@@ -121,25 +121,21 @@ delete()
     fi
 }
 
-
-Ask='n'
-
 case ${1-} in 
   --help) print_help; exit $?;;
   --version) print_version; exit $?;;
 esac
 
+declare -i ask=0
 while [ $# -gt 0 ]; do
   case $1 in
-    -i) Ask=y;;
+    -i) ask=1;;
     --) shift; break;;
     -*) usage_error "'$1': unrecognized option";;
      *) break;;
   esac
 done
 [ $# -gt 0 ] || usage_error "missing argument"
-
-declare -r Ask
 
 #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
@@ -151,8 +147,6 @@ T=${TRASH_DIRECTORY:-"$HOME/.trash"}
 [[ -r "$T" && -x "$T" && -w "$T" ]] || \
   fatal "trash directory '$T': bad permissions"
 
-#~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
 exit_status=$EXIT_SUCCESS
 
 for file in "$@"; do
@@ -160,7 +154,5 @@ for file in "$@"; do
 done
 
 exit $exit_status
-
-#~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 # vim: expandtab tabstop=4 shiftwidth=4 ft=sh
