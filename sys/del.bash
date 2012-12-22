@@ -102,7 +102,7 @@ delete()
     fi
   fi
 
-  if run_as_del mv "$file" "$destfile"; then
+  if run_as_del mv -- "$file" "$destfile"; then
     return 0
   else
     exit_status=$EXIT_FAILURE
