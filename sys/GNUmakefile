@@ -1,6 +1,8 @@
 # -*- makefile -*-
 
-UTILS = strerror
+UTILS = \
+  strerror \
+  IPof
 
 ifeq ($(shell test `id -u` -eq 0 && echo yes),yes)
   bindir = /usr/local/bin
