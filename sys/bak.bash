@@ -8,7 +8,7 @@ set -u
 shopt -s extglob
 
 readonly progname=${0##*/}
-readonly version="0.5beta2"
+readonly version=0.6
 
 declare -ir EXIT_SUCCESS=0
 declare -ir EXIT_FAILURE=1
@@ -91,18 +91,12 @@ if (($# == 0)); then
     fi
 fi
 
-# TODO: make these portable and defined at "compile-time"
 if ((move)); then
-    if LC_ALL=C mv -T 2>&1 | grep -i 'invalid option' >/dev/null; then
-        BAKFILE='mv --'
-        BAKDIR='mv --'
-    else
-        BAKFILE='mv -T --'
-        BAKDIR='mv -T --'
-    fi
+    BAKFILE='mv --'
+    BAKDIR='mv --'
 else
-    BAKFILE='cp -d -p --'
-    BAKDIR='cp -a --'
+    BAKFILE='cp -dp --'
+    BAKDIR='cp -dpR --'
 fi
 
 #--------------------------------------------------------------------------
