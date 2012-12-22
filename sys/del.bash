@@ -146,7 +146,7 @@ case ${1-} in
   --version) print_version; exit $?;;
 esac
 
-while getopts ":-i" OPTION: do
+while getopts ":-i" OPTION; do
     case $OPTION in
         i) Ask='y'                                                  ;;
         -) break                                                    ;;
