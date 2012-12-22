@@ -12,12 +12,12 @@
 int strip = 0; /* 0 => escape special chars; 1 => discard special chars */
 const char *progname;
 
+int parse_opt (int, char **);
+void vis (FILE *);
+
 int
 main (int argc, char **argv)
 {
-    int parse_opt(int, char **);
-    void vis(FILE *);
-
     int i, optshift;
     FILE *fp;
 
@@ -52,9 +52,9 @@ vis (FILE *fp)
             printf ("%s", strip ? "\\": "\\\\");
         else if (isascii (c)
                  && (isprint (c) || c == '\n' || c == '\t' || c == ' '))
-            putchar(c);
+            putchar (c);
         else if (!strip)
-            printf("\\%03o", c);
+            printf ("\\%03o", c);
 }
 
 int
