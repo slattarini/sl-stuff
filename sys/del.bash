@@ -45,21 +45,20 @@ OPTIONS:
 EOT
 }
 
-error ()
+warn ()
 {
   echo "$progname: $*" >&2
-  exit_status=$EXIT_FAILURE
 }
 
 fatal ()
 {
-  error "$@"
+  warn "$@"
   exit $EXIT_FAILURE
 }
 
 usage_error ()
 {
-  [ $# -gt 0 ] && error "$@"
+  [ $# -gt 0 ] && warn "$@"
   print_usage >&2
   exit $E_USAGE
 }
@@ -97,17 +96,12 @@ delete()
     sleep 1
     destfile=$(trashname "$file")
     if exists "$destfile"; then
-      error "$file: cannot delete: preexisting file in trash dir"
+      warn "$file: cannot delete: preexisting file in trash dir"
       return 1
     fi
   fi
 
-  if run_as_del mv -- "$file" "$destfile"; then
-    return 0
-  else
-    exit_status=$EXIT_FAILURE
-    return 1
-  fi
+  run_as_del mv -- "$file" "$destfile"
 }
 
 declare -i ask=0
@@ -132,11 +126,9 @@ T=${TRASH_DIRECTORY:-"$HOME/.trash"}
   fatal "trash directory '$T': bad permissions"
 
 exit_status=$EXIT_SUCCESS
-
 for file in "$@"; do
-  delete "$file"
+  delete "$file" || exit_status=$EXIT_FAILURE
 done
-
 exit $exit_status
 
 # vim: et ts=2 sw=2 ft=sh
