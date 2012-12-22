@@ -16,10 +16,7 @@ declare -ir E_INTERNAL=100
 
 print_usage ()
 {
-    cat <<-EOT
-		Usage: $progname [-i] [--] FILE-1 [FILE-2... FILE-n]
-		Try '$progname --help' for more information.
-		EOT
+  echo "Usage: $progname [-i] [--] FILE-1 [FILE-2... FILE-n]"
 }
 
 print_version ()
