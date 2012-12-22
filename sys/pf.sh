@@ -16,7 +16,7 @@ print_usage ()
 print_help ()
 {
   print_usage
-  echo "\"FIELD-NUM = 0\" means all fields."
+  echo "A value of \"0\" for FIELD-NUM means all fields."
 }
 
 usage_error ()
