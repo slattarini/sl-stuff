@@ -9,7 +9,8 @@ UTILS = \
   cdefn \
   cfundef \
   zap \
-  del
+  del \
+  nolocale
 
 ifeq ($(shell test `id -u` -eq 0 && echo yes),yes)
   bindir = /usr/local/bin
