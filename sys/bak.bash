@@ -20,11 +20,6 @@ declare -ir FALSE=0
 
 #--------------------------------------------------------------------------
 
-vwarn () {
-    ((force)) || echo "$progname: $*" >&2
-    exit_status=$EXIT_FAILURE
-}
-
 warn () {
     echo "$progname: $*" >&2
     exit_status=$EXIT_FAILURE
