@@ -64,16 +64,6 @@ usage_error ()
     exit $E_USAGE
 }
 
-internal_error ()
-{
-    exec >&2
-    printf "INTERNAL ERROR"
-    [ -n "${FUNCNAME[1]-}" ] && printf " in subroutine '%s'" ${FUNCNAME[1]}
-    [ -n "${BASH_LINENO[0]-}" ] && printf " at line %s" ${BASH_LINENO[0]}
-    echo
-    exit $E_INTERNAL
-}
-
 #--------------------------------------------------------------------------
 
 IsYes()
@@ -87,13 +77,11 @@ IsYes()
 
 exists ()
 {
-    [ $# -eq 1 ] || internal_error
     [[ -e "$1" || -h "$1" ]]
 }
 
 run_as_del ()
 {
-    [ $# -gt 0 ] || internal_error
     (exec -a "$progname" "$@")
 }
 
@@ -103,9 +91,8 @@ trashname ()
     echo "${T}/${f##*/}___$(LC_ALL=C date '+%Y-%m-%d_%H:%M:%S')"
 }
 
-delete() {
-    [ $# -eq 1 ] || internal_error
-   
+delete()
+{
     local file="$1"
     
     if IsYes "$Ask"; then
