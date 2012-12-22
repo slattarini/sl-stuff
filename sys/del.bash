@@ -108,6 +108,7 @@ while [ $# -gt 0 ]; do
     -*) usage_error "'$1': unrecognized option";;
      *) break;;
   esac
+  shift
 done
 [ $# -gt 0 ] || usage_error "missing argument"
 
