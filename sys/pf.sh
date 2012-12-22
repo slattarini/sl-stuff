@@ -53,7 +53,7 @@ while [ $# -gt 0 ]; do
   shift
 done
 
-if [ $# -gt 0 ]; then
+if [ $# -eq 0 ]; then
   usage_error "no field specified"
 elif ! [ 0 -le "$1" ] >/dev/null 2>&1; then
   usage_error "'$1': not a non-negative integer"
