@@ -39,12 +39,11 @@ print_version () {
     echo "$progname, version $version"
 }
 
-# TODO: add description of all options, and maybe some examples
+# TODO: add description of all options, and maybe some examples.
 print_help () {
     print_version \
-     && echo "\
-A simple script to quickly make in-place backups of regular files and
-directories." \
+     && echo "A simple script to quickly make in-place backups of" \
+     && echo "regular files and directories" \
      && print_usage
 }
 
@@ -92,11 +91,11 @@ if (($# == 0)); then
 fi
 
 if ((move)); then
-    BAKFILE='mv --'
-    BAKDIR='mv --'
+    bakfile_cmd='mv --'
+    bakdir_cmd='mv --'
 else
-    BAKFILE='cp -dp --'
-    BAKDIR='cp -dpR --'
+    bakfile_cmd='cp -dp --'
+    bakdir_cmd='cp -dpR --'
 fi
 
 #--------------------------------------------------------------------------
@@ -109,7 +108,7 @@ for item in "$@"; do
         dir=${item%%+(/)}
         # Remove any preexisting backup, also if it's a directory.
         if rm -rf -- "${dir}${backup_suffix}"; then
-            $BAKDIR "${dir}" "${dir}${backup_suffix}" || {
+            $bakdir_cmd "${dir}" "${dir}${backup_suffix}" || {
                 warn "failed to backup directory '$dir'"
                 continue
             }
@@ -119,9 +118,9 @@ for item in "$@"; do
         fi
     elif [ -f "$item" ]; then
         file=$item
-        # remove any preexisting backup, but not if it's a directory
+        # Remove any preexisting backup, but not if it's a directory.
         if rm -f -- "${file}${backup_suffix}"; then
-            $BAKFILE "${file}" "${file}${backup_suffix}" || {
+            $bakfile_cmd "${file}" "${file}${backup_suffix}" || {
                 warn "failed to backup file '$file'"
                 continue
             }
