@@ -6,19 +6,13 @@ set -u
 shopt -s extglob
 
 readonly progname=${0##*/}
-readonly VERSION=0.6
+readonly VERSION=0.6.1
 readonly PROGRAM="Reversible Delete"
 
 declare -ir EXIT_SUCCESS=0
 declare -ir EXIT_FAILURE=1
 declare -ir E_USAGE=2
 declare -ir E_INTERNAL=100
-
-#~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-#
-# Informational subroutines.
-#
 
 print_usage ()
 {
@@ -35,13 +29,12 @@ print_version ()
 
 print_help()
 {
-    print_version
-    echo
-    cat <<EOT
+    print_version && cat <<'EOT'
+
 Move files and directory in a "trash" directory rather than 
 really remove them.
 
-The default trash directory is \$HOME/.trash, but the environmental
+The default trash directory is $HOME/.trash, but the environmental
 variale 'TRASH_DIRECTORY' is honoured.
 
 OPTIONS:
@@ -75,8 +68,6 @@ OPTIONS:
 EOT
 }
 
-#--------------------------------------------------------------------------
-
 warn ()
 {
    echo "$progname: $*" >&2
@@ -85,7 +76,7 @@ warn ()
 badwarn ()
 {
    warn "$*"
-   e=$EXIT_FAILURE
+   exit_status=$EXIT_FAILURE
 }
 
 error ()
@@ -171,13 +162,12 @@ delete() {
         if run_as_del mv "$file" "$destfile"; then
             return 0
         else
-            e=$EXIT_FAILURE
+            exit_status=$EXIT_FAILURE
             return 1
         fi
     fi
 }
 
-#~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 Ask='n'
 Silent='n'
@@ -186,16 +176,13 @@ DelAll='n'
 Debug='n'
 suffix=''
 
-#~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-case "${*-}" in 
-    --help|-\?) set -- '-h';;
+case ${*-} in 
+    --help) set -- '-h';;
     --version)  set -- '-V';;
 esac
 
-while getopts ":-hVaifqDrR:X" OPTION
-do
-    case "$OPTION" in
+while getopts ":-hVaifqDrR:X" OPTION: do
+    case $OPTION in
         a) DelAll='y'                                               ;;
         i) Ask='y'                                                  ;;
         f) Ask='n'; Silent='y'                                      ;;
@@ -203,8 +190,8 @@ do
         D) DelDir='n'                                               ;;
         r|R) DelDir='y'                                             ;;
         X) Debug='y'                                                ;;
-        h) print_help; exit $EXIT_SUCCESS                           ;;
-        V) print_version; exit $EXIT_SUCCESS                        ;;
+        h) print_help; exit $?                                       ;;
+        V) print_version; exit $?                                   ;;
         -) break                                                    ;;
         \?) usage_error "'-$OPTARG': unrecognized option"           ;;
         \:) usage_error "'-$OPTARG': option requires an argument"   ;;
@@ -231,8 +218,9 @@ T=${TRASH_DIRECTORY:-"$HOME/.trash"}
 
 #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-e=$EXIT_SUCCESS
-for file in "$@"
+exit_status=$EXIT_SUCCESS
+
+for file in "$@"; 
 do
     if ! [[ -e "$file" || -h "$file" ]]; then
         if ! IsYes "$Silent"; then
@@ -260,7 +248,7 @@ do
    fi   
 done
 
-exit $e
+exit $exit_status
 
 #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
