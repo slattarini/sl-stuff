@@ -21,12 +21,12 @@ print_usage ()
 
 print_version ()
 {
-    echo "$PROGRAM, version $VERSION"
+  echo "$PROGRAM, version $VERSION"
 }
 
 print_help()
 {
-    print_version && cat <<'EOT'
+  print_version && cat <<'EOT'
 
 Move files and directory in a "trash" directory rather than 
 really remove them.
@@ -47,24 +47,22 @@ EOT
 
 error ()
 {
-   echo "$progname: $*" >&2
-   exit_status=$EXIT_FAILURE
+  echo "$progname: $*" >&2
+  exit_status=$EXIT_FAILURE
 }
 
 fatal ()
 {
-   error "$@"
-   exit $EXIT_FAILURE
+  error "$@"
+  exit $EXIT_FAILURE
 }
 
 usage_error ()
 {
-    [ $# -gt 0 ] && error "$@"
-    print_usage >&2
-    exit $E_USAGE
+  [ $# -gt 0 ] && error "$@"
+  print_usage >&2
+  exit $E_USAGE
 }
-
-#--------------------------------------------------------------------------
 
 IsYes()
 {
@@ -77,48 +75,48 @@ IsYes()
 
 exists ()
 {
-    [[ -e "$1" || -h "$1" ]]
+  [[ -e "$1" || -h "$1" ]]
 }
 
 run_as_del ()
 {
-    (exec -a "$progname" "$@")
+  (exec -a "$progname" "$@")
 }
 
 trashname ()
 {
-    local f=${1%%*(/)}
-    echo "${T}/${f##*/}___$(LC_ALL=C date '+%Y-%m-%d_%H:%M:%S')"
+  local f=${1%%*(/)}
+  echo "${T}/${f##*/}___$(LC_ALL=C date '+%Y-%m-%d_%H:%M:%S')"
 }
 
 delete()
 {
-    local file="$1"
+  local file=$1
     
-    if ((ask)); then
-        local reply
-        printf "Delete '$file'? (y/n) [N] " >&2
-        read reply
-        case $reply in [yY]*);; *) return 0;; esac
-    fi
+  if ((ask)); then
+    local reply
+    printf "Delete '$file'? (y/n) [N] " >&2
+    read reply
+    case $reply in [yY]*);; *) return 0;; esac
+  fi
     
-    local destfile=$(trashname "$file")
+  local destfile=$(trashname "$file")
    
+  if exists "$destfile"; then
+    sleep 1
+    destfile=$(trashname "$file")
     if exists "$destfile"; then
-        sleep 1
-        destfile=$(trashname "$file")
-        if exists "$destfile"; then
-            error "$file: cannot delete: preexisting file in trash dir"
-            return 1
-        fi
+      error "$file: cannot delete: preexisting file in trash dir"
+      return 1
     fi
+  fi
 
-    if run_as_del mv "$file" "$destfile"; then
-        return 0
-    else
-        exit_status=$EXIT_FAILURE
-        return 1
-    fi
+  if run_as_del mv "$file" "$destfile"; then
+    return 0
+  else
+    exit_status=$EXIT_FAILURE
+    return 1
+  fi
 }
 
 declare -i ask=0
@@ -133,8 +131,6 @@ while [ $# -gt 0 ]; do
   esac
 done
 [ $# -gt 0 ] || usage_error "missing argument"
-
-#~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 T=${TRASH_DIRECTORY:-"$HOME/.trash"}
 
@@ -152,4 +148,4 @@ done
 
 exit $exit_status
 
-# vim: expandtab tabstop=4 shiftwidth=4 ft=sh
+# vim: et ts=2 sw=2 ft=sh
