@@ -151,7 +151,7 @@ case ${*-} in
     --version)  set -- '-V';;
 esac
 
-while getopts ":-hVaifqDrR:X" OPTION: do
+while getopts ":-hVi" OPTION: do
     case $OPTION in
         i) Ask='y'                                                  ;;
         h) print_help; exit $?                                      ;;
