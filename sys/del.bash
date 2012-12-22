@@ -68,11 +68,6 @@ exists ()
   [[ -e "$1" || -h "$1" ]]
 }
 
-run_as_del ()
-{
-  (exec -a "$progname" "$@")
-}
-
 trashname ()
 {
   local f=${1%%*(/)}
@@ -101,7 +96,7 @@ delete()
     fi
   fi
 
-  run_as_del mv -- "$file" "$destfile"
+  mv -- "$file" "$destfile"
 }
 
 declare -i ask=0
@@ -119,7 +114,7 @@ done
 
 T=${TRASH_DIRECTORY:-"$HOME/.trash"}
 
-[ -d "$T" ] || run_as_del mkdir -p -m 700 "$T" || \
+[ -d "$T" ] || mkdir -p -m 700 "$T" || \
   fatal "trash directory '$T': is not a directory, and cannot be created"
 
 [[ -r "$T" && -x "$T" && -w "$T" ]] || \
