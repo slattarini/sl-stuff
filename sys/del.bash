@@ -146,16 +146,14 @@ delete() {
 Ask='n'
 suffix=''
 
-case ${*-} in 
-    --help) set -- '-h';;
-    --version)  set -- '-V';;
+case ${1-} in 
+  --help) print_help; exit $?;;
+  --version) print_version; exit $?;;
 esac
 
-while getopts ":-hVi" OPTION: do
+while getopts ":-i" OPTION: do
     case $OPTION in
         i) Ask='y'                                                  ;;
-        h) print_help; exit $?                                      ;;
-        V) print_version; exit $?                                   ;;
         -) break                                                    ;;
         \?) usage_error "'-$OPTARG': unrecognized option"           ;;
         \:) usage_error "'-$OPTARG': option requires an argument"   ;;
