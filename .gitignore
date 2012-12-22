@@ -1,3 +1,16 @@
+/local/record-radio
+/local/record-radioclassica
 /local/P
 /local/listen-radioclassica
+/sys/IPof
+/sys/apply
+/sys/bak
+/sys/cdefn
+/sys/cfundef
+/sys/del
+/sys/errnoinfo
+/sys/nolocale
+/sys/pf
+/sys/vis
+/sys/zap
 /sys/strerror
