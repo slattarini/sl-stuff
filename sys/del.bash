@@ -41,9 +41,9 @@ OPTIONS:
   -i:
        Interactive: ask before deleting any file. Answer is read from 
        standard input.
-  -V:
+  --version:
        print program version and exit
-  -h:
+  --help:
        print this help message and exit
 EOT
 }
