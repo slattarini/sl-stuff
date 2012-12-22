@@ -15,3 +15,7 @@ install:
 	@exit 1
 .PHONY: install-sys install-local install
 
+clean-sys clean-local: clean-%: %
+	@$(MAKE) -C $* clean
+clean: clean-sys clean-local
+.PHONY: clean clean-sys clean-local
