@@ -12,7 +12,6 @@ readonly PROGRAM="Reversible Delete"
 declare -ir EXIT_SUCCESS=0
 declare -ir EXIT_FAILURE=1
 declare -ir E_USAGE=2
-declare -ir E_INTERNAL=100
 
 print_usage ()
 {
