@@ -3,6 +3,7 @@
 UTILS = \
   P \
   listen-radioclassica \
+  record-radioclassica \
   record-radio
 
 bindir = $(HOME)/bin
