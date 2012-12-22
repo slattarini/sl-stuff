@@ -41,8 +41,6 @@ OPTIONS:
   -i:
        Interactive: ask before deleting any file. Answer is read from 
        standard input.
-  -X:
-       run in debug mode (do not really delete anything)
   -V:
        print program version and exit
   -h:
@@ -136,23 +134,16 @@ delete() {
         fi
     fi
 
-    if IsYes "$Debug"; then
-        echo mv "$file" "$destfile"
+    if run_as_del mv "$file" "$destfile"; then
         return 0
     else
-        # Really delete file.
-        if run_as_del mv "$file" "$destfile"; then
-            return 0
-        else
-            exit_status=$EXIT_FAILURE
-            return 1
-        fi
+        exit_status=$EXIT_FAILURE
+        return 1
     fi
 }
 
 
 Ask='n'
-Debug='n'
 suffix=''
 
 case ${*-} in 
@@ -163,7 +154,6 @@ esac
 while getopts ":-hVaifqDrR:X" OPTION: do
     case $OPTION in
         i) Ask='y'                                                  ;;
-        X) Debug='y'                                                ;;
         h) print_help; exit $?                                      ;;
         V) print_version; exit $?                                   ;;
         -) break                                                    ;;
