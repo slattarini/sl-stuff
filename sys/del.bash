@@ -38,8 +38,6 @@ The default trash directory is $HOME/.trash, but the environmental
 variale 'TRASH_DIRECTORY' is honoured.
 
 OPTIONS:
-  -a:
-       Delete all files (not only regular files and directories)
   -i:
        Interactive: ask before deleting any file. Answer is read from 
        standard input.
@@ -52,13 +50,6 @@ OPTIONS:
        silent: do no complaint if a given file does not exist or hasn't
        to be moved (for example because it is a directory and option
        '-D' was passed to the script)
-  -D:
-       do not delete any directory.
-  -r:
-       also delete directories (this is the default; this option is 
-       provided for for compatibility with the 'rm' usage)
-  -R:
-       same as '-r'
   -X:
        run in debug mode (do not really delete anything)
   -V:
@@ -170,9 +161,6 @@ delete() {
 
 
 Ask='n'
-Silent='n'
-DelDir='y'
-DelAll='n'
 Debug='n'
 suffix=''
 
@@ -183,14 +171,10 @@ esac
 
 while getopts ":-hVaifqDrR:X" OPTION: do
     case $OPTION in
-        a) DelAll='y'                                               ;;
         i) Ask='y'                                                  ;;
-        f) Ask='n'; Silent='y'                                      ;;
-        q) Silent='y'                                               ;;
-        D) DelDir='n'                                               ;;
-        r|R) DelDir='y'                                             ;;
+        f) Ask='n'                                                  ;;
         X) Debug='y'                                                ;;
-        h) print_help; exit $?                                       ;;
+        h) print_help; exit $?                                      ;;
         V) print_version; exit $?                                   ;;
         -) break                                                    ;;
         \?) usage_error "'-$OPTARG': unrecognized option"           ;;
@@ -202,7 +186,7 @@ done
 shift $((OPTIND - 1))
 
 unset OPTION OPTARG OPTERR OPTIND
-declare -r Ask Silent DelDir
+declare -r Ask
 
 [ $# -gt 0 ] || usage_error "missing argument"
 
@@ -220,30 +204,8 @@ T=${TRASH_DIRECTORY:-"$HOME/.trash"}
 
 exit_status=$EXIT_SUCCESS
 
-for file in "$@"; 
-do
-    if ! [[ -e "$file" || -h "$file" ]]; then
-        if ! IsYes "$Silent"; then
-            badwarn "$file: no such file or directory"
-        fi
-        continue
-    fi
-    if IsYes "$DelAll"; then
-        delete "$file"
-        continue
-    fi
-    if [ -d "$file" ]; then
-        if IsYes "$DelDir"
-        then
-            delete "$file"
-        else
-            IsYes "$Silent" || warn "$file: is a directory: skipping"
-        fi
-    elif [[ -f "$file" || -h "$file" ]]; then
-        delete "$file"
-    else
-        IsYes "$Silent" || warn "$file: not symlink, directory or regular file: skipping"
-   fi   
+for file in "$@"; do
+  delete "$file"
 done
 
 exit $exit_status
