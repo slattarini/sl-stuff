@@ -56,7 +56,7 @@ usage_error () {
 
 print_usage () {
     cat <<EOT
-Usage: $progname [-m] [-f] [-x] [-s BACKUP-SUFFIX-FOR-REGULAR-FILES]
+Usage: $progname [-m] [-f] [-s BACKUP-SUFFIX-FOR-REGULAR-FILES]
        [-S BACKUP-SUFFIX-FOR-DIRECTORIES] [-b GLOBAL-BACKUP-SUFFIX]
        [--] FILES-TO-BACKUP
 EOT
@@ -64,7 +64,6 @@ EOT
 
 #--------------------------------------------------------------------------
 
-declare -i unexec=$FALSE
 declare -i force=$FALSE
 declare -i move=$FALSE
 file_suffix='~'
@@ -80,7 +79,6 @@ while getopts ":mfxb:s:S:" OPTION; do
         b) file_suffix=$OPTARG; dir_suffix=$OPTARG;;
         s) file_suffix=$OPTARG;;
         S) dir_suffix=$OPTARG;;
-        x) unexec=$TRUE;;
         f) force=$TRUE;;
        \?) usage_error "'-$OPTARG': invalid option";;
        \:) usage_error "'-$OPTARG': option requires an argument";;
@@ -89,7 +87,7 @@ while getopts ":mfxb:s:S:" OPTION; do
 done
 shift $((OPTIND - 1))
 unset OPTION OPTERR OPTARG OPTIND
-declare -r file_suffix dir_suffix unexec force move
+declare -r file_suffix dir_suffix force move
 
 if (($# == 0)); then
     if ((force)); then
@@ -139,9 +137,6 @@ for item in "$@"; do
                 warn "failed to backup file '$file'"
                 continue
             }
-            if ((unexec)); then
-                chmod -x "${file}${file_suffix}" || exit_status=$EXIT_FAILURE
-            fi
         else
             warn "pre-existent file '${file}${file_suffix}' can't" \
                  "be removed: file '$file' not backupped"
