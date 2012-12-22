@@ -9,3 +9,6 @@ else
 endif
 
 include ../common.mk
+
+install: install-utils
+.PHONY: install
