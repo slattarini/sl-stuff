@@ -5,7 +5,9 @@ UTILS = \
   IPof \
   bak \
   errnoinfo \
-  apply
+  apply \
+  cdefn \
+  cfundef
 
 ifeq ($(shell test `id -u` -eq 0 && echo yes),yes)
   bindir = /usr/local/bin
