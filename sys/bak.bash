@@ -61,17 +61,17 @@ print_usage () {
 
 #--------------------------------------------------------------------------
 
-declare -i force=$FALSE
-declare -i move=$FALSE
-backup_suffix='~'
-
 case ${1-} in
     --help) print_help; exit $?;;
     --version) print_version; exit $?;;
 esac
+
+force=$FALSE
+move=$FALSE
+backup_suffix='~'
 while getopts ":mfxb:s:S:" OPTION; do
-    case "$OPTION" in
-        m) move=1;;
+    case $OPTION in
+        m) move=$TRUE;;
         s) backup_suffix=$OPTARG;;
         f) force=$TRUE;;
        \?) usage_error "'-$OPTARG': invalid option";;
