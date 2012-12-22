@@ -17,7 +17,7 @@ declare -ir E_INTERNAL=100
 print_usage ()
 {
     cat <<-EOT
-		Usage: $progname [-aifqD] [--] FILE-1 [FILE-2... FILE-n]
+		Usage: $progname [-i] [--] FILE-1 [FILE-2... FILE-n]
 		Try '$progname --help' for more information.
 		EOT
 }
