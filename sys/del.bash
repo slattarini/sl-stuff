@@ -26,7 +26,7 @@ print_version ()
 
 print_help()
 {
-  print_version && cat <<'EOT'
+  print_version && print_usage && cat <<'EOT'
 
 Move files and directory in a "trash" directory rather than
 really remove them.
