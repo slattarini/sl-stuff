@@ -65,13 +65,13 @@ clean:
 %: %.bash
 	rm -f $@ $@-t
 	sed '1s|#!.*|#!$(BASH_SHELL)|' $< >$@-t
-	chmod a-w $@-t && mv -f $@-t $@
+	chmod a-w,a+x $@-t && mv -f $@-t $@
 
 # Pre-process posix shell scripts.
 %: %.sh
 	rm -f $@ $@-t
 	sed '1s|#!.*|#!$(POSIX_SHELL)|' $< >$@-t
-	chmod a-w $@-t && mv -f $@-t $@
+	chmod a-w,a+x $@-t && mv -f $@-t $@
 
 # Compile and link C programs.
 CC ?= gcc
