@@ -7,7 +7,8 @@ UTILS = \
   errnoinfo \
   apply \
   cdefn \
-  cfundef
+  cfundef \
+  zap
 
 ifeq ($(shell test `id -u` -eq 0 && echo yes),yes)
   bindir = /usr/local/bin
