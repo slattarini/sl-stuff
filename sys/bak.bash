@@ -8,7 +8,7 @@ set -u
 shopt -s extglob
 
 readonly progname=${0##*/}
-readonly version="0.5beta1"
+readonly version="0.5beta2"
 
 declare -ir EXIT_SUCCESS=0
 declare -ir EXIT_FAILURE=1
@@ -20,27 +20,27 @@ declare -ir FALSE=0
 
 #--------------------------------------------------------------------------
 
-vwarn() {
+vwarn () {
     ((force)) || echo "$progname: $*" >&2
-    exitval=$EXIT_FAILURE
+    exit_status=$EXIT_FAILURE
 }
 
-warn() {
+warn () {
     echo "$progname: $*" >&2
-    exitval=$EXIT_FAILURE
+    exit_status=$EXIT_FAILURE
 }
 
-error() {
+error () {
     echo "$progname: error: $*" >&2
     exit $EXIT_FAILURE
 }
 
-print_version() {
+print_version () {
     echo "$progname, version $version"
 }
 
 # TODO: add description of all options, and maybe some examples
-print_help() {
+print_help () {
     print_version \
      && echo "\
 A simple script to quickly make in-place backups of regular files and
@@ -48,13 +48,13 @@ directories." \
      && print_usage
 }
 
-usage_error() {
+usage_error () {
     [ $# -gt 0 ] && echo "$progname: $*" >&2
     print_usage >&2
     exit $E_USAGE
 }
 
-print_usage() {
+print_usage () {
     cat <<EOT
 Usage: $progname [-m] [-f] [-x] [-s BACKUP-SUFFIX-FOR-REGULAR-FILES]
        [-S BACKUP-SUFFIX-FOR-DIRECTORIES] [-b GLOBAL-BACKUP-SUFFIX]
@@ -82,8 +82,8 @@ while getopts ":mfxb:s:S:" OPTION; do
         S) dir_suffix=$OPTARG;;
         x) unexec=$TRUE;;
         f) force=$TRUE;;
-       \?) usage_error "\`-$OPTARG': invalid option";;
-       \:) usage_error "\`-$OPTARG': option requires an argument";;
+       \?) usage_error "'-$OPTARG': invalid option";;
+       \:) usage_error "'-$OPTARG': option requires an argument";;
         *) echo "INTERNAL ERROR at line $LINENO" >&2; exit $E_INTERNAL;;
     esac
 done
@@ -115,47 +115,47 @@ fi
 
 #--------------------------------------------------------------------------
 
-declare -i exitval=$EXIT_SUCCESS
+declare -i exit_status=$EXIT_SUCCESS
 
 for item in "$@"; do
     if [ -d "$item" ]; then
         # We must remove the (possible) trailing slash(es).
-        dir="${item%%+(/)}"
-        # remove any preexisting backup, also if it's a directory
+        dir=${item%%+(/)}
+        # Remove any preexisting backup, also if it's a directory.
         if rm -rf -- "${dir}${dir_suffix}"; then
             $BAKDIR "${dir}" "${dir}${dir_suffix}" || {
-                warn "failed to backup directory \`$dir'"
+                warn "failed to backup directory '$dir'"
                 continue
             }
         else
-            warn "pre-existent file \`${dir}${dir_suffix}' can't" \
-                 "be removed: directory \`$dir' not backupped"
+            warn "pre-existent file '${dir}${dir_suffix}' can't" \
+                 "be removed: directory '$dir' not backupped"
         fi
     elif [ -f "$item" ]; then
-        file="$item"
+        file=$item
         # remove any preexisting backup, but not if it's a directory
         if rm -f -- "${file}${file_suffix}"; then
             $BAKFILE "${file}" "${file}${file_suffix}" || {
-                warn "failed to backup file \`$file'"
+                warn "failed to backup file '$file'"
                 continue
             }
             if ((unexec)); then
-                chmod -x "${file}${file_suffix}" || extival=$EXIT_FAILURE
+                chmod -x "${file}${file_suffix}" || exit_status=$EXIT_FAILURE
             fi
         else
-            warn "pre-existent file \`${file}${file_suffix}' can't" \
-                 "be removed: file \`$file' not backupped"
+            warn "pre-existent file '${file}${file_suffix}' can't" \
+                 "be removed: file '$file' not backupped"
         fi
     else  # [ ! -f $item ] && [ ! -d $item ]
         if ((! force)); then
             if [ ! -e "$item" ]; then
                 if [ -h "$item" ]; then
-                    warn "\`$item': Broken symlink"
+                    warn "'$item': Broken symlink"
                 else
-                    warn "\`$item': No such file or directory"
+                    warn "'$item': No such file or directory"
                 fi
             else  # [ -e "$item" ]
-                warn "\`$item': Not a regular file nor a directory"
+                warn "'$item': Not a regular file nor a directory"
             fi
         fi  # ! $force
     fi  # $item
@@ -163,6 +163,6 @@ done
 
 #--------------------------------------------------------------------------
 
-exit $exitval
+exit $exit_status
 
 # vim: ft=sh ts=4 sw=4 et
