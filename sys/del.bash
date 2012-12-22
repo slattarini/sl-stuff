@@ -41,15 +41,6 @@ OPTIONS:
   -i:
        Interactive: ask before deleting any file. Answer is read from 
        standard input.
-  -f:
-       Force: do not ask before delete a file, and do not complain if a
-       given file does not exist or hasn't to be moved (for example
-       because it is a directory and option '-D' was passed to the 
-       script)
-  -q:
-       silent: do no complaint if a given file does not exist or hasn't
-       to be moved (for example because it is a directory and option
-       '-D' was passed to the script)
   -X:
        run in debug mode (do not really delete anything)
   -V:
@@ -172,7 +163,6 @@ esac
 while getopts ":-hVaifqDrR:X" OPTION: do
     case $OPTION in
         i) Ask='y'                                                  ;;
-        f) Ask='n'                                                  ;;
         X) Debug='y'                                                ;;
         h) print_help; exit $?                                      ;;
         V) print_version; exit $?                                   ;;
