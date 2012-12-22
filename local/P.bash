@@ -1,5 +1,6 @@
 #!bash
-# Start recording current program of Radio Classica Brescian on disk.
+# Start recording current program of Radio Classica Bresciana on disk.
+# Requires the auxiliary utility "record-radiocalassica".
 
 e=0
 set -e -u
