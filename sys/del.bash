@@ -6,7 +6,7 @@ set -u
 shopt -s extglob
 
 readonly progname=${0##*/}
-readonly VERSION=0.9alpha
+readonly VERSION=0.9
 readonly PROGRAM="Reversible Delete"
 
 declare -ir EXIT_SUCCESS=0
