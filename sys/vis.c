@@ -67,9 +67,9 @@ parse_opt (int argc, char **argv)
             case '?':
                 /* bad option */
                 if (isprint (optopt))
-                    error (E_USAGE, 0, "unknown option `-%c'", optopt);
+                    error (E_USAGE, 0, "unknown option '-%c'", optopt);
                 else
-                    error (E_USAGE, 0, "unknown option character `\\x%x'",
+                    error (E_USAGE, 0, "unknown option character '\\x%x'",
                            optopt);
                 break;
             default:
