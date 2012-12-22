@@ -55,19 +55,15 @@ usage_error () {
 }
 
 print_usage () {
-    cat <<EOT
-Usage: $progname [-m] [-f] [-s BACKUP-SUFFIX-FOR-REGULAR-FILES]
-       [-S BACKUP-SUFFIX-FOR-DIRECTORIES] [-b GLOBAL-BACKUP-SUFFIX]
-       [--] FILES-TO-BACKUP
-EOT
+    echo "Usage: $progname [-m] [-f] [-s BACKUP-SUFFIX] [--]" \
+         "FILES-TO-BACKUP"
 }
 
 #--------------------------------------------------------------------------
 
 declare -i force=$FALSE
 declare -i move=$FALSE
-file_suffix='~'
-dir_suffix='.bak'
+backup_suffix='~'
 
 case ${1-} in
     --help) print_help; exit $?;;
@@ -76,9 +72,7 @@ esac
 while getopts ":mfxb:s:S:" OPTION; do
     case "$OPTION" in
         m) move=1;;
-        b) file_suffix=$OPTARG; dir_suffix=$OPTARG;;
-        s) file_suffix=$OPTARG;;
-        S) dir_suffix=$OPTARG;;
+        s) backup_suffix=$OPTARG;;
         f) force=$TRUE;;
        \?) usage_error "'-$OPTARG': invalid option";;
        \:) usage_error "'-$OPTARG': option requires an argument";;
@@ -87,7 +81,7 @@ while getopts ":mfxb:s:S:" OPTION; do
 done
 shift $((OPTIND - 1))
 unset OPTION OPTERR OPTARG OPTIND
-declare -r file_suffix dir_suffix force move
+declare -r backup_suffix force move
 
 if (($# == 0)); then
     if ((force)); then
@@ -120,25 +114,25 @@ for item in "$@"; do
         # We must remove the (possible) trailing slash(es).
         dir=${item%%+(/)}
         # Remove any preexisting backup, also if it's a directory.
-        if rm -rf -- "${dir}${dir_suffix}"; then
-            $BAKDIR "${dir}" "${dir}${dir_suffix}" || {
+        if rm -rf -- "${dir}${backup_suffix}"; then
+            $BAKDIR "${dir}" "${dir}${backup_suffix}" || {
                 warn "failed to backup directory '$dir'"
                 continue
             }
         else
-            warn "pre-existent file '${dir}${dir_suffix}' can't" \
+            warn "pre-existent file '${dir}${backup_suffix}' can't" \
                  "be removed: directory '$dir' not backupped"
         fi
     elif [ -f "$item" ]; then
         file=$item
         # remove any preexisting backup, but not if it's a directory
-        if rm -f -- "${file}${file_suffix}"; then
-            $BAKFILE "${file}" "${file}${file_suffix}" || {
+        if rm -f -- "${file}${backup_suffix}"; then
+            $BAKFILE "${file}" "${file}${backup_suffix}" || {
                 warn "failed to backup file '$file'"
                 continue
             }
         else
-            warn "pre-existent file '${file}${file_suffix}' can't" \
+            warn "pre-existent file '${file}${backup_suffix}' can't" \
                  "be removed: file '$file' not backupped"
         fi
     else  # [ ! -f $item ] && [ ! -d $item ]
