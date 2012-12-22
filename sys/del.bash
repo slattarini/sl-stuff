@@ -143,22 +143,17 @@ case ${1-} in
   --version) print_version; exit $?;;
 esac
 
-while getopts ":-i" OPTION; do
-    case $OPTION in
-        i) Ask='y'                                                  ;;
-        -) break                                                    ;;
-        \?) usage_error "'-$OPTARG': unrecognized option"           ;;
-        \:) usage_error "'-$OPTARG': option requires an argument"   ;;
-        *) internal_error                                           ;;
-    esac
+while [ $# -gt 0 ]; do
+  case $1 in
+    -i) Ask=y;;
+    --) shift; break;;
+    -*) usage_error "'$1': unrecognized option";;
+     *) break;;
+  esac
 done
-
-shift $((OPTIND - 1))
-
-unset OPTION OPTARG OPTERR OPTIND
-declare -r Ask
-
 [ $# -gt 0 ] || usage_error "missing argument"
+
+declare -r Ask
 
 #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
