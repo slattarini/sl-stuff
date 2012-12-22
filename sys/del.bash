@@ -224,7 +224,7 @@ for file in "$@";
 do
     if ! [[ -e "$file" || -h "$file" ]]; then
         if ! IsYes "$Silent"; then
-            badwarn "$file: No such file or directory"
+            badwarn "$file: no such file or directory"
         fi
         continue
     fi
@@ -237,14 +237,12 @@ do
         then
             delete "$file"
         else
-            IsYes "$Silent" || \
-              warn "$file: Is a directory: skipping"
+            IsYes "$Silent" || warn "$file: is a directory: skipping"
         fi
     elif [[ -f "$file" || -h "$file" ]]; then
         delete "$file"
     else
-        IsYes "$Silent" || \
-          warn "$file: Not symlink, directory or regular file: skipping"
+        IsYes "$Silent" || warn "$file: not symlink, directory or regular file: skipping"
    fi   
 done
 
