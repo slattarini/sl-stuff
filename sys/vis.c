@@ -5,11 +5,12 @@
 #include <ctype.h>
 #include <stdlib.h>
 #include <unistd.h>
-#include <error.h> /* glib specific */
+#include <string.h>
 #include <errno.h>
 #define E_USAGE 2
 
 int strip = 0; /* 0 => escape special chars; 1 => discard special chars */
+const char *progname;
 
 int
 main (int argc, char **argv)
@@ -20,6 +21,8 @@ main (int argc, char **argv)
     int i, optshift;
     FILE *fp;
 
+    progname = argv[0];
+
     optshift = parse_opt (argc, argv);
     argc -= optshift;
     argv += optshift;
@@ -29,8 +32,9 @@ main (int argc, char **argv)
     } else {
         for (i = 1; i < argc; i++)
             if ((fp = fopen (argv[i], "r" )) == NULL ) {
-                error (EXIT_FAILURE, errno, "can't open file '%s'",
-                       argv[i]);
+                fprintf (stderr, "%s: can't open file '%s': %s",
+                         progname, argv[i], strerror (errno));
+                exit (EXIT_FAILURE);
             } else {
                 vis (fp);
                 fclose (fp);
@@ -66,11 +70,17 @@ parse_opt (int argc, char **argv)
                 break;
             case '?':
                 /* bad option */
-                if (isprint (optopt))
-                    error (E_USAGE, 0, "unknown option '-%c'", optopt);
-                else
-                    error (E_USAGE, 0, "unknown option character '\\x%x'",
-                           optopt);
+                if (isprint (optopt)) {
+                    fprintf (stderr,
+                             "%s: unknown option '-%c'\n",
+                             progname, optopt);
+                    exit (E_USAGE);
+                } else {
+                    fprintf (stderr,
+                             "%s: unknown option character '\\x%x'\n",
+                             progname, optopt);
+                    exit (E_USAGE);
+                }
                 break;
             default:
                 abort ();
