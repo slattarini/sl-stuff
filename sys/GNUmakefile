@@ -4,7 +4,8 @@ UTILS = \
   strerror \
   IPof \
   bak \
-  errnoinfo
+  errnoinfo \
+  apply
 
 ifeq ($(shell test `id -u` -eq 0 && echo yes),yes)
   bindir = /usr/local/bin
