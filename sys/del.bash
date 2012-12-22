@@ -14,16 +14,6 @@ declare -ir EXIT_FAILURE=1
 declare -ir E_USAGE=2
 declare -ir E_INTERNAL=100
 
-# NLS nuisances.
-for var in \
-  LANG LANGUAGE LC_ADDRESS LC_ALL LC_COLLATE LC_CTYPE LC_IDENTIFICATION \
-  LC_MEASUREMENT LC_MESSAGES LC_MONETARY LC_NAME LC_NUMERIC LC_PAPER \
-  LC_TELEPHONE LC_TIME
-do
-    [ x"${var+set}" = x"set" ] && { eval $var=C; export $var; }
-done
-unset var
-
 #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 #
