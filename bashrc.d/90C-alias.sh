@@ -64,6 +64,9 @@ else
     alias PS='ps auxwwwww | less'
 fi
 
+# Only display my processed.
+myps () { ps "$@" $(pgrep -u "$UID"); }
+
 # Restart the currently-running bash shell.
 alias rebash='exec "$BASH"'
 
