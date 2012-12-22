@@ -48,26 +48,21 @@ OPTIONS:
 EOT
 }
 
-warn ()
+error ()
 {
    echo "$progname: $*" >&2
-}
-
-badwarn ()
-{
-   warn "$*"
    exit_status=$EXIT_FAILURE
 }
 
-error ()
+fatal ()
 {
-   warn "error: $*" >&2
+   error "$@"
    exit $EXIT_FAILURE
 }
 
 usage_error ()
 {
-    [ $# -gt 0 ] && echo "$progname: $*" >&2
+    [ $# -gt 0 ] && error "$@"
     print_usage >&2
     exit $E_USAGE
 }
@@ -129,7 +124,7 @@ delete() {
         sleep 1
         destfile=$(trashname "$file")
         if exists "$destfile"; then
-            badwarn "$file: cannot delete: preexisting file in trash dir"
+            error "$file: cannot delete: preexisting file in trash dir"
             return 1
         fi
     fi
@@ -173,10 +168,10 @@ declare -r Ask
 T=${TRASH_DIRECTORY:-"$HOME/.trash"}
 
 [ -d "$T" ] || run_as_del mkdir -p -m 700 "$T" || \
-  error "trash directory '$T': is not a directory, and cannot be created"
+  fatal "trash directory '$T': is not a directory, and cannot be created"
 
 [[ -r "$T" && -x "$T" && -w "$T" ]] || \
-  error "trash directory '$T': bad permissions"
+  fatal "trash directory '$T': bad permissions"
 
 #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
