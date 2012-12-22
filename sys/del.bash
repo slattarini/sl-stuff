@@ -28,7 +28,7 @@ print_help()
 {
   print_version && cat <<'EOT'
 
-Move files and directory in a "trash" directory rather than 
+Move files and directory in a "trash" directory rather than
 really remove them.
 
 The default trash directory is $HOME/.trash, but the environmental
@@ -36,7 +36,7 @@ variale 'TRASH_DIRECTORY' is honoured.
 
 OPTIONS:
   -i:
-       Interactive: ask before deleting any file. Answer is read from 
+       Interactive: ask before deleting any file. Answer is read from
        standard input.
   --version:
        print program version and exit
@@ -74,19 +74,19 @@ trashname ()
   echo "${T}/${f##*/}___$(LC_ALL=C date '+%Y-%m-%d_%H:%M:%S')"
 }
 
-delete()
+delete ()
 {
   local file=$1
-    
+
   if ((ask)); then
     local reply
     printf "Delete '$file'? (y/n) [N] " >&2
     read reply
     case $reply in [yY]*);; *) return 0;; esac
   fi
-    
+
   local destfile=$(trashname "$file")
-   
+
   if exists "$destfile"; then
     sleep 1
     destfile=$(trashname "$file")
