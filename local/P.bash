@@ -2,8 +2,9 @@
 # Start recording current program of Radio Classica Bresciana on disk.
 # Requires the auxiliary utility "record-radiocalassica".
 
-e=0
 set -e -u
+
+exit_status=0
 
 dir=${RADIO_CLASSICA_BRESCIANA_CACHE-"$HOME/.radio-classica-bresciana.cache"}
 [ -d "$dir" ] || mkdir -p "$dir"
@@ -20,28 +21,29 @@ file=$(($max + 1)).wav
 unset f n max
 
 trap '
-    trap - 0
-    chmod a-w "$file" || e=1
+    trap - EXIT
+    chmod a-w "$file" || exit_status=1
     if [ -n "${devt-}" ]; then
-        rm -f "$devt" || e=1
+        rm -f "$devt" || exit_status=1
     fi
     if [ -n "${wholefile-}" ]; then
         echo "***"
         echo "*** OUTPUT FILE IS $wholefile ***"
         echo "***"
     fi
-    exit $e
-' 0
+    exit $exit_status
+' EXIT
+
 trap '
     echo "***" >&2
     echo "*** WARNING: recording interrupted, output file" \
                       "might be corrupted" >&2
     exit 1
-' 2 3 15
+' HUP INT QUIT PIPE TERM
 
 wholefile=$(pwd)/$file
 echo "Recording to file $wholefile..."
-record-radioclassica -o "$file" || e=1
+record-radioclassica -o "$file" || exit_status=1
 
 # mplayer (used by 'record-radioclassica') seems not to check if write(2)
 # fails due to 'No space left on device' error, so we must do that check
@@ -61,6 +63,6 @@ echo $$ >"$devt" || {
     exit 1
 } >&2
 
-exit $e
+exit $exit_status
 
 # vim: et sw=4 ts=4 ft=sh
