@@ -63,7 +63,7 @@ install: all
 	     dir_colors|inputrc) ;; \
 	     bash_completion.sh|bashrc.sh|bash_profile.sh) ;; \
 	     [0-9][0-9]C-*.sh) ;; \
-	     [0-9][0-9]S-*.sh) test '$(ALL)' = yes || continue;; \
+	     [0-9][0-9]u-*.sh) test '$(ALL)' = yes || continue;; \
 	     *) echo "$@: invalid filename '$$f'" >&2; exit 1;; \
 	   esac; \
 	   $(inst) $$f "$$cooked_homedir/.bashrc.d"; \
