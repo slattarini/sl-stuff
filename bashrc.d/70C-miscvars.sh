@@ -3,7 +3,7 @@
 
 case $UID in
   0)
-    if false && { test -d "$HOME/tmp" || mkdir -p "$HOME/tmp"; }; then
+    if test -d "$HOME/tmp" || mkdir -p "$HOME/tmp"; then
       export TMPDIR=$HOME/tmp
     else
       mwarn "cannot create directory '$HOME/tmp'."
