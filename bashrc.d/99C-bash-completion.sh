@@ -20,14 +20,14 @@ fi
 
 if [[ -z $BASH_COMPLETION ]]; then
     mwarn "  no bash completion file could be found"
-    mwarn "  Bash advanced completion features won't be avaible."
+    mwarn "  Bash advanced completion features won't be available."
     return $SUCCESS
 fi
 
 if [[ ! -f $BASH_COMPLETION || ! -r $BASH_COMPLETION ]]; then
     mwarn "  expected bash completion file '$BASH_COMPLETION"
     mwarn "  does not exist or is not a regular readable file."
-    mwarn "  Bash advanced completion features won't be avaible."
+    mwarn "  Bash advanced completion features won't be available."
     return $SUCCESS
 fi
 
@@ -35,10 +35,10 @@ fi
 if (($? != 0)); then
     mwarn "some errors occurred while loading bash completion file" \
           "'$BASH_COMPLETION'"
-    mwarn "Some bash's advanced completion features may not be avaible."
+    mwarn "Some bash advanced completion features may not be available."
     return $SUCCESS
 fi
 
 return $SUCCESS
 
-# vim: expandtab tabstop=4 shiftwidth=4 ft=sh
+# vim: et ts=4 sw=4 ft=sh
