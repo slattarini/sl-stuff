@@ -6,9 +6,9 @@
 # variable instead.
 tPATH=''
 if [ $UID -eq 0 ]; then
-  add_to_path -B /bin /sbin /usr/bin /usr/sbin
+  add_to_path -p tPATH -B /bin /sbin /usr/bin /usr/sbin
 else
-  add_to_path -B /sbin /bin /usr/sbin /usr/bin
+  add_to_path -p tPATH -B /sbin /bin /usr/sbin /usr/bin
 fi
 PATH=$tPATH
 unset tPATH
