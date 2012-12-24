@@ -90,12 +90,14 @@ _ps1()
     # entered.
     local mini_prompt=${ps1_smiley}
     case $BLEEDING_WITNESS in
-      [yY]es) mini_prompt="${mini_prompt} ${_ps1_red}\$${_ps1_raw} ";;
-           *) mini_prompt="${mini_prompt} \$ ";;
+      [yY]es) mini_prompt="${mini_prompt} ${_ps1_red}"'\$'"${_ps1_raw} ";;
+           *) mini_prompt="${mini_prompt} "'\$ ';;
     esac
 
     local _ps1_who_where="\\u@\\h"
-    if [[ -n $SSH_CONNECTION ]]; then
+    if [[ $UID -eq 0 ]]; then
+      _ps1_who_where=${_ps1_red}${_ps1_who_where}${_ps1_raw}
+    elif [[ -n $SSH_CONNECTION ]]; then
       _ps1_who_where=${_ps1_yellow}${_ps1_who_where}${_ps1_raw}
     fi
     PS1="$_ps1_raw\n$_ps1_who_where [$(_ps1_pretty_cwd --color)] \A"
