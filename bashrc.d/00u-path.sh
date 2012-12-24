@@ -21,10 +21,12 @@ add_to_path -B \
     /usr/ccs/bin \
     /opt/SUNWspro/bin \
     /opt/SUNWspro/extra/bin \
-    /usr/games \
     /usr/pkg/bin \
-    /opt/java/sun-java/bin \
-    /opt/bin
+    /opt/java/sun-java/bin
+
+[ $UID -eq 0 ] || add_to_path -B /usr/games
+
+add_to_path -B /opt/bin
 
 if [ $UID -eq 0 ]; then
   add_to_path -B /usr/local/bin /usr/local/sbin
