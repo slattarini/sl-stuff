@@ -1,12 +1,19 @@
 # -*- bash -*-
 # Set PATH variable (for search of executable files).
 
-tPATH=''
 # The add_to_path subroutine might rely on basic external programs,
-# so we cannot modify PATH directly here.
-add_to_path -p tPATH -B /usr/ucb /sbin /bin /usr/sbin /usr/bin
+# so we cannot modify PATH directly here.  We use this temporary
+# variable instead.
+tPATH=''
+if [ $UID -eq 0 ]; then
+  add_to_path -B /bin /sbin /usr/bin /usr/sbin
+else
+  add_to_path -B /sbin /bin /usr/sbin /usr/bin
+fi
 PATH=$tPATH
 unset tPATH
+
+add_to_path -B /usr/ucb
 
 add_to_path -B \
     /usr/xpg4/bin \
@@ -21,10 +28,10 @@ add_to_path -B \
     /usr/local64/bin \
     /usr/local/bin
 
-# On FreeBSD, /usr/local/sbin contains important binaries like pkg_which,
-# which should be easily available also to non-root users.
-if [[ -f /usr/local/sbin/pkg_which ]]; then
-    add_to_path -B /usr/local/sbin
+if [ $UID -eq 0 ]; then
+  add_to_path -B /usr/local/bin /usr/local/sbin
+else
+  add_to_path -B /usr/local/sbin /usr/local/bin
 fi
 
 add_to_path -B "/usr/local/opt/bin" "$HOME/bin" "$HOME/bin/local"
