@@ -1,6 +1,5 @@
 # -*- bash -*-
-
-# I18N and L10N
+# I18N
 
 W nlang || {
     mwarn "Missing program 'nlang'" >&2
@@ -8,26 +7,31 @@ W nlang || {
     return $SUCCESS
 }
 
-savelang() {
+savelang ()
+{
     _restore_lang_cmd=$(nlang)
 }
 
-resetlang() {
-    eval "${_restore_lang_cmd}" && _restore_lang_cmd=""
-}
-
-setlang() {
+setlang ()
+{
     eval $(nlang "$@")
     export LC_COLLATE=C
     export LC_NUMERIC=C
 }
 
-clearlang() {
+resetlang ()
+{
+    eval "${_restore_lang_cmd}" && _restore_lang_cmd=
+}
+
+clearlang ()
+{
     eval $(nlang '')
 }
 
-speak() {
-    case "${1-}" in
+speak ()
+{
+    case ${1-} in
         en|USA)     set en_US.UTF-8;;
         uk|british) set en_GB.UTF-8;;
         de|german)  set de_DE.UTF-8;;
