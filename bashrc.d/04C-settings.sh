@@ -56,6 +56,8 @@ set_defualt_shell_options ()
     shopt -u cdable_vars
     shopt -u cdspell
     shopt -u checkhash
+    # Check the window size after each command and, if necessary,
+    # update the values of LINES and COLUMNS environment variables.
     shopt -s checkwinsize
     shopt -s cmdhist
     shopt -u dotglob

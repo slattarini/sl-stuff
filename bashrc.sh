@@ -39,10 +39,6 @@ readonly BASHSHRC_INCLUDED=1
 # shell).
 . /etc/profile
 
-# Check the window size after each command and, if necessary, update the
-# values of LINES and COLUMNS.
-shopt -s checkwinsize
-
 PS1='\u@\h[bash-\v]$ '
 
 declare -rx USER_BASHRC_DIR=$HOME/.bashrc.d
