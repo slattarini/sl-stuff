@@ -2,6 +2,8 @@
 # Set PATH variable (for search of executable files).
 
 tPATH=''
+# The add_to_path subroutine might rely on basic external programs,
+# so we cannot modify PATH directly here.
 add_to_path -p tPATH -B /usr/ucb /sbin /bin /usr/sbin /usr/bin
 PATH=$tPATH
 unset tPATH
