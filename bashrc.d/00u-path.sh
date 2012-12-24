@@ -34,7 +34,7 @@ else
   add_to_path -B /usr/local/sbin /usr/local/bin
 fi
 
-add_to_path -B "/usr/local/opt/bin" "$HOME/bin" "$HOME/bin/local"
+add_to_path -B "$HOME/bin" "$HOME/bin/local"
 
 export PATH
 
