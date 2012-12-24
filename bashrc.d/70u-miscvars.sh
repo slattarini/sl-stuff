@@ -29,10 +29,12 @@ unset d
 
 # Location of a checked-out copy of gnulib.  Not for the superuser.
 if [ $UID -gt 0 ]; then
-  if [[ -d $HOME/src/gnulib ]]; then
-    export GNULIB_SRCDIR=$HOME/src/gnulib
-    export GNULIB_TOOL=$GNULIB_SRCDIR/gnulib-tool
+  if [[ -z $GNULIB_SRCDIR && -d $HOME/src/gnulib ]]; then
+    GNULIB_SRCDIR=$HOME/src/gnulib
   fi
+  # For bootstrapping (at least) GNU Gettext.
+  GNULIB_TOOL=$GNULIB_SRCDIR/gnulib-tool
+  export GNULIB_SRCDIR GNULIB_TOOL
 fi
 
 # Override defaults for autoconf-generated configure scripts.
