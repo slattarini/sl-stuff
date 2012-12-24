@@ -1,7 +1,21 @@
 # -*- bash -*-
 # Definitions of miscellaneous variables.
 
-export TMPDIR=/tmp
+case $UID in
+  0)
+    if false && { test -d "$HOME/tmp" || mkdir -p "$HOME/tmp"; }; then
+      export TMPDIR=$HOME/tmp
+    else
+      mwarn "cannot create directory '$HOME/tmp'."
+      mwarn "'/tmp' will be used as your temporary directory."
+      export TMPDIR=/tmp
+    fi
+    ;;
+  *)
+    export TMPDIR=/tmp
+    ;;
+esac
+
 export PAGER=less
 
 [[ -f $HOME/.bash_inputrc ]] && export INPUTRC=$HOME/.bash_inputrc
@@ -10,13 +24,15 @@ d=/var/local/cache/radio-classica-bresciana.cache
 [[ -d $d ]] && export RADIO_CLASSICA_BRESCIANA_CACHE=$d
 unset d
 
-# Filters for less(1).
-W lesspipe && eval "$(lesspipe)"
+# Filters for less(1).  Not for the superuser.
+[ $UID -gt 0 ] && W lesspipe && eval "$(lesspipe)"
 
-# Location of a checked-out copy of gnulib.
-if [[ -d $HOME/src/gnulib ]]; then
-  export GNULIB_SRCDIR=$HOME/src/gnulib
-  export GNULIB_TOOL=$GNULIB_SRCDIR/gnulib-tool
+# Location of a checked-out copy of gnulib.  Not for the superuser.
+if [ $UID -gt 0 ]; then
+  if [[ -d $HOME/src/gnulib ]]; then
+    export GNULIB_SRCDIR=$HOME/src/gnulib
+    export GNULIB_TOOL=$GNULIB_SRCDIR/gnulib-tool
+  fi
 fi
 
 # Override defaults for autoconf-generated configure scripts.
