@@ -88,10 +88,14 @@ _ps1()
 
     # The small coloured prompt which is on the same line where command is
     # entered.
-    local mini_prompt=${ps1_smiley}
+    local _ps1_mini_prompt=${ps1_smiley}
+    local _ps1_dollar='\$'
+    if [ $UID -eq 0 ]; then
+      _ps1_dollar=${_ps1_yellow}${_ps1_dollar}${_ps1_raw}
+    fi
     case $BLEEDING_WITNESS in
-      [yY]es) mini_prompt="${mini_prompt} ${_ps1_red}"'\$'"${_ps1_raw} ";;
-           *) mini_prompt="${mini_prompt} "'\$ ';;
+      [yY]es) _ps1_mini="${_ps1_mini} ${_ps1_red}${_ps1_dollar}${_ps1_raw} ";;
+           *) _ps1_mini="${_ps1_mini} ${_ps1_dollar} ";;
     esac
 
     local _ps1_who_where="\\u@\\h"
@@ -105,7 +109,7 @@ _ps1()
         local _ps1_venv="${_ps1_B}${VIRTUAL_ENV}${_ps1_b}"
         PS1="${PS1}\nvirtualenv --> ${_ps1_venv}"
     fi
-    PS1="${PS1}\n${mini_prompt}"
+    PS1="${PS1}\n${_ps1_mini}"
 
     # Return the exit status of the command which preceded us.
     return ${_ps1_last_exit_status}
