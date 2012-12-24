@@ -1,6 +1,6 @@
 # -*- bash -*-
 
-# Colori per ls.
+# Color scheme for ls(1).
 if [[ ${TERM-dumb} != dumb && -f $HOME/.dir_colors ]] && W dircolors; then
     eval $(dircolors -b "$HOME/.dir_colors")
 fi
