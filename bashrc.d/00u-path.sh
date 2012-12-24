@@ -13,25 +13,27 @@ fi
 PATH=$tPATH
 unset tPATH
 
-add_to_path -B /usr/ucb
-
+# These are for Solaris, mostly.
 add_to_path -B \
+    /usr/ucb \
     /usr/xpg4/bin \
     /usr/xpg6/bin \
     /usr/ccs/bin \
     /opt/SUNWspro/bin \
     /opt/SUNWspro/extra/bin \
-    /usr/pkg/bin \
-    /opt/java/sun-java/bin
 
-[ $UID -eq 0 ] || add_to_path -B /usr/games
+# For NetBSD.
+add_to_path -B /usr/pkg/bin
 
-add_to_path -B /opt/bin
+# Hack for my Debian desktop.
+add_to_path -B /opt/java/sun-java/bin
 
 if [ $UID -eq 0 ]; then
   add_to_path -B /usr/local/bin /usr/local/sbin
   add_to_path -B /usr/local64/bin /usr/local64/sbin
 else
+  add_to_path -B /usr/games
+  add_to_path -B /opt/bin
   add_to_path -B /usr/local/sbin /usr/local/bin
   add_to_path -B /usr/local64/sbin /usr/local64/bin
 fi
