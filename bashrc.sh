@@ -10,9 +10,6 @@
 # Shell must be interactive.
 case "$-" in *i*) ;; *) return 0;; esac
 
-# The shell must have an associate tty.
-LC_ALL=C tty | grep -i 'not.*tty' >/dev/null && return 0
-
 # The shell standard output and error must be associated to terminals.
 { test -t 1 && test -t 2; } || return 0
 
