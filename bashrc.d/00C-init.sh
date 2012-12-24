@@ -16,21 +16,21 @@ warn ()  { xecho "$0: $*" >&2; }
 mwarn () { xecho "$(modulname 2): $*" >&2; }
 fwarn () { xecho "$(funcname 2): $*" >&2; }
 
-funcname()  { xecho "${FUNCNAME[${1-1}]:-(main)}"; }
-modulname() { xecho "${BASH_SOURCE[${1-1}]:-$0}"; }
+funcname ()  { xecho "${FUNCNAME[${1-1}]:-(main)}"; }
+modulname () { xecho "${BASH_SOURCE[${1-1}]:-$0}"; }
 
-is_function() { declare -F "$1" &>/dev/null; }
+is_function () { declare -F "$1" &>/dev/null; }
 
 # Abstraction layer for lowercase/uppercase conversions.  Mostly meant
 # for systems with limited 'tr' utility.
-tolower()
+tolower ()
 {
     case $# in
         0) cat;;
         *) xecho "$*";;
     esac | tr ABCDEFGHIJKLMNOPQRSTUVWXYZ abcdefghijklmnopqrstuvwxyz
 }
-toupper()
+toupper ()
 {
     case $# in
         0) cat;;
@@ -59,7 +59,7 @@ which ()
     type -P $opts -- "$@"
 }
 
-W() { which "$@" >/dev/null 2>&1; }
+W () { which "$@" >/dev/null 2>&1; }
 
 # On non-FreeBSD and non-Linux systems, some binaries we are looking for
 # can be stashed in weird/unusual locations.
@@ -124,15 +124,16 @@ _check_realpath()
 }
 # Internal subroutine '_weak_realpath', used by '_fixdir_for_path'.
 if find_better_program realpath REALPATH_CMD _check_realpath; then
-  _weak_realpath() { $REALPATH_CMD "$@"; }
+  _weak_realpath () { $REALPATH_CMD "$@"; }
 else
-  _weak_realpath() { xecho "$1"; }
+  _weak_realpath () { xecho "$1"; }
 fi
 # Get rid of this temporary subroutine.
 unset -f _check_realpath
 
 # Internal subroutine, used by '_add_dir_to_path()'.
-_fixdir_for_path() {
+_fixdir_for_path ()
+{
     case "$1" in
         .|..) xecho "$1";;
         *) _weak_realpath "$1";;
@@ -141,7 +142,8 @@ _fixdir_for_path() {
 
 # Internal subroutine, used by 'add_to_path()'.
 # Usage: _add_dir_to_path [-B] DIRECTORY [PATH-VARIABLE='PATH'] [PATHSEP=:]
-_add_dir_to_path () {
+_add_dir_to_path ()
+{
     declare -i prepend=0
     if [ x"${1-}" = x'-B' ]; then
         prepend=1
@@ -186,7 +188,7 @@ _add_dir_to_path () {
 # path whose variable name is given by the '-p' option (default to 'PATH').
 # The path separator is assumed to be ':', unless differently specified by
 # the '-c' option.
-add_to_path()
+add_to_path ()
 {
     local prepend_opt=''
     local path_sep=':' path_var='PATH'
