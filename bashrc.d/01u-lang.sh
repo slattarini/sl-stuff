@@ -1,20 +1,20 @@
 # -*- bash -*-
 # I18N
 
-W nlang || {
-    mwarn "Missing program 'nlang'" >&2
-    mwarn "Fancy localization functions won't be available" >&2
-    return $SUCCESS
-}
+export LC_COLLATE=C
+export LC_NUMERIC=C
 
-savelang ()
+locale -a &>/dev/null || return $SUCCESS
+
+_setlang_cmd ()
 {
-    _restore_lang_cmd=$(nlang)
+  locale | sed -e 's/=\(.*\)$/='"${1-}"';/' -e 's/^/export /'
+  case $1 in C) echo export LC_ALL=C;; *) echo unset LC_ALL;; esac
 }
 
 setlang ()
 {
-    eval $(nlang "$@")
+    eval $(_setlang_cmd "$@")
     export LC_COLLATE=C
     export LC_NUMERIC=C
 }
@@ -26,7 +26,7 @@ resetlang ()
 
 clearlang ()
 {
-    eval $(nlang '')
+    eval $(_setlang_cmd C)
 }
 
 speak ()
@@ -41,7 +41,6 @@ speak ()
     setlang "$1"
 }
 
-savelang
-setlang -f en_US.UTF-8
+setlang en_US.UTF-8
 
 # vim: ft=sh ts=4 sw=4 et
