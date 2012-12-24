@@ -117,11 +117,6 @@ else
   export SHELL=$BASH
 fi
 
-# This variables are set by smart terminal and passed to the shell, so
-# pass them to shell child processes as well.
-[ -n "${COLUMNS-}" ] && export COLUMNS
-[ -n "${LINES-}" ] && export LINES
-
 # Temporary subroutine, used by the check right below.
 _check_realpath()
 {
