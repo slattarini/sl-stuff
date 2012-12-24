@@ -24,14 +24,14 @@ add_to_path -B \
     /usr/games \
     /usr/pkg/bin \
     /opt/java/sun-java/bin \
-    /opt/bin \
-    /usr/local64/bin \
-    /usr/local/bin
+    /opt/bin
 
 if [ $UID -eq 0 ]; then
   add_to_path -B /usr/local/bin /usr/local/sbin
+  add_to_path -B /usr/local64/bin /usr/local64/sbin
 else
   add_to_path -B /usr/local/sbin /usr/local/bin
+  add_to_path -B /usr/local64/sbin /usr/local64/bin
 fi
 
 add_to_path -B "$HOME/bin" "$HOME/bin/local"
