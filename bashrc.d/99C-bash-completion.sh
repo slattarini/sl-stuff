@@ -10,7 +10,7 @@
 #
 
 if [[ -z $BASH_COMPLETION ]]; then
-    for d in $HOME/etc /usr/local/opt/etc /usr/local/etc /etc; do
+    for d in $HOME/etc /usr/local/etc /etc; do
         if test -f $d/bash_completion; then
             BASH_COMPLETION=$d/bash_completion
             break
@@ -37,12 +37,6 @@ if (($? != 0)); then
           "'$BASH_COMPLETION'"
     mwarn "Some bash's advanced completion features may not be avaible."
     return $SUCCESS
-fi
-
-# FIXME: hack to support git completion on FreeBSD; there should be a
-#        better way!
-if [ -f /usr/local/share/git-core/contrib/completion/git-completion.bash ]; then
-  . /usr/local/share/git-core/contrib/completion/git-completion.bash
 fi
 
 return $SUCCESS
