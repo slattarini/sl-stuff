@@ -29,6 +29,14 @@ install-git:
 	     done
 INSTALLS += git
 
+install-vim:
+	@cd $(homedir) \
+	  && rm -rf .vim .vimrc .gvimrc \
+	  && $(LN_S) .sl-config/vim .vim \
+	  && $(LN_S) .vim/virmrc .vimrc \
+	  && $(LN_S) .vim/gvirmrc .gvimrc
+INSTALLS += vim
+
 INSTALL_TARGETS := $(patsubst %,install-%,$(INSTALLS))
 $(INSTALL_TARGETS): install-setup
 .PHONY: install-all install-setup $(INSTALL_TARGETS)
