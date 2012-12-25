@@ -14,7 +14,7 @@ homedir = $(DESTDIR)$(HOME)
 print-info:
 	@echo 'Run "make install-all" to install; be warned that this will'
 	@echo 'override several configuration files in your home directory'
-	@echo 'Note however that DESTDIR is honured'
+	@echo 'Note however that DESTDIR is honoured'
 
 install-setup:
 	@rm -f $(homedir)/.sl-config
@@ -27,7 +27,7 @@ install-git:
 	  && for f in config ignore; do \
 	       $(LN_S) .sl-config/git/$$f .git$$f; \
 	     done
-INSTALLS := git
+INSTALLS += git
 
 INSTALL_TARGETS := $(patsubst %,install-%,$(INSTALLS))
 $(INSTALL_TARGETS): install-setup
