@@ -19,3 +19,9 @@ clean-sys clean-local: clean-%: %
 	@$(MAKE) -C $* clean
 clean: clean-sys clean-local
 .PHONY: clean clean-sys clean-local
+
+GIT = git
+DISTNAME = sl-utils
+dist:
+	$(GIT) archive --prefix=$(DISTNAME)/ -o $(DISTNAME).tar.gz HEAD
+.PHONY: dist
