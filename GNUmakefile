@@ -1,5 +1,7 @@
 #-*- makefile -*-
 
+.ONESHELL:
+
 # Paranoid sanity check.
 ifndef HOME
 $(error cannot use this makefile with $$HOME unset or empty)
@@ -19,21 +21,21 @@ GNUTAR = tar
 install_data = $(INSTALL) -m 444
 inst = vrun $(install_data)
 
-shell_setup = \
-  set -u; set -e; (set -C) >/dev/null 2>&1 && set -C; \
-  trap 'echo "Makefile bug: UNEXPECTED EXIT" >&2; exit 255;' 0; \
-  case '$(FAKEINSTALL)' in \
-    1|[yY]*) \
-      run()  { echo " $$@"; }; \
-      vrun() { echo " $$@"; }; \
-      : ;; \
-    *) \
-      run()  { "$$@" || exit $$?; }; \
-      vrun() { echo " $$@"; run "$$@"; }; \
-      : ;; \
+define shell_setup
+  set -u;
+  set -e;
+  (set -C) >/dev/null 2>&1 && set -C
+  case '$(FAKEINSTALL)' in
+    1|[yY]*)
+      run()  { echo " $$@"; }
+      vrun() { echo " $$@"; }
+      ;; 
+    *)
+      run()  { "$$@" || exit $$?; }
+      vrun() { echo " $$@"; run "$$@"; }
+      ;;
   esac
-
-shell_done = trap 'exit $$?' 0; exit 0
+endef
 
 help:
 	@echo "Type '$(MAKE) install' to install common files."
@@ -53,35 +55,33 @@ all: bashrc.sh
 .PHONY: all
 
 install: all
-	@$(shell_setup); \
-	 [ -d '$(home-dir)' ] || vrun $(MKDIR_P) '$(home-dir)'; \
-	 vrun rm -rf "$(home-dir)/.bashrc.d"; \
-	 vrun $(MKDIR_P) "$(home-dir)/.bashrc.d"; \
-	 cd bashrc.d; \
-	 for f in *; do \
-	   case $$f in \
-	     inputrc) ;; \
-	     bash_completion.sh|bashrc.sh|bash_profile.sh) ;; \
-	     [0-9][0-9]C-*.sh) ;; \
-	     [0-9][0-9]u-*.sh) test '$(ALL)' = yes || continue;; \
-	     *) echo "$@: invalid filename '$$f'" >&2; exit 1;; \
-	   esac; \
-	   $(inst) $$f '$(home-dir)/.bashrc.d'; \
-	 done; \
-	 cd ..; \
-	 $(inst) bashrc.sh          '$(home-dir)/.bashrc'; \
-	 $(inst) bash_profile.sh    '$(home-dir)/.bash_profile'; \
-	 $(inst) bash_completion.sh '$(home-dir)/.bash_completion'; \
-	 $(inst) inputrc            '$(home-dir)/.inputrc'; \
-	 $(shell_done)
+	@$(shell_setup)
+	@[ -d '$(home-dir)' ] || vrun $(MKDIR_P) '$(home-dir)'
+	@vrun rm -rf "$(home-dir)/.bashrc.d"
+	@vrun $(MKDIR_P) "$(home-dir)/.bashrc.d"
+	@cd bashrc.d
+	@for f in *; do
+	@  case $$f in
+	@    inputrc) ;;
+	@    bash_completion.sh|bashrc.sh|bash_profile.sh) ;;
+	@    [0-9][0-9]C-*.sh) ;;
+	@    [0-9][0-9]u-*.sh) test '$(ALL)' = yes || continue;;
+	@    *) echo "$@: invalid filename '$$f'" >&2; exit 1;;
+	@  esac
+	@  $(inst) $$f '$(home-dir)/.bashrc.d'
+	@done
+	@cd ..
+	@$(inst) bashrc.sh          '$(home-dir)/.bashrc'
+	@$(inst) bash_profile.sh    '$(home-dir)/.bash_profile'
+	@$(inst) bash_completion.sh '$(home-dir)/.bash_completion'
+	@$(inst) inputrc            '$(home-dir)/.inputrc'
 .PHONY: install
 
 uninstall:
-	@$(shell_setup); \
-	 vrun cd '$(home-dir)'; \
-	 vrun rm -rf .bashrc.d; \
-	 vrun rm -f .bash_profile .bashrc .bash_completion .inputrc; \
-	 $(shell_done)
+	@$(shell_setup)
+	@vrun cd '$(home-dir)'
+	@vrun rm -rf .bashrc.d
+	@vrun rm -f .bash_profile .bashrc .bash_completion .inputrc
 .PHONY: uninstall
 
 fake-install:
