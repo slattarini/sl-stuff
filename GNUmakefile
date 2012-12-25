@@ -25,7 +25,7 @@ install-git:
 	@cd $(homedir) \
 	  && rm -f .gitconfig .gitignore \
 	  && for f in config ignore; do \
-	       $(LN_S) .sl-config/git/$$f .git$$f; \
+	       $(LN_S) .sl-config/git/$$f .git$$f || exit 1; \
 	     done
 INSTALLS += git
 
