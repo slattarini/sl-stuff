@@ -9,7 +9,7 @@ MAKEFLAGS += -r -R
 LN_S = ln -s
 MKDIR_P = mkdir -p
 
-homedir = $(DESTDIR)$(HOME)
+home-dir = $(DESTDIR)$(HOME)
 sl-config-dir := .sl-config
 
 i-am-root := $(shell test `id -u` -eq 0 && echo yes)
@@ -23,18 +23,18 @@ print-info:
 
 install-setup:
 ifdef i-am-root
-	@rm -rf $(homedir)/$(sl-config-dir)
-	@$(MKDIR_P) $(homedir)/$(sl-config-dir)
+	@rm -rf $(home-dir)/$(sl-config-dir)
+	@$(MKDIR_P) $(home-dir)/$(sl-config-dir)
 	@git -c tar.umask=02222 archive HEAD | \
-	  (cd $(homedir)/$(sl-config-dir) && tar xf - && rm -f GNUmakefile)
+	  (cd $(home-dir)/$(sl-config-dir) && tar xf - && rm -f GNUmakefile)
 else
-	@rm -rf $(homedir)/$(sl-config-dir)
-	@$(MKDIR_P) $(homedir) # For DESTDIR installs.
-	@$(LN_S) "$$(pwd)" $(homedir)/$(sl-config-dir)
+	@rm -rf $(home-dir)/$(sl-config-dir)
+	@$(MKDIR_P) $(home-dir) # For DESTDIR installs.
+	@$(LN_S) "$$(pwd)" $(home-dir)/$(sl-config-dir)
 endif
 
 install-git:
-	@cd $(homedir) \
+	@cd $(home-dir) \
 	  && rm -f .gitconfig .gitignore \
 	  && for f in config ignore; do \
 	       $(LN_S) $(sl-config-dir)/git/$$f .git$$f || exit 1; \
@@ -42,19 +42,19 @@ install-git:
 INSTALL_TARGETS += install-git
 
 install-python:
-	@cd $(homedir) \
+	@cd $(home-dir) \
 	  && rm -f .pythonrc \
 	  && $(LN_S) $(sl-config-dir)/pythonrc.py .pythonrc
 INSTALL_TARGETS += install-python
 
 install-dircolors:
-	@cd $(homedir) \
+	@cd $(home-dir) \
 	  && rm -f .dircolors \
 	  && $(LN_S) $(sl-config-dir)/dircolors .dircolors
 INSTALL_TARGETS += install-dircolors
 
 install-vim:
-	@cd $(homedir) \
+	@cd $(home-dir) \
 	  && rm -rf .vim .vimrc .gvimrc \
 	  && $(LN_S) $(sl-config-dir)/vim .vim \
 	  && $(LN_S) .vim/vimrc.vim .vimrc \
