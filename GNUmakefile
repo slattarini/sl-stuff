@@ -12,7 +12,7 @@ INSTALL =
 
 homedir = $(DESTDIR)$(HOME)
 
-i-am-root := y$(shell test `id -u` -eq 0 && echo yes)
+i-am-root := $(shell test `id -u` -eq 0 && echo yes)
 
 INSTALL_TARGETS := # Updated later.
 
