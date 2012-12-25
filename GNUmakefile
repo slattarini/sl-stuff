@@ -8,6 +8,7 @@ MAKEFLAGS += -r -R
 
 INSTALLS := # Updated later.
 LN_S = ln -s
+MKDIR_P = mkdir -p
 homedir = $(DESTDIR)$(HOME)
 
 print-info:
@@ -17,6 +18,7 @@ print-info:
 
 install-setup:
 	@rm -f $(homedir)/.sl-config
+	@$(MKDIR_P) $(homedir) # For DESTDIR installs.
 	@$(LN_S) "$$(pwd)" $(homedir)/.sl-config
 
 install-git:
