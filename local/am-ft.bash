@@ -31,7 +31,7 @@ done
 if ((interactive)); then
   do_on_error='exec bash --login -i'
 else
-  do_on_error='exit $?' 
+  do_on_error='exit $?'
 fi
 
 tarball=$(echo automake*.tar.xz)
@@ -50,12 +50,12 @@ if test -t 1; then
 fi
 
 # This is tempting:
-#   $ ssh "command" arg-1 ... arg-2 
+#   $ ssh "command" arg-1 ... arg-2
 # but doesn't work as expected.  So we need the following hack
 # to propagate the command line arguments to the remote shell.
 quoted_args=--
 while (($# > 0)); do
-  case $1 in 
+  case $1 in
     *\'*) quoted_args+=" "$(printf '%s\n' "$1" | sed "s/'/'\\''/g");;
        *) quoted_args+=" '$1'";;
   esac
