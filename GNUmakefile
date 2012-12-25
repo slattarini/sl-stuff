@@ -1,14 +1,14 @@
 #-*- makefile -*-
 
-DISTNAME = bashrc
-GIT = git
-
 # Paranoid sanity check.
 ifndef HOME
 $(error cannot use this makefile with $$HOME unset or empty)
 endif
 
-homedir = $(HOME)
+home-dir = $(DESTDIR)$(HOME)
+
+DISTNAME = bashrc
+GIT = git
 
 FAKEINSTALL =
 
@@ -54,10 +54,9 @@ all: bashrc.sh
 
 install: all
 	@$(shell_setup); \
-	 cooked_homedir='$(DESTDIR)$(homedir)'; \
-	 [ -d "$$cooked_homedir" ] || vrun $(MKDIR_P) "$$cooked_homedir"; \
-	 vrun rm -rf "$$cooked_homedir/.bashrc.d"; \
-	 vrun $(MKDIR_P) "$$cooked_homedir/.bashrc.d"; \
+	 [ -d '$(home-dir)' ] || vrun $(MKDIR_P) '$(home-dir)'; \
+	 vrun rm -rf "$(home-dir)/.bashrc.d"; \
+	 vrun $(MKDIR_P) "$(home-dir)/.bashrc.d"; \
 	 cd bashrc.d; \
 	 for f in *; do \
 	   case $$f in \
@@ -67,19 +66,18 @@ install: all
 	     [0-9][0-9]u-*.sh) test '$(ALL)' = yes || continue;; \
 	     *) echo "$@: invalid filename '$$f'" >&2; exit 1;; \
 	   esac; \
-	   $(inst) $$f "$$cooked_homedir/.bashrc.d"; \
+	   $(inst) $$f '$(home-dir)/.bashrc.d'; \
 	 done; \
 	 cd ..; \
-	 $(inst) bashrc.sh          "$$cooked_homedir"/.bashrc; \
-	 $(inst) bash_profile.sh    "$$cooked_homedir"/.bash_profile; \
-	 $(inst) bash_completion.sh "$$cooked_homedir"/.bash_completion; \
-	 $(inst) inputrc            "$$cooked_homedir"/.inputrc; \
-	 $(inst) inputrc            "$$cooked_homedir"/.bash_inputrc; \
+	 $(inst) bashrc.sh          '$(home-dir)/.bashrc'; \
+	 $(inst) bash_profile.sh    '$(home-dir)/.bash_profile'; \
+	 $(inst) bash_completion.sh '$(home-dir)/.bash_completion'; \
+	 $(inst) inputrc            '$(home-dir)/.inputrc'; \
 	 $(shell_done)
 .PHONY: install
 
 uninstall:
-	cd '$(DESTDIR)$(homedir)' && rm -rf .bashrc.d \
+	cd '$(home-dir)' && rm -rf .bashrc.d \
 	  && rm -f .bash_profile .bashrc .bash_completion \
 	           .dir_colors .inputrc .bash_inputrc
 .PHONY: uninstall
