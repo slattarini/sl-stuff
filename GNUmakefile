@@ -13,6 +13,7 @@ DISTNAME = bashrc
 GIT = git
 
 FAKEINSTALL =
+ALL =
 
 INSTALL = install -c
 MKDIR_P = mkdir -p
@@ -25,16 +26,14 @@ define shell_setup
   set -u;
   set -e;
   (set -C) >/dev/null 2>&1 && set -C
-  case '$(FAKEINSTALL)' in
-    1|[yY]*)
-      run()  { echo " $$@"; }
-      vrun() { echo " $$@"; }
-      ;; 
-    *)
-      run()  { "$$@" || exit $$?; }
-      vrun() { echo " $$@"; run "$$@"; }
-      ;;
-  esac
+  isTrue () { case $$1 in 1|[yY]*) true;; *) false;; esac; }
+  if isTrue '$(FAKEINSTALL)'; then
+    run()  { echo " $$@"; }
+    vrun() { echo " $$@"; }
+  else
+    run()  { "$$@" || exit $$?; }
+    vrun() { echo " $$@"; run "$$@"; }
+  fi
 endef
 
 help:
@@ -65,7 +64,7 @@ install: all
 	@    inputrc) ;;
 	@    bash_completion.sh|bashrc.sh|bash_profile.sh) ;;
 	@    [0-9][0-9]C-*.sh) ;;
-	@    [0-9][0-9]u-*.sh) test '$(ALL)' = yes || continue;;
+	@    [0-9][0-9]u-*.sh) isTrue '$(ALL)' || continue;;
 	@    *) echo "$@: invalid filename '$$f'" >&2; exit 1;;
 	@  esac
 	@  $(inst) $$f '$(home-dir)/.bashrc.d'
