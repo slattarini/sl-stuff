@@ -8,7 +8,6 @@ MAKEFLAGS += -r -R
 
 LN_S = ln -s
 MKDIR_P = mkdir -p
-INSTALL =
 
 homedir = $(DESTDIR)$(HOME)
 sl-config-dir := .sl-config
