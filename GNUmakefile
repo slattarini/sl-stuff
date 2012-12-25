@@ -41,6 +41,18 @@ install-git:
 	     done
 INSTALL_TARGETS += install-git
 
+install-python:
+	@cd $(homedir) \
+	  && rm -f .pythonrc \
+	  && $(LN_S) .sl-config/pythonrc.py .pythonrc
+INSTALL_TARGETS += install-python
+
+install-dircolors:
+	@cd $(homedir) \
+	  && rm -f .dir_colors \
+	  && $(LN_S) .sl-config/dir_colors .dir_colors
+INSTALL_TARGETS += install-dircolors
+
 install-vim:
 	@cd $(homedir) \
 	  && rm -rf .vim .vimrc .gvimrc \
@@ -48,12 +60,6 @@ install-vim:
 	  && $(LN_S) .vim/vimrc.vim .vimrc \
 	  && $(LN_S) .vim/gvimrc.vim .gvimrc
 INSTALL_TARGETS += install-vim
-
-install-python:
-	@cd $(homedir) \
-	  && rm -f .pythonrc \
-	  && $(LN_S) .sl-config/pythonrc.py .pythonrc
-INSTALL_TARGETS += install-python
 
 $(INSTALL_TARGETS): install-setup
 install-all: $(INSTALL_TARGETS)
