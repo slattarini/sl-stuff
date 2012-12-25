@@ -49,5 +49,11 @@ install-vim:
 	  && $(LN_S) .vim/gvimrc.vim .gvimrc
 INSTALL_TARGETS += install-vim
 
+install-python:
+	@cd $(homedir) \
+	  && rm -f .pythonrc \
+	  && $(LN_S) .sl-config/pythonrc.py .pythonrc
+INSTALL_TARGETS += install-python
+
 $(INSTALL_TARGETS): install-setup
 install-all: $(INSTALL_TARGETS)
