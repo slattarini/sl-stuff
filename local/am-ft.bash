@@ -6,11 +6,21 @@ me=${0##*/}
 
 fatal () { echo "$me: $*" >&2; exit 1; }
 
+cmd='
+  test_script=$HOME/.am-test/run
+  if test -f $test_script && test -x $test_script; then
+    $test_script "$@"
+  else
+    nice -n19 ./configure && nice -n19 make -j10 check
+  fi
+'
+
 remote=
 interactive=1
 while test $# -gt 0; do
   case $1 in
    -b|--batch) interactive=0;;
+   -c|--command) cmd=${2-}; shift;;
    -*) fatal "'$1': invalid option";;
     *) remote=$1; shift; break;;
   esac
@@ -77,14 +87,7 @@ ssh -t -t $remote "
   if test -d \$HOME/.am-test/extra-bin; then
       export extra_bindir=\$HOME/.am-test/extra-bin
   fi
-  export $env"'
-  test_script=$HOME/.am-test/run
-  st=0
-  # FIXME: allow the command to be defined from the command line?
-  if test -f $test_script && test -x $test_script; then
-    $test_script "$@" || rc=$?
-  else
-    nice -n19 ./configure && nice -n19 make -j10 check || rc=$?
-  fi'"
-  ((rc == 0)) || $do_on_error
+  export $env
+  $cmd
+  ((\$? == 0)) || $do_on_error
 "
