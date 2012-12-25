@@ -1,0 +1,54 @@
+[user]
+    name = Stefano Lattarini
+    email = stefano.lattarini@gmail.com
+[push]
+    # I prefer specifying the remote to push to explicitly.
+    default = nothing
+[sendemail]
+    from = Stefano Lattarini <stefano.lattarini@gmail.com>
+    cc = Stefano Lattarini <stefano.lattarini@gmail.com>
+    suppressfrom = true
+    smtpencryption = tls
+    smtpserver = smtp.gmail.com
+    smtpuser = stefano.lattarini@gmail.com
+    smtpserverport = 587
+    chainreplyto = false
+[format]
+    thread = shallow
+    signoff = false
+[color]
+    diff = auto
+    status = auto
+    branch = auto
+[color "branch"]
+    current = yellow reverse
+    local = yellow
+    remote = green
+[color "diff"]
+    commit = yellow
+    meta = yellow bold
+    frag = cyan
+    old = red
+    new = green
+[color "status"]
+    added = cyan
+    changed = green
+    untracked = red
+[alias]
+    changes = diff --name-status -r
+    cdiff = diff --cached
+    ci = commit -s
+    co = checkout
+    pu = pull --ff-only
+    st = status
+    lgl = log --stat --format=fuller
+    dfl = log -p --format=fuller
+[diff]
+    renames = true
+[core]
+    excludesfile = ~/.gitignore
+[merge "merge-changelog"]
+    name = GNU-style ChangeLog merge driver
+    driver = git-merge-changelog %O %A %B
+[merge]
+    renamelimit = 0
