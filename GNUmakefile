@@ -20,8 +20,8 @@ i-am-root := $(shell test `id -u` -eq 0 && echo yes)
 
 print-info:
 	@echo 'Run "make install" to install; be warned that this will'
-	@echo 'override several configuration files in your home directory'
-	@echo 'Note however that DESTDIR is honoured'
+	@echo 'override several configuration files in your home directory.'
+	@echo 'Note however that DESTDIR is honoured.'
 
 install:
 	@set -u -e
