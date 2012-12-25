@@ -35,7 +35,7 @@ install:
 ifdef i-am-root
 	@echo " git-copytree $(CURDIR) $(home-dir)/$(sl-config-dir)"
 	@$(MKDIR_P) $(home-dir)/$(sl-config-dir)
-	@git -c tar.umask=02222 archive HEAD | \
+	@git -c tar.umask=00222 archive HEAD | \
 	  (cd $(home-dir)/$(sl-config-dir) && tar xf - && rm -f GNUmakefile)
 else
 	@lnk "$(CURDIR)" $(home-dir)/$(sl-config-dir)
