@@ -61,7 +61,7 @@ install: all
 	 cd bashrc.d; \
 	 for f in *; do \
 	   case $$f in \
-	     dir_colors|inputrc) ;; \
+	     inputrc) ;; \
 	     bash_completion.sh|bashrc.sh|bash_profile.sh) ;; \
 	     [0-9][0-9]C-*.sh) ;; \
 	     [0-9][0-9]u-*.sh) test '$(ALL)' = yes || continue;; \
@@ -73,7 +73,6 @@ install: all
 	 $(inst) bashrc.sh          "$$cooked_homedir"/.bashrc; \
 	 $(inst) bash_profile.sh    "$$cooked_homedir"/.bash_profile; \
 	 $(inst) bash_completion.sh "$$cooked_homedir"/.bash_completion; \
-	 $(inst) dir_colors 		"$$cooked_homedir"/.dir_colors; \
 	 $(inst) inputrc            "$$cooked_homedir"/.inputrc; \
 	 $(inst) inputrc            "$$cooked_homedir"/.bash_inputrc; \
 	 $(shell_done)
