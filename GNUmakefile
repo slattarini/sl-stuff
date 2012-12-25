@@ -40,6 +40,7 @@ else
 endif
 	@vrun cd '$(home-dir)'
 	@xlnk dircolors .dircolors
+	@xlnk inputrc .inputrc
 	@xlnk vim .vim
 	@lnk .vim/vimrc.vim .vimrc
 	@lnk .vim/gvimrc.vim .gvimrc
