@@ -77,9 +77,11 @@ install: all
 .PHONY: install
 
 uninstall:
-	cd '$(home-dir)' \
-	  && rm -rf .bashrc.d \
-	  && rm -f .bash_profile .bashrc .bash_completion .inputrc
+	@$(shell_setup); \
+	 vrun cd '$(home-dir)'; \
+	 vrun rm -rf .bashrc.d; \
+	 vrun rm -f .bash_profile .bashrc .bash_completion .inputrc; \
+	 $(shell_done)
 .PHONY: uninstall
 
 fake-install:
