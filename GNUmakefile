@@ -6,10 +6,15 @@ MAKEFLAGS += -r -R
 
 .DEFAUL_GOAL = print-info
 
-INSTALLS := # Updated later.
 LN_S = ln -s
 MKDIR_P = mkdir -p
+INSTALL =
+
 homedir = $(DESTDIR)$(HOME)
+
+i-am-root := y$(shell test `id -u` -eq 0 && echo yes)
+
+INSTALL_TARGETS := # Updated later.
 
 print-info:
 	@echo 'Run "make install-all" to install; be warned that this will'
@@ -17,9 +22,16 @@ print-info:
 	@echo 'Note however that DESTDIR is honoured'
 
 install-setup:
-	@rm -f $(homedir)/.sl-config
+ifdef i-am-root
+	@rm -rf $(homedir)/.sl-config
+	@$(MKDIR_P) $(homedir)/.sl-config
+	@git -c tar.umask=02222 archive HEAD | \
+	  (cd $(homedir)/.sl-config && tar xf - && rm -f GNUmakefile)
+else
+	@rm -rf $(homedir)/.sl-config
 	@$(MKDIR_P) $(homedir) # For DESTDIR installs.
 	@$(LN_S) "$$(pwd)" $(homedir)/.sl-config
+endif
 
 install-git:
 	@cd $(homedir) \
@@ -27,7 +39,7 @@ install-git:
 	  && for f in config ignore; do \
 	       $(LN_S) .sl-config/git/$$f .git$$f || exit 1; \
 	     done
-INSTALLS += git
+INSTALL_TARGETS += install-git
 
 install-vim:
 	@cd $(homedir) \
@@ -35,9 +47,7 @@ install-vim:
 	  && $(LN_S) .sl-config/vim .vim \
 	  && $(LN_S) .vim/virmrc .vimrc \
 	  && $(LN_S) .vim/gvirmrc .gvimrc
-INSTALLS += vim
+INSTALL_TARGETS += install-vim
 
-INSTALL_TARGETS := $(patsubst %,install-%,$(INSTALLS))
 $(INSTALL_TARGETS): install-setup
-.PHONY: install-all install-setup $(INSTALL_TARGETS)
 install-all: $(INSTALL_TARGETS)
