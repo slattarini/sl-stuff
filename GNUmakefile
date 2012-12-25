@@ -18,8 +18,6 @@ sl-config-dir := .sl-config
 # The user is of course free to override this.
 i-am-root := $(shell test `id -u` -eq 0 && echo yes)
 
-INSTALL_TARGETS := # Updated later.
-
 print-info:
 	@echo 'Run "make install" to install; be warned that this will'
 	@echo 'override several configuration files in your home directory'
