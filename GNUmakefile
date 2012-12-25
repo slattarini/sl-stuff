@@ -77,9 +77,9 @@ install: all
 .PHONY: install
 
 uninstall:
-	cd '$(home-dir)' && rm -rf .bashrc.d \
-	  && rm -f .bash_profile .bashrc .bash_completion \
-	           .dir_colors .inputrc .bash_inputrc
+	cd '$(home-dir)' \
+	  && rm -rf .bashrc.d \
+	  && rm -f .bash_profile .bashrc .bash_completion .inputrc
 .PHONY: uninstall
 
 fake-install:
