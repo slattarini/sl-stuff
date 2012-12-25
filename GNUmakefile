@@ -1,6 +1,7 @@
 #-*- makefile -*-
 
 DISTNAME = bashrc
+GIT = git
 
 # Paranoid sanity check.
 ifndef HOME
@@ -88,23 +89,8 @@ fake-install:
 	$(MAKE) FAKEINSTALL=y install
 .PHONY: fake-install
 
-$(DISTNAME).tar.gz: dist
 dist:
-	@set -x -u; \
-	files="GNUmakefile bash_completion.sh bash_profile.sh bashrc.sh \
-	       inputrc dir_colors"; \
-	rm -rf dist.tmpdir \
-	  && mkdir dist.tmpdir \
-	  && $(GNUTAR) -cf dist.tmpdir/tmp.tar $$files bashrc.d/*.sh \
-	  && cd dist.tmpdir \
-	  && mkdir $(DISTNAME) \
-	  && cd $(DISTNAME) \
-	  && $(GNUTAR) -xf ../tmp.tar \
-	  && cd .. \
-	  && $(GNUTAR) -czvf ../$(DISTNAME).tar.gz ./$(DISTNAME) \
-	  && cd .. \
-	  && rm -rf dist.tmpdir
-	ls -l $(DISTNAME).tar.gz
+	$(GIT) archive --prefix=$(DISTNAME)/ -o $(DISTNAME).tar.gz HEAD
 .PHONY: dist
 
 clean:
