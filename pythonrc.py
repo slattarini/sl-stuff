@@ -83,7 +83,7 @@ def dumpfds():
 # Enable tab completion on variale/function/moule names!!!
 try:
     import rlcompleter, readline
-    readline.read_init_file(HOME + "/" + ".python_inputrc")
+    readline.read_init_file(HOME + "/" + ".inputrc")
 except ImportError:
     pass
 
