@@ -45,8 +45,8 @@ install-vim:
 	@cd $(homedir) \
 	  && rm -rf .vim .vimrc .gvimrc \
 	  && $(LN_S) .sl-config/vim .vim \
-	  && $(LN_S) .vim/virmrc .vimrc \
-	  && $(LN_S) .vim/gvirmrc .gvimrc
+	  && $(LN_S) .vim/vimrc.vim .vimrc \
+	  && $(LN_S) .vim/gvimrc.vim .gvimrc
 INSTALL_TARGETS += install-vim
 
 $(INSTALL_TARGETS): install-setup
