@@ -6,10 +6,10 @@ MAKEFLAGS += -r -R
 
 .DEFAUL_GOAL = print-info
 
-LN_S = ln -s
-MKDIR_P = mkdir -p
+LN_S := ln -s
+MKDIR_P := mkdir -p
 
-home-dir = $(DESTDIR)$(HOME)
+home-dir := $(DESTDIR)$(HOME)
 sl-config-dir := .sl-config
 
 i-am-root := $(shell test `id -u` -eq 0 && echo yes)
@@ -22,13 +22,12 @@ print-info:
 	@echo 'Note however that DESTDIR is honoured'
 
 install-setup:
-ifdef i-am-root
 	@rm -rf $(home-dir)/$(sl-config-dir)
+ifdef i-am-root
 	@$(MKDIR_P) $(home-dir)/$(sl-config-dir)
 	@git -c tar.umask=02222 archive HEAD | \
 	  (cd $(home-dir)/$(sl-config-dir) && tar xf - && rm -f GNUmakefile)
 else
-	@rm -rf $(home-dir)/$(sl-config-dir)
 	@$(MKDIR_P) $(home-dir) # For DESTDIR installs.
 	@$(LN_S) "$$(pwd)" $(home-dir)/$(sl-config-dir)
 endif
