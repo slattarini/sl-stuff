@@ -1,5 +1,5 @@
-#!/usr/bin/python
-# This file is read automatically by interactive phyton sessions
+# -*- Mode: python -*-
+# This file is read automatically by interactive python sessions
 # at startup.
 
 import sys
@@ -13,14 +13,14 @@ try:
     import subprocess
     run = subprocess.call
 except ImportError:
-    # emulate subprocess.call
+    # Emulate subprocess.call.
     _run_rx = re.compile("'")
     def run(args):
         args = ["'"+_run_rx.sub(r"'\''", s)+"'" for s in args]
         cmd = " ".join(args)
         return os.system(cmd)
 
-# Home directory
+# Home directory.
 HOME = os.environ["HOME"]
 
 if not is_jython:
@@ -43,7 +43,7 @@ def cd(dir_=None):
     OLDPWD = _oldpwd
     PWD = os.getcwd()
 
-# factory function, using closures
+# Factory function, using closures.
 def shwrap(cmd=None, opts=None, retbool=None):
     if cmd is None:
         cmd = "echo"
@@ -62,7 +62,7 @@ def shwrap(cmd=None, opts=None, retbool=None):
     _f.__doc__ = "Wrapper around command '%s'" % cmd
     return _f
 
-# some unix utilities exposed
+# Some UNIX utilities exposed.
 for u in ('pwd', 'ls', 'll', 'la', 'cat', 'cp', 'mv', 'rm', 'mkdir',
           'rmdir'):
     exec('%s = shwrap(cmd="%s")' % (u,u))
@@ -76,11 +76,11 @@ def sh(cmd='echo $*', *args):
 def bash(cmd='echo $*', *args):
     _bash(*((cmd, 'bash-from-python') + args))
 
-# List opened file descriptors
+# List opened file descriptors.
 def dumpfds():
     ls("-l", "/proc/" + str(os.getpid()) + "/fd")
 
-# Enable tab completion on variale/function/moule names!!!
+# Enable tab completion on variable/function/module names!
 try:
     import rlcompleter, readline
     readline.read_init_file(HOME + "/" + ".inputrc")
