@@ -49,8 +49,8 @@ INSTALL_TARGETS += install-python
 
 install-dircolors:
 	@cd $(homedir) \
-	  && rm -f .dir_colors \
-	  && $(LN_S) .sl-config/dir_colors .dir_colors
+	  && rm -f .dircolors \
+	  && $(LN_S) .sl-config/dircolors .dircolors
 INSTALL_TARGETS += install-dircolors
 
 install-vim:
