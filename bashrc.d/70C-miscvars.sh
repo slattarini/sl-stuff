@@ -18,7 +18,7 @@ esac
 
 export PAGER=less
 
-[[ -f $HOME/.bash_inputrc ]] && export INPUTRC=$HOME/.bash_inputrc
+[[ -f $HOME/.inputrc ]] && export INPUTRC=$HOME/.inputrc
 
 d=/var/local/cache/radio-classica-bresciana.cache
 [[ -d $d ]] && export RADIO_CLASSICA_BRESCIANA_CACHE=$d
