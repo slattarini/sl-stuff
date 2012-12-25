@@ -2,6 +2,7 @@
 /local/record-radioclassica
 /local/P
 /local/listen-radioclassica
+/local/ssh-add-all
 /sys/IPof
 /sys/apply
 /sys/bak

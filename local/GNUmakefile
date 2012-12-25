@@ -4,7 +4,8 @@ UTILS = \
   P \
   listen-radioclassica \
   record-radioclassica \
-  record-radio
+  record-radio \
+  ssh-add-all
 
 bindir = $(HOME)/bin
 
