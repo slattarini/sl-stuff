@@ -12,7 +12,7 @@ home-dir = $(DESTDIR)$(HOME)
 DISTNAME = bashrc
 GIT = git
 
-FAKEINSTALL =
+FAKE =
 ALL =
 
 INSTALL = install -c
@@ -27,7 +27,7 @@ define shell_setup
   set -e;
   (set -C) >/dev/null 2>&1 && set -C
   isTrue () { case $$1 in 1|[yY]*) true;; *) false;; esac; }
-  if isTrue '$(FAKEINSTALL)'; then
+  if isTrue '$(FAKE)'; then
     run()  { echo " $$@"; }
     vrun() { echo " $$@"; }
   else
@@ -84,7 +84,7 @@ uninstall:
 .PHONY: uninstall
 
 fake-install:
-	$(MAKE) FAKEINSTALL=y install
+	$(MAKE) install FAKE=yes
 .PHONY: fake-install
 
 dist:
