@@ -19,7 +19,7 @@ install-setup:
 	@rm -f $(homedir)/.sl-config
 	@$(LN_S) "$$(pwd)" $(homedir)/.sl-config
 
-git-install:
+install-git:
 	@cd $(homedir) \
 	  && rm -f .gitconfig .gitignore \
 	  && for f in config ignore; do \
@@ -27,7 +27,7 @@ git-install:
 	     done
 INSTALLS := git
 
-INSTALL_TARGETS := $(patsubst %,%-install,$(INSTALLS))
+INSTALL_TARGETS := $(patsubst %,install-%,$(INSTALLS))
 $(INSTALL_TARGETS): install-setup
 .PHONY: install-all install-setup $(INSTALL_TARGETS)
 install-all: $(INSTALL_TARGETS)
