@@ -39,9 +39,7 @@ install-git:
 	  && for f in config ignore; do \
 	       $(LN_S) .sl-config/git/$$f .git$$f || exit 1; \
 	     done
-ifndef i-am-root
 INSTALL_TARGETS += install-git
-endif
 
 install-vim:
 	@cd $(homedir) \
