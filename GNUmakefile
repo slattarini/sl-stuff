@@ -39,7 +39,7 @@ endef
 help:
 	@echo "Type '$(MAKE) install' to install common files."
 	@echo "Type '$(MAKE) install ALL=yes' to all files" \
-	      "(for \"stefano's\" persona)."
+	      "(for \"stefano\" persona)."
 	@echo "The 'DESTDIR' variable is honoured."
 	@echo "Try '$(MAKE) fake-install' to see what would have been" \
 	      "removed/installed."
