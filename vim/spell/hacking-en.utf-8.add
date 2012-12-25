@@ -774,3 +774,11 @@ readline
 rsync
 symlinking
 Linus Torvalds
+gnupload
+GnuPG
+smartcards
+rpath
+pthread
+selinux
+sigaction
+euidaccess
