@@ -61,7 +61,6 @@ install: all
 	@cd bashrc.d
 	@for f in *; do
 	@  case $$f in
-	@    inputrc) ;;
 	@    bash_completion.sh|bashrc.sh|bash_profile.sh) ;;
 	@    [0-9][0-9]C-*.sh) ;;
 	@    [0-9][0-9]u-*.sh) isTrue '$(ALL)' || continue;;
@@ -73,14 +72,13 @@ install: all
 	@$(inst) bashrc.sh          '$(home-dir)/.bashrc'
 	@$(inst) bash_profile.sh    '$(home-dir)/.bash_profile'
 	@$(inst) bash_completion.sh '$(home-dir)/.bash_completion'
-	@$(inst) inputrc            '$(home-dir)/.inputrc'
 .PHONY: install
 
 uninstall:
 	@$(shell_setup)
 	@vrun cd '$(home-dir)'
 	@vrun rm -rf .bashrc.d
-	@vrun rm -f .bash_profile .bashrc .bash_completion .inputrc
+	@vrun rm -f .bash_profile .bashrc .bash_completion
 .PHONY: uninstall
 
 fake-install:
