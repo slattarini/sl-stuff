@@ -14,7 +14,7 @@ UTILS = \
   nolocale \
   vis
 
-ifeq ($(shell test `id -u` -eq 0 && echo yes),yes)
+ifdef i-am-root
   bindir = /usr/local/bin
 else
   bindir = $(HOME)/bin
