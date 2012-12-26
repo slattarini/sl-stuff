@@ -8,6 +8,7 @@ help:
 	@echo "Can only build and install from the subdirs"
 .PHONY: help
 
+DISTNAME = sl-stuff
 dist:
 	git archive --prefix=$(DISTNAME)/ -o $(DISTNAME).tar.gz HEAD
 .PHONY: dist
