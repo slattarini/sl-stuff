@@ -1,11 +1,8 @@
 #-*- makefile -*-
 
-.ONESHELL:
+include ../common.mk
 
-# Paranoid sanity check.
-ifndef HOME
-$(error cannot use this makefile with $$HOME unset or empty)
-endif
+.ONESHELL:
 
 home-dir = $(DESTDIR)$(HOME)
 
