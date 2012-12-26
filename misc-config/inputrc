@@ -1,0 +1,54 @@
+# -*- readline -*-
+# Personal configuration for GNU readline.
+
+"\C-x\C-r": re-read-init-file
+
+# <Home> (was C-a)
+"\e[H": beginning-of-line
+# <End> (was C-e)
+"\e[F": end-of-line
+# <PageUp> (was M-b)
+"\e[5~": backward-word
+# <PageDown> (was M-f).
+"\e[6~": forward-word
+# <Ctrl> + <Left> (was M-b).
+"\e[1;5D": backward-word
+# <Ctrl> + <Right> (was M-f).
+"\e[1;5C": forward-word
+# <Del>.
+"\e[3~": delete-char
+# <Ctrl>  + D
+"\C-d":  delete-char
+
+# <Ins>
+"\e[2~": overwrite-mode
+
+# <Ctrl> + <Space> => literal tabulation character
+"\C- ": tab-insert
+# <Tab> => command completion
+"	": complete
+
+# These are required to get readline to display accents and/or umlauts,
+# i.e. to be put into "8 bit" mode.  Some systems (e.g. FreeBSD) really
+# require this.
+set input-meta on
+set output-meta on
+set convert-meta off
+
+$if Bash
+
+   # <F1> => command completion
+   "\eOP": complete
+
+   # <F2> as well as <Meta> + "-"
+   # Help completing long options (deal with a minor botch of bash
+   # completion)
+   # XXX: "\M--" doesn't work; why?
+   "\e-": "\C-b\C-b\C-b\C-d\C-f"
+   "\eOQ": "\C-b\C-b\C-b\C-d\C-f"
+   # <F3>
+   "\eOR": possible-completions
+   # <F4>
+   "\eOS": menu-complete
+
+$endif

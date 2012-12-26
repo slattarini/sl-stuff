@@ -1,0 +1,32 @@
+## Global personal .gitignore file.
+
+## temporary files and directories
+*.tmp
+*.tmp[0-9]
+*.tmpdir
+
+## backup files
+*[$~]
+*.bak
+
+## vim swap files
+.*.sw[op]
+
+## git commit messages (personal convention)
+/git.msg
+/git.msg[0-9]
+/git.msg.*
+/git.msg[0-9]
+
+## archives and compressed files
+
+*.gz
+*.bz2
+*.xz
+*.lzip
+*.ar
+*.tar
+*.tgz
+*.tbz
+*.tbz2
+*.zip

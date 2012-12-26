@@ -1,0 +1,4 @@
+My "portable" configuration files for some common tools (e.g.,
+Vim, Git, GNU Readline).  Having them in a centralized place
+is better then having to copy them around several machines by
+hand.
