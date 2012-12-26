@@ -44,7 +44,7 @@ endif
 all: $(UTILS)
 
 install-utils: $(UTILS)
-	$(MKDIR_P) $(DESTDIR)$(bindir)
+	[ -d $(DESTDIR)$(bindir) ] || $(MKDIR_P) $(DESTDIR)$(bindir)
 	$(INSTALL_EXEC) $^ $(DESTDIR)$(bindir)
 
 clean:

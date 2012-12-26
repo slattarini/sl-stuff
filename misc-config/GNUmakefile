@@ -20,11 +20,13 @@ install:
 	@vrun() { echo " $$@" && "$$@"; }
 	@lnk () { rm -f "$$2" && vrun $(LN_S) "$$1" "$$2"; }
 	@xlnk () { lnk "$(sl-config-dir)/$$1" "$$2"; }
-	@$(MKDIR_P) '$(home-dir)' # For DESTDIR installs.
+	@# For DESTDIR installs.
+	@[ -d '$(home-dir)' ] || $(MKDIR_P) '$(home-dir)'
 	@vrun rm -rf '$(home-dir)/$(sl-config-dir)'
 ifdef i-am-root
 	@echo ' git-copytree $(CURDIR) $(home-dir)/$(sl-config-dir)'
-	@$(MKDIR_P) '$(home-dir)/$(sl-config-dir)'
+	@[ -d '$(home-dir)/$(sl-config-dir)' ] \
+	  || $(MKDIR_P) '$(home-dir)/$(sl-config-dir)'
 	@git -c tar.umask=00222 archive HEAD | \
 	  (cd '$(home-dir)/$(sl-config-dir)' \
 	    && tar xf - \
