@@ -15,9 +15,9 @@ UTILS = \
   vis
 
 ifdef i-am-root
-  bindir = /usr/local/bin
+  bindir = $(sysbindir)
 else
-  bindir = $(HOME)/bin
+  bindir = $(homebindir)
 endif
 
 include ../utils-common.mk

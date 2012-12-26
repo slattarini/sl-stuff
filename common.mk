@@ -10,6 +10,9 @@ ifndef HOME
 $(error cannot use these makefiles with $${HOME} unset or empty)
 endif
 
+homebindir = $(HOME)/bin
+sysbindir = /usr/local/bin
+
 INSTALL = install -c
 INSTALL_DATA = $(INSTALL) -m 444
 INSTALL_EXEC = $(INSTALL) -m 555

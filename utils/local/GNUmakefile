@@ -9,7 +9,7 @@ UTILS = \
   am-ft \
   am-xft
 
-bindir = $(HOME)/bin
+bindir = $(homebindir)
 
 include ../utils-common.mk
 
