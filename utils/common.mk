@@ -90,3 +90,4 @@ CFLAGS ?= -Wall -Werror
 	$(CC) $(CPPFLAGS) $(CFLAGS) $< -o$@-t $(LDFLAGS)
 	chmod a-w $@-t && mv -f $@-t $@
 
+# vim: ft=make sw=4 ts=8 noet

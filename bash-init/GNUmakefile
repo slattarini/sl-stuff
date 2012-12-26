@@ -86,4 +86,4 @@ clean:
 	rm -f *.tmp *.tmp[0-9]
 .PHONY: clean
 
-# vim: ft=make sw=4 ts=4 noet
+# vim: ft=make sw=4 ts=8 noet

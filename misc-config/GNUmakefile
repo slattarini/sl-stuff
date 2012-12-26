@@ -48,3 +48,5 @@ ifndef i-am-root
 	@for f in config ignore; do xlnk git/$$f .git$$f; done
 	@xlnk pythonrc.py .pythonrc
 endif
+
+# vim: ft=make sw=4 ts=8 noet

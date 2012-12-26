@@ -19,3 +19,5 @@ clean-sys clean-local: clean-%: %
 	@$(MAKE) -C $* clean
 clean: clean-sys clean-local
 .PHONY: clean clean-sys clean-local
+
+# vim: ft=make sw=4 ts=8 noet
