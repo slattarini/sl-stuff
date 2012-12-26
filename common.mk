@@ -29,6 +29,6 @@ we-are-at-home := $(if $(wildcard $(HOME)/.icedove $(HOME)/.tunderbird),yes)
 i-am-root := $(shell test `id -u` -eq 0 && echo yes)
 
 # Allow user configuration.
--include ./cfg.mk
+-include $(dir $(lastword $(MAKEFILE_LIST)))cfg.mk
 
 # vim: ft=make sw=4 ts=8 noet
