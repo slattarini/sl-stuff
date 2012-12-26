@@ -53,8 +53,8 @@ all: bashrc.sh
 install: all
 	@$(shell_setup)
 	@[ -d '$(home-dir)' ] || vrun $(MKDIR_P) '$(home-dir)'
-	@vrun rm -rf "$(home-dir)/.bashrc.d"
-	@vrun $(MKDIR_P) "$(home-dir)/.bashrc.d"
+	@vrun rm -rf '$(home-dir)/.bashrc.d'
+	@vrun $(MKDIR_P) '$(home-dir)/.bashrc.d'
 	@cd bashrc.d
 	@for f in *; do
 	@  case $$f in
