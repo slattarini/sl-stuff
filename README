@@ -1,0 +1,16 @@
+Personal files, configurations and utilities of Stefano Lattarini.
+
+A collection of utilities, scripts and initialization files that I
+use on my machines, both local and remote-access only, running varying
+operating systems (at least GNU/Linux, BSD and Solaris, so far).
+
+I find it better to keep all of this centralized and under version
+control, to avoid synchronization and backup issues (and lots of
+headaches).
+
+See the README files in the subdirs for further details about components
+and sub-projects of this repository.
+
+This project is not actually meant nor expected to be used by any
+other person; but if someone reading this can find interesting bits
+and pieces and want to steal some — be my guest :–)
