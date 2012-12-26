@@ -44,8 +44,8 @@ endif
 all: $(UTILS)
 
 install-utils: $(UTILS)
-	[ -d $(DESTDIR)$(bindir) ] || $(MKDIR_P) $(DESTDIR)$(bindir)
-	$(INSTALL_EXEC) $^ $(DESTDIR)$(bindir)
+	[ -d '$(DESTDIR)$(bindir)' ] || $(MKDIR_P) '$(DESTDIR)$(bindir)'
+	$(INSTALL_EXEC) $^ '$(DESTDIR)$(bindir)'
 
 clean:
 	rm -f $(UTILS) $(CLEANFILES)
