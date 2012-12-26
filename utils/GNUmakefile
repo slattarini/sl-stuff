@@ -1,5 +1,7 @@
 # -* makefile -*-
 
+include ../common.mk
+
 .DEFAULT_GOAL = all
 
 all-sys all-local: all-%: %

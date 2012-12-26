@@ -20,7 +20,7 @@ else
   bindir = $(HOME)/bin
 endif
 
-include ../common.mk
+include ../utils-common.mk
 
 install: install-utils
 .PHONY: install

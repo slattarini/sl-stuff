@@ -11,9 +11,9 @@ UTILS = \
 
 bindir = $(HOME)/bin
 
-include ../common.mk
+include ../utils-common.mk
 
-ifdef we_are_at_home
+ifdef we-are-at-home
 install: install-utils
 else
 install:

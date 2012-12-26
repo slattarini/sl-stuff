@@ -1,12 +1,12 @@
 #-*- makefile -*-
 
-# No builtin rules or variables.
-MAKEFLAGS += -r -R
-.SUFFIXES:
+.DEFAULT_GOAL = help
 
-all:
+include common.mk
+
+help:
 	@echo "Can only build and install from the subdirs"
-.PHONY: all
+.PHONY: help
 
 dist:
 	git archive --prefix=$(DISTNAME)/ -o $(DISTNAME).tar.gz HEAD

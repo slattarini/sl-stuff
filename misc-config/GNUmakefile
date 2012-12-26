@@ -1,22 +1,14 @@
 # -*- makefile -*-
 
-# No builtin rules or variables.
-MAKEFLAGS += -r -R
-.SUFFIXES:
+include ../common.mk
 
 # One shell run all the components of a recipe.
 .ONESHELL:
 
 .DEFAUL_GOAL = print-info
 
-LN_S := ln -s
-MKDIR_P := mkdir -p
-
 home-dir := $(DESTDIR)$(HOME)
 sl-config-dir := .sl-config
-
-# The user is of course free to override this.
-i-am-root := $(shell test `id -u` -eq 0 && echo yes)
 
 print-info:
 	@echo 'Run "make install" to install; be warned that this will'

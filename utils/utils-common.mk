@@ -1,8 +1,6 @@
 # -*- makefile -*-
 
-# No builtin rules or variables.
-MAKEFLAGS += -r -R
-.SUFFIXES:
+include ../common.mk
 
 ifndef UTILS
 $(error $${UTILS} should be defined before including this makefile)
@@ -11,11 +9,6 @@ endif
 ifndef bindir
 $(error $${bindir} should be defined before including this makefile)
 endif
-
-INSTALL = install -c
-INSTALL_DATA = $(INSTALL) -m 444
-INSTALL_EXEC = $(INSTALL) -m 555
-MKDIR_P = mkdir -p
 
 # A python interpreter invocation.
 PYTHON_CMD = /usr/bin/env python
@@ -45,10 +38,6 @@ $(call maybe_set_posix_shell,/usr/bin/bash)
 ifndef HOME
 $(error cannot use these makefiles with $${HOME} unset or empty)
 endif
-
-# Little hack: I identify a "personal account on a personal system"
-# by the use of Thunderbird (or Icedove, as it's called on Debian).
-we_are_at_home := $(if $(wildcard $(HOME)/.icedove $(HOME)/.tunderbird),yes)
 
 .DEFAULT_GOAL := all
 
