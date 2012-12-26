@@ -9,9 +9,6 @@ endif
 
 home-dir = $(DESTDIR)$(HOME)
 
-DISTNAME = bashrc
-GIT = git
-
 FAKE =
 ALL =
 
@@ -85,13 +82,8 @@ fake-install:
 	$(MAKE) install FAKE=yes
 .PHONY: fake-install
 
-dist:
-	$(GIT) archive --prefix=$(DISTNAME)/ -o $(DISTNAME).tar.gz HEAD
-.PHONY: dist
-
 clean:
-	rm -f *.tmp *.tmp[0-9] $(DISTNAME).tar.gz
-	rm -rf dist.tmpdir
+	rm -f *.tmp *.tmp[0-9]
 .PHONY: clean
 
 # vim: ft=make sw=4 ts=4 noet
