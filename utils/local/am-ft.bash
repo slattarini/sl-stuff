@@ -26,7 +26,7 @@ while test $# -gt 0; do
   esac
   shift
 done
-[[ -n $remote ]] || fatal_ "no remote given"
+[[ -n $remote ]] || fatal "no remote given"
 
 if ((interactive)); then
   do_on_error='exec bash --login -i'
