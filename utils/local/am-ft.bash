@@ -88,6 +88,5 @@ ssh -t -t $remote "
       export extra_bindir=\$HOME/.am-test/extra-bin
   fi
   export $env
-  $cmd
-  ((\$? == 0)) || $do_on_error
+  ($cmd) || $do_on_error
 "
