@@ -13,6 +13,8 @@
     smtpuser = stefano.lattarini@gmail.com
     smtpserverport = 587
     chainreplyto = false
+    aliasesfile = ~/.mailrc
+    aliasfiletype = mailrc
 [format]
     thread = shallow
     signoff = false

@@ -1,0 +1,12 @@
+# This file is not obsolete, being used by (at least) git-send-email.
+
+# Mailing lists.
+alias ac  autoconf-patches@gnu.org
+alias am  automake-patches@gnu.org
+alias cu  coreutils@gnu.org
+alias gl  bug-gnulib@gnu.org
+alias git git@vger.kernel.org
+
+# People.
+alias +me stefano.lattarini@gmail.com
+alias +ju gitster@pobox.com
