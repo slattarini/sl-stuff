@@ -6,6 +6,7 @@ alias am  automake-patches@gnu.org
 alias cu  coreutils@gnu.org
 alias gl  bug-gnulib@gnu.org
 alias git git@vger.kernel.org
+alias ng  automake-ng@gnu.org
 
 # People.
 alias +me stefano.lattarini@gmail.com
