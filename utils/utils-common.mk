@@ -1,7 +1,5 @@
 # -*- makefile -*-
 
-include ../$(dir $(lastword $(MAKEFILE_LIST)))common.mk
-
 ifndef UTILS
 $(error $${UTILS} should be defined before including this makefile)
 endif

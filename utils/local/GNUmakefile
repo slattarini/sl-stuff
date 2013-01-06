@@ -1,5 +1,7 @@
 # -*- makefile -*-
 
+include ../../common.mk
+
 UTILS = \
   P \
   listen-radioclassica \

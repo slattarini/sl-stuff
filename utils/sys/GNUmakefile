@@ -1,5 +1,7 @@
 # -*- makefile -*-
 
+include ../../common.mk
+
 UTILS = \
   strerror \
   IPof \
