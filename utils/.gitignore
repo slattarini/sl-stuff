@@ -9,6 +9,7 @@
 /sys/cdefn
 /sys/cfundef
 /sys/del
+/sys/editor
 /sys/errnoinfo
 /sys/nolocale
 /sys/pf

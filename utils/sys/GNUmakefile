@@ -7,6 +7,7 @@ UTILS = \
   IPof \
   bak \
   errnoinfo \
+  editor \
   apply \
   cdefn \
   cfundef \
