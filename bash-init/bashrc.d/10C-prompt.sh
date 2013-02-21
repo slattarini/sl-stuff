@@ -44,20 +44,20 @@ readonly _ps1_b=$(_ps1_escape 22)
 readonly _ps1_raw=$(_ps1_escape 0)
 # Restore normal color
 readonly _ps1_std=$(_ps1_escape '')
-# Set to cyan foreground
-readonly _ps1_cyan=$(_ps1_escape '1;36')
 # Set to magenta foreground
 readonly _ps1_magenta=$(_ps1_escape '1;35')
 # Set to red foreground
 readonly _ps1_red=$(_ps1_escape '1;31')
+# Set to blue foreground
+readonly _ps1_blue=$(_ps1_escape '1;34')
 # Set to green foreground
 readonly _ps1_green=$(_ps1_escape '1;32')
 # Set to green background
 readonly _ps1_green_bg=$(_ps1_escape '1;42')
-# Set to yellow foreground
-readonly _ps1_yellow=$(_ps1_escape '1;33')
-# Set to pale yellow foreground
-readonly _ps1_pale_yellow=$(_ps1_escape '0;33')
+# Set to "pale yellow" (basically ochre) on black
+readonly _ps1_ochre=$(_ps1_escape '0;33')
+# Set to "pale yellow" (basically ochre) on black
+readonly _ps1_ochre_on_black=$(_ps1_escape '1;40;0;33')
 
 # Be happy or sad depending on the previous exit status (or to the given
 # parameter, if any).
@@ -68,9 +68,9 @@ _ps1_smiley()
     [ $# -gt 0 ] && _ps1_prev_rc=$1
     ps1_smiley="{$_ps1_prev_rc} "
     if ((${_ps1_prev_rc} == 0)); then
-        ps1_smiley="${ps1_smiley}${_ps1_cyan}:-)"
+        ps1_smiley="${ps1_smiley}${_ps1_blue}:-)"
     else
-        ps1_smiley="${ps1_smiley}${_ps1_magenta}:-("
+        ps1_smiley="${ps1_smiley}${_ps1_red}:-("
     fi
     ps1_smiley="${ps1_smiley}${_ps1_raw}"
 }
@@ -97,7 +97,7 @@ _ps1()
     local _ps1_dollar _ps1_dollar_color
     if [ $UID -eq 0 ]; then
       _ps1_dollar=\#
-      _ps1_dollar_color=${_ps1_yellow}
+      _ps1_dollar_color=${_ps1_ochre}
     elif [[ $BLEEDING_WITNESS =~ [yY]es ]]; then
       _ps1_dollar=%
       _ps1_dollar_color=${_ps1_green_bg}
@@ -112,7 +112,7 @@ _ps1()
     if [[ $UID -eq 0 ]]; then
       _ps1_who_where=${_ps1_red}${_ps1_who_where}${_ps1_raw}
     elif [[ -n $SSH_CONNECTION ]]; then
-      _ps1_who_where=${_ps1_pale_yellow}${_ps1_who_where}${_ps1_raw}
+      _ps1_who_where=${_ps1_ochre_on_black}${_ps1_who_where}${_ps1_raw}
     fi
     PS1="$_ps1_raw\n$_ps1_who_where [$(_ps1_pretty_cwd --color)] \A"
     if [ -n "$VIRTUAL_ENV" ]; then
