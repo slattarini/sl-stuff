@@ -1,4 +1,5 @@
-# colordiffrc file for dark backgrounds
+# colordiffrc file for light backgrounds; color scheme is similar
+# to the one used by my ~/.gitconfig file.
 #
 # Set banner=no to suppress authorship info at top of
 # colordiff output
