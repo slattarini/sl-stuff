@@ -15,7 +15,8 @@ UTILS = \
   del \
   pf \
   nolocale \
-  vis
+  vis \
+  pkgi
 
 ifdef i-am-root
   bindir = $(sysbindir)
