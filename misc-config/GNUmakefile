@@ -35,6 +35,7 @@ else
 	@lnk '$(CURDIR)' '$(home-dir)/$(sl-config-dir)'
 endif
 	@vrun cd '$(home-dir)'
+	@xlnk colordiffrc .colordiffrc
 	@xlnk dircolors .dircolors
 	@xlnk inputrc .inputrc
 	@xlnk vim .vim
