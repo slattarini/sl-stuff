@@ -1,0 +1,31 @@
+## Global personal .hgignore file.
+
+## temporary files and directories
+*.tmp
+*.tmp[0-9]
+*.tmpdir
+
+## backup files
+*[$~]
+*.bak
+
+## vim swap files
+.*.sw[op]
+
+## hg commit messages (personal convention)
+^hg.msg
+^hg.msg[0-9]
+^hg.msg.*
+^hg.msg[0-9]
+
+## archives and compressed files
+*.gz
+*.bz2
+*.xz
+*.lz
+*.ar
+*.tar
+*.tgz
+*.tbz
+*.tbz2
+*.zip

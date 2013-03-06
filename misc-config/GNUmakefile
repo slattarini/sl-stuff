@@ -43,6 +43,7 @@ endif
 	@lnk .vim/gvimrc.vim .gvimrc
 ifndef i-am-root
 	@for f in config ignore; do xlnk git/$$f .git$$f; done
+	@for f in rc ignore; do xlnk hg/$$f .hg$$f; done
 	@xlnk mailrc .mailrc
 	@xlnk pythonrc.py .pythonrc
 endif
