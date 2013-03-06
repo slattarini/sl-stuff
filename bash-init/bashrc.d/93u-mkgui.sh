@@ -105,8 +105,8 @@ MakeGUI ()
 
 MakeGUI \
     firefox libreoffice pidgin vuze easytag emacs \
-    gitk qgit hgview xpdf xdvi gv ddd iceweasel icedove \
-    smalltalk bluej cssed civ freeciv heretic alsaplayer
+    gitk qgit hgview xpdf xdvi gv iceweasel icedove \
+    smalltalk cssed civ freeciv heretic alsaplayer
 
 MakeGUI -w aoss -- clanbomber bomberclone
 
