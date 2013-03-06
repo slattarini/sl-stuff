@@ -7,12 +7,13 @@ lg = log -g --color always
 
 [extensions]
 hgview =
-rebase = 
+rebase =
 pager =
 record =
 patchbomb =
 mq =
 color =
+fetch =
 bookmarks =
 histedit = ~/src/histedit
 shelve = ~/src/hgshelve/hgshelve.py
