@@ -19,11 +19,10 @@
 /git.msg[0-9]
 
 ## archives and compressed files
-
 *.gz
 *.bz2
 *.xz
-*.lzip
+*.lz
 *.ar
 *.tar
 *.tgz
