@@ -6,6 +6,7 @@ df = log -g -p --color always
 lg = log -g --color always
 
 [extensions]
+hgview =
 rebase = 
 pager =
 record =
