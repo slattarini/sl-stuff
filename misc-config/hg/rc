@@ -32,4 +32,7 @@ status.deleted = cyan bold underline
 status.unknown = magenta bold underline
 status.ignored = black bold
 
+[hgview]
+maxfilesize = 24000000
+
 # vim: ft=cfg
