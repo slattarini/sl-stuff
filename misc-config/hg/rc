@@ -30,3 +30,5 @@ status.removed = red bold blue_background
 status.deleted = cyan bold underline
 status.unknown = magenta bold underline
 status.ignored = black bold
+
+# vim: ft=cfg
