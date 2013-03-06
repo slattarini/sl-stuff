@@ -1,2 +1,32 @@
+[ui]
+username = Stefano Lattarini <stefano.lattarini@gmail.com>
+
+[alias]
+df = log -g -p --color always
+lg = log -g --color always
+
 [extensions]
-        fetch =
+rebase = 
+pager =
+record =
+patchbomb =
+mq =
+color =
+bookmarks =
+histedit = ~/src/histedit
+shelve = ~/src/hgshelve/hgshelve.py
+
+[pager]
+pager = LESS='FSRX' less
+attend = lg, df, annotate, cat, diff, export, glog, log, qdiff
+
+[bookmarks]
+track.current = True
+
+[color]
+status.modified = blue bold underline red_background
+status.added = green bold
+status.removed = red bold blue_background
+status.deleted = cyan bold underline
+status.unknown = magenta bold underline
+status.ignored = black bold
