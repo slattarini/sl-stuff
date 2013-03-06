@@ -104,7 +104,7 @@ MakeGUI ()
 }
 
 MakeGUI \
-    firefox xterm xman libreoffice pidgin vuze easytag emacs \
+    firefox libreoffice pidgin vuze easytag emacs \
     gitk qgit hgview xpdf xdvi gv ddd iceweasel icedove \
     smalltalk bluej cssed civ freeciv heretic alsaplayer
 
