@@ -15,8 +15,8 @@ mq =
 color =
 fetch =
 bookmarks =
-histedit = ~/src/histedit
-shelve = ~/src/hgshelve/hgshelve.py
+histedit = ~/src/hg/histedit
+shelve = ~/src/hg/shelve/hgshelve.py
 
 [pager]
 pager = LESS='FSRX' less
