@@ -30,6 +30,10 @@ map <F1> :syntax sync fromstart<CR>
 map <F2> u
 map <F5> :set tabstop=4<CR>
 map <F6> :set tabstop=8<CR>
+nnoremap <C-Left> :tabprevious<CR>
+nnoremap <C-Right> :tabnext<CR>
+nnoremap <silent> <A-Left> :execute 'silent! tabmove ' . (tabpagenr()-2)<CR>
+nnoremap <silent> <A-Right> :execute 'silent! tabmove ' . tabpagenr()<CR>
 set enc=utf-8 
 setlocal spell spelllang=hacking-en
 map <F11> :setlocal spell spelllang=hacking-en<CR>
