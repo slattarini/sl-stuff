@@ -55,6 +55,7 @@ set viminfo='20,\"50
 set hls is
 set number
 set tabstop=8
+set textwidth=76
 set shiftwidth=4
 set shiftround
 set expandtab
