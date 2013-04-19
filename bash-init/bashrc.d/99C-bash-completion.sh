@@ -10,7 +10,7 @@
 #
 
 if [[ -z $BASH_COMPLETION ]]; then
-    for d in $HOME/etc /usr/local/etc /etc; do
+    for d in $HOME/etc /usr/local/etc /etc /usr/share/bash-completion; do
         if test -f $d/bash_completion; then
             BASH_COMPLETION=$d/bash_completion
             break
