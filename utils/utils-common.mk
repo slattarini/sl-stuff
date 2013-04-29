@@ -12,7 +12,13 @@ endif
 PYTHON_CMD = /usr/bin/env python
 
 # A perl interpreter invocation.
+ifndef PERL_CMD
+ifeq ($(wildcard /usr/bin/perl),/usr/bin/perl)
 PERL_CMD = /usr/bin/perl
+else
+PERL_CMD = /usr/bin/env perl
+endif
+endif
 
 # The Bourne-Again shell.
 ifndef BASH_SHELL
