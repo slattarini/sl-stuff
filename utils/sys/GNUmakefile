@@ -15,6 +15,7 @@ UTILS = \
   del \
   pf \
   nolocale \
+  xrm \
   vis \
   pkgi
 

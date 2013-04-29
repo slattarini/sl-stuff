@@ -11,6 +11,9 @@ endif
 # A python interpreter invocation.
 PYTHON_CMD = /usr/bin/env python
 
+# A perl interpreter invocation.
+PERL_CMD = /usr/bin/perl
+
 # The Bourne-Again shell.
 ifndef BASH_SHELL
 ifeq ($(wildcard /bin/bash),/bin/bash)
@@ -67,6 +70,12 @@ clean:
 %: %.py
 	rm -f $@ $@-t
 	sed '1s|#!.*|#!$(PYTHON_CMD)|' $< >$@-t
+	chmod a-w,a+x $@-t && mv -f $@-t $@
+
+# Pre-process perl scripts.
+%: %.pl
+	rm -f $@ $@-t
+	sed '1s|#!.*|#!$(PERL_CMD)|' $< >$@-t
 	chmod a-w,a+x $@-t && mv -f $@-t $@
 
 # Compile and link C programs.
