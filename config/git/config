@@ -54,5 +54,6 @@
     driver = git-merge-changelog %O %A %B
 [merge]
     renamelimit = 0
+    log = 10000
 
 # vim: ft=cfg
