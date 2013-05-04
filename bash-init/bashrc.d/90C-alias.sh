@@ -102,9 +102,10 @@ fi
 # ls(1) with colors, bells and whistles.
 
 if have_gnu_program ls; then
-    @ls () { $gnu_ls --color=always "$@"; }
+    @ls () { $gnu_ls -h --color=always "$@"; }
 elif (CLICOLOR_FORCE=1 /bin/ls -G . | grep '') >/dev/null 2>&1; then
-    # FreeBSD systems, usually.
+    # FreeBSD systems, usually.  Assume such an 'ls' implementation is
+    # also good enough to understand the '-h' option.
     @ls () { CLICOLOR_FORCE=1 /bin/ls -G "$@"; }
 else
     @ls () { ls "$@"; }
