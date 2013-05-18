@@ -55,5 +55,6 @@
 [merge]
     renamelimit = 0
     log = 10000
+    ff = false
 
 # vim: ft=cfg
