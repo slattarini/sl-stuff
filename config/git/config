@@ -41,7 +41,7 @@
     cdiff = diff --cached
     ci = commit -s
     co = checkout
-    pu = pull --ff-only
+    pu = -c merge.ff=only pull
     st = status
     lgl = log --stat --format=fuller
     dfl = log -p --format=fuller
