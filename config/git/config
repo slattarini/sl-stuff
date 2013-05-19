@@ -42,6 +42,7 @@
     ci = commit -s
     co = checkout
     pu = -c merge.ff=only pull
+    pile = -c merge.ff=only merge
     st = status
     lgl = log --stat --format=fuller
     dfl = log -p --format=fuller
