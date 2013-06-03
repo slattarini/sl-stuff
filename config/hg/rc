@@ -15,6 +15,7 @@ mq =
 color =
 fetch =
 bookmarks =
+purge =
 histedit = ~/src/hg/histedit
 shelve = ~/src/hg/shelve/hgshelve.py
 
