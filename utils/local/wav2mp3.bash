@@ -1,4 +1,4 @@
-#!/bin/bash
+#!bash
 # Wrapper around lame(1) to convert wav files into mp3 files.
 
 set -u            # die if any unset variable is expanded
