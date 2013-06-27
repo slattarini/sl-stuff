@@ -104,10 +104,10 @@ MakeGUI ()
 }
 
 MakeGUI \
-    firefox libreoffice pidgin vuze easytag emacs \
+    firefox libreoffice pidgin skype vuze easytag emacs \
     gitk qgit hgview xpdf xdvi gv iceweasel icedove \
-    smalltalk cssed gimp freeciv heretic alsaplayer \
-    audacity ristretto comix
+    smalltalk gimp freeciv heretic alsaplayer ripperx \
+    ristretto comix
 
 MakeGUI -w aoss -- clanbomber bomberclone
 
