@@ -3,6 +3,7 @@
 /local/P
 /local/listen-radioclassica
 /local/ssh-add-all
+/local/wav2mp3
 /sys/IPof
 /sys/apply
 /sys/bak
@@ -17,3 +18,4 @@
 /sys/zap
 /sys/strerror
 /sys/pkgi
+/sys/xrm
