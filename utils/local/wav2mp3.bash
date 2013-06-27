@@ -1,24 +1,16 @@
 #!/bin/bash
 # Wrapper around lame(1) to convert wav files into mp3 files.
 
-#
-# INIT CODE
-#
-
-set -u # die if any unset variable is expanded
+set -u            # die if any unset variable is expanded
 shopt -s extglob  # extended globbing for 'case' and '[['
-set -o noglob  # don't do globbing on files
+set -o noglob     # don't do globbing on files
 
 declare -r progname=${0##*/}
-declare -r VERSION="0.4beta2"
-declare -r LAME_BIN=${LAME_BIN-"lame"} # name/path of lame(1) program
+declare -r VERSION=0.5
+declare -r LAME=${LAME-'lame'}
 declare -ir EXIT_SUCCESS=0
 declare -ir EXIT_FAILURE=1
 declare -ir E_USAGE=2
-
-#
-# SUBROUTINES
-#
 
 xecho() {
     printf '%s\n' "$*"
@@ -55,15 +47,15 @@ print_help() {
     cat <<EOH
 BRIEF DESCRIPTION
   $progname convert a file from WAV format to MP3 format, using lame(1).
-  If the name of input file is \`-', then input is taken from standard
+  If the name of input file is '-', then input is taken from standard
   input.
 OUTPUT FILE NAME
   By default, the name of output file is FILE.mp3, where FILE is the name
-  of input file with the suffix \`.wav' (if any) stripped off; but, if the
-  input file is \`-' (i.e. the input is taken from standard input), then
+  of input file with the suffix '.wav' (if any) stripped off; but, if the
+  input file is '-' (i.e. the input is taken from standard input), then
   the output is sent by default to standard output.
   Obviously, the user can explicitly choose the output file, with the
-  \`-o' option (see below).
+  '-o' option (see below).
 OPTIONS
  --help
     Display this help screen on standard output, and exit.
@@ -77,11 +69,11 @@ OPTIONS
     Set to PRESET the lame preset to be used in creation of mp3-file.
     Default is "extreme".
  -o OUTFILE
-    Set the output file to OUTFILE; a value of \`-' means that output
+    Set the output file to OUTFILE; a value of '-' means that output
     must be written to standard output.
 ENVIRONMENT
   The name/path of the lame program to use is taken from the environmental
-  variable \`LAME_BIN' (default to "lame").
+  variable 'LAME' (default to "lame").
 EOH
 }
 
@@ -148,8 +140,7 @@ if [[ ${outfile+"set"} != "set" ]]; then
     esac
 fi
 
-type -P "$LAME_BIN" >/dev/null 2>&1 || \
-  error "lame program \`$LAME_BIN' not found"
+type -P "$LAME" >/dev/null 2>&1 || error "lame program '$LAME' not found"
 
 can_read_or_die "$infile"
 can_write_or_die "$outfile"
@@ -157,7 +148,7 @@ can_write_or_die "$outfile"
 infile=$(normalize_filename "$infile")
 outfile=$(normalize_filename "$outfile")
 
-exec -a "$progname" "$LAME_BIN" $lame_verbose -h --preset "$lame_preset" \
-                                "$infile" "$outfile"
+exec -a "$progname" "$LAME" $lame_verbose -h --preset "$lame_preset" \
+                            "$infile" "$outfile"
 
 # vim: et sw=4 ts=4 ft=sh
