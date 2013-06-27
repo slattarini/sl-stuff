@@ -8,6 +8,7 @@ UTILS = \
   record-radioclassica \
   record-radio \
   ssh-add-all \
+  ogg2mp3 \
   wav2mp3
 
 bindir = $(homebindir)
