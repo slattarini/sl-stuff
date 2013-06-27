@@ -103,10 +103,6 @@ normalize_filename() {
     xecho "$fname"
 }
 
-#
-# OPTION PARSING
-#
-
 readonly OPTSTRING="vp:o:"
 case ${1-} in
     --help) print_help; exit $?;;
@@ -134,9 +130,7 @@ case $# in
     *) usage_error "too many arguments";;
 esac
 
-#
 # MAIN CODE
-#
 
 if [[ ${outfile+set} != set ]]; then
     case $infile in
