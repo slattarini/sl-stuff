@@ -108,10 +108,11 @@ normalize_filename() {
 #
 
 readonly OPTSTRING="vp:o:"
-case "${1-}" in
-    --help) print_help; exit $EXIT_SUCCESS;;
-    --version) print_version; exit $EXIT_SUCCESS;;
+case ${1-} in
+    --help) print_help; exit $?;;
+    --version) print_version; exit $?;;
 esac
+
 lame_preset='extreme'
 lame_verbose=''
 unset outfile
@@ -129,7 +130,7 @@ unset OPTION OPTARG OPTERR OPTIND
 
 case $# in
     0) usage_error "missing argument";;
-    1) infile="$1";;
+    1) infile=$1;;
     *) usage_error "too many arguments";;
 esac
 
@@ -137,9 +138,9 @@ esac
 # MAIN CODE
 #
 
-if [[ ${outfile+"set"} != "set" ]]; then
-    case "$infile" in
-        -) outfile="-";;
+if [[ ${outfile+set} != set ]]; then
+    case $infile in
+        -) outfile=-;;
         *) outfile=${infile%%.@(wav|WAV)}.mp3;;
     esac
 fi
