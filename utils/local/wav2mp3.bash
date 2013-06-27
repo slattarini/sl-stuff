@@ -40,11 +40,11 @@ print_version() {
 }
 
 print_help() {
-    print_version
-    echo
-    print_usage
-    echo
-    cat <<EOH
+    print_version \
+      && xecho \
+      && print_usage \
+      && xecho \
+      && cat <<EOH
 BRIEF DESCRIPTION
   $progname convert a file from WAV format to MP3 format, using lame(1).
   If the name of input file is '-', then input is taken from standard
