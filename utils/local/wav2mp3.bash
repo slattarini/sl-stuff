@@ -143,6 +143,7 @@ type -P "$LAME" >/dev/null 2>&1 || error "lame program '$LAME' not found"
 can_read_or_die "$infile"
 can_write_or_die "$outfile"
 
+# Sigh, lame doesn't recognize the '--' special option :-(
 infile=$(normalize_filename "$infile")
 outfile=$(normalize_filename "$outfile")
 
