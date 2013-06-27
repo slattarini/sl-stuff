@@ -146,7 +146,6 @@ can_write_or_die "$outfile"
 infile=$(normalize_filename "$infile")
 outfile=$(normalize_filename "$outfile")
 
-exec -a "$progname" "$LAME" $lame_verbose -h --preset "$lame_preset" \
-                            "$infile" "$outfile"
+exec "$LAME" $lame_verbose -h --preset "$lame_preset" "$infile" "$outfile"
 
 # vim: et sw=4 ts=4 ft=sh
