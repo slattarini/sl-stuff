@@ -43,7 +43,6 @@ print_help() {
     print_version \
       && xecho \
       && print_usage \
-      && xecho \
       && cat <<EOH
 
 BRIEF DESCRIPTION
