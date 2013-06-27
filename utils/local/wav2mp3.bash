@@ -45,10 +45,12 @@ print_help() {
       && print_usage \
       && xecho \
       && cat <<EOH
+
 BRIEF DESCRIPTION
   $progname convert a file from WAV format to MP3 format, using lame(1).
   If the name of input file is '-', then input is taken from standard
   input.
+
 OUTPUT FILE NAME
   By default, the name of output file is FILE.mp3, where FILE is the name
   of input file with the suffix '.wav' (if any) stripped off; but, if the
@@ -56,6 +58,7 @@ OUTPUT FILE NAME
   the output is sent by default to standard output.
   Obviously, the user can explicitly choose the output file, with the
   '-o' option (see below).
+
 OPTIONS
  --help
     Display this help screen on standard output, and exit.
@@ -71,6 +74,7 @@ OPTIONS
  -o OUTFILE
     Set the output file to OUTFILE; a value of '-' means that output
     must be written to standard output.
+
 ENVIRONMENT
   The name/path of the lame program to use is taken from the environmental
   variable 'LAME' (default to "lame").
