@@ -110,7 +110,7 @@ esac
 
 lame_preset='extreme'
 lame_verbose=''
-unset outfile
+unset outfile # add potential interferences from the environment
 while getopts ":$OPTSTRING" OPTION; do
     case "$OPTION" in
         v) lame_verbose='--verbose';;
