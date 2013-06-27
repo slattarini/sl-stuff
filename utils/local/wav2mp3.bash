@@ -6,7 +6,7 @@ shopt -s extglob  # extended globbing for 'case' and '[['
 set -o noglob     # don't do globbing on files
 
 declare -r progname=${0##*/}
-declare -r VERSION=0.5
+declare -r version=0.5
 declare -r LAME=${LAME-'lame'}
 declare -ir EXIT_SUCCESS=0
 declare -ir EXIT_FAILURE=1
@@ -36,7 +36,7 @@ EOU
 }
 
 print_version() {
-    xecho "$progname, version $VERSION"
+    xecho "$progname, version $version"
 }
 
 print_help() {
