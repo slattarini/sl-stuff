@@ -40,23 +40,23 @@ _ps1_escape()
 readonly _ps1_B=$(_ps1_escape 1)
 # End bold text.
 readonly _ps1_b=$(_ps1_escape 22)
-# Restore normal text
+# Restore normal text.
 readonly _ps1_raw=$(_ps1_escape 0)
-# Restore normal color
+# Restore normal color.
 readonly _ps1_std=$(_ps1_escape '')
-# Set to magenta foreground
+# Set to magenta foreground.
 readonly _ps1_magenta=$(_ps1_escape '1;35')
-# Set to red foreground
+# Set to red foreground.
 readonly _ps1_red=$(_ps1_escape '1;31')
-# Set to blue foreground
+# Set to blue foreground.
 readonly _ps1_blue=$(_ps1_escape '1;34')
-# Set to green foreground
+# Set to green foreground.
 readonly _ps1_green=$(_ps1_escape '1;32')
-# Set to green background
+# Set to green background.
 readonly _ps1_green_bg=$(_ps1_escape '1;42')
-# Set to "pale yellow" (basically ochre) on black
+# Set to "pale yellow" (basically ochre).
 readonly _ps1_ochre=$(_ps1_escape '0;33')
-# Set to "pale yellow" (basically ochre) on black
+# Set to "pale yellow" (basically ochre) on black.
 readonly _ps1_ochre_on_black=$(_ps1_escape '1;40;0;33')
 
 # Be happy or sad depending on the previous exit status (or to the given
