@@ -113,6 +113,13 @@ _ps1()
       _ps1_who_where=${_ps1_red}${_ps1_who_where}${_ps1_raw}
     elif [[ -n $SSH_CONNECTION ]]; then
       _ps1_who_where=${_ps1_ochre_on_black}${_ps1_who_where}${_ps1_raw}
+    # When running on a remote system under screen(1), the ssh-related
+    # variables can be no longer available.  SO we use a different color
+    # to make it plain that, being under screen, we might be running on
+    # a remote system.  This might be a bit of an hack, but since I only
+    # use screen for remote systems, is good enough for me.
+    elif [[ -n $STY || $TERM == screen ]]; then
+      _ps1_who_where=${_ps1_blue}${_ps1_who_where}${_ps1_raw}
     fi
     PS1="$_ps1_raw\n$_ps1_who_where [$(_ps1_pretty_cwd --color)] \A"
     if [ -n "$VIRTUAL_ENV" ]; then
