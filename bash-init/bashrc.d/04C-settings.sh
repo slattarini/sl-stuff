@@ -66,7 +66,8 @@ set_defualt_shell_options ()
     shopt -u extdebug
     shopt -s extglob
     shopt -s extquote
-    shopt -u failglob  # Don't complain if a glob expansion fails
+    shopt -u failglob  # don't complain if a glob expansion fails
+    shopt -u globstar  # globbing '**' expands recursively, a la' zsh
     shopt -s force_fignore
     shopt -u gnu_errfmt
     shopt -u histreedit
