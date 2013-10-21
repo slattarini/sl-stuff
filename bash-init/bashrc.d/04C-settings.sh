@@ -5,44 +5,28 @@ set_defualt_shell_options ()
 
     # Do not mark variables which are modified or created for export.
     set +a
-
     # Do *not* notify of job termination immediately (that is
     # really irritating!)
     set +b
-
     # The shell will perform brace expansion.
     set -B
-
     # Allow existing regular files to be overwritten by redirection
     # of output
     set +C
-
-    # Do not exit immediately if a command exits with a non-zero status.
     set +e
-
     # Enable file name generation (globbing).
     set +f
-
     # Do *not* remember the location of commands as they are looked up.
     set +h
-
     # Enable !-style history substitution.
     set -H
-
     # Enable job control.
     set -m
-
     # Follow symbolic links when executing commands (such as cd)
     # which change the current directory.
     set +P
-
-    # Do not treat unset variables as an error when substituting.
     set +u
-
-    # Do not print shell input lines as they are read.
     set +v
-
-    # Do not print commands and their arguments as they are executed.
     set +x
 
     # Do not exit when an EOF is read from terminal.
@@ -67,7 +51,7 @@ set_defualt_shell_options ()
     shopt -s extglob
     shopt -s extquote
     shopt -u failglob  # don't complain if a glob expansion fails
-    shopt -u globstar  # globbing '**' expands recursively, a la' zsh
+    shopt -s globstar  # globbing '**' expands recursively, a la' zsh
     shopt -s force_fignore
     shopt -u gnu_errfmt
     shopt -u histreedit
