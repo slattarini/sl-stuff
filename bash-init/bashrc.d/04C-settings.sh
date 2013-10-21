@@ -37,6 +37,8 @@ set_defualt_shell_options ()
     # a non-zero status.
     set -o pipefail
 
+    # Trying to execute a directory will cd into that directory.
+    shopt -s autocd
     shopt -u cdable_vars
     shopt -u cdspell
     shopt -u checkhash
