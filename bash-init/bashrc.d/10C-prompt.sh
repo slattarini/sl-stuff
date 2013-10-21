@@ -112,7 +112,7 @@ _ps1()
     elif [[ -n $SSH_CONNECTION ]]; then
       _ps1_who_where=${_ps1_ochre}${_ps1_who_where}${_ps1_raw}
     # When running on a remote system under screen(1), the ssh-related
-    # variables can be no longer available.  SO we use a different color
+    # variables can be no longer available.  So we use a different color
     # to make it plain that, being under screen, we might be running on
     # a remote system.  This might be a bit of an hack, but since I only
     # use screen for remote systems, is good enough for me.
