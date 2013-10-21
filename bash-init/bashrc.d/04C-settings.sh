@@ -1,37 +1,19 @@
 # -*- bash -*-
 
-set_defualt_shell_options ()
+set_preferred_shell_options ()
 {
-
-    # Do not mark variables which are modified or created for export.
-    set +a
     # Do *not* notify of job termination immediately (that is
     # really irritating!)
     set +b
-    # The shell will perform brace expansion.
-    set -B
-    # Allow existing regular files to be overwritten by redirection
-    # of output
-    set +C
-    set +e
-    # Enable file name generation (globbing).
-    set +f
     # Do *not* remember the location of commands as they are looked up.
     set +h
     # Enable !-style history substitution.
     set -H
-    # Enable job control.
-    set -m
     # Follow symbolic links when executing commands (such as cd)
     # which change the current directory.
     set +P
-    set +u
-    set +v
-    set +x
-
     # Do not exit when an EOF is read from terminal.
     set -o ignoreeof
-
     # The return value of a pipeline is the status of the last command
     # to exit with a non-zero status, or zero if no command exited with
     # a non-zero status.
@@ -39,40 +21,29 @@ set_defualt_shell_options ()
 
     # Trying to execute a directory will cd into that directory.
     shopt -s autocd
-    shopt -u cdable_vars
-    shopt -u cdspell
-    shopt -u checkhash
     # Check the window size after each command and, if necessary,
     # update the values of LINES and COLUMNS environment variables.
     shopt -s checkwinsize
-    shopt -s cmdhist
+    # File globbing.
     shopt -u dotglob
-    shopt -u execfail
-    shopt -s expand_aliases
-    shopt -u extdebug
-    shopt -s extglob
-    shopt -s extquote
     shopt -u failglob  # don't complain if a glob expansion fails
     shopt -s globstar  # globbing '**' expands recursively, a la' zsh
-    shopt -s force_fignore
-    shopt -u gnu_errfmt
-    shopt -u histreedit
-    shopt -u histappend
-    shopt -u histverify
-    shopt -u hostcomplete
-    shopt -u huponexit
-    shopt -s interactive_comments
-    shopt -u lithist
-    shopt -u login_shell
-    shopt -u mailwarn
-    shopt -s no_empty_cmd_completion
-    shopt -u nocaseglob
     shopt -u nullglob
-    shopt -s progcomp
-    shopt -s promptvars
-    shopt -u restricted_shell
-    shopt -u shift_verbose
-    shopt -s sourcepath
+    # Extended globbing for files and the 'case' statement.
+    shopt -s extglob
+    # Shell history and history editing.
+    shopt -s cmdhist
+    shopt -u lithist
+    shopt -s histreedit
+    shopt -s histverify
+    shopt -u hostcomplete # no generic hostname completion
+    shopt -s no_empty_cmd_completion
+    # No annoying legacy checking for mail.
+    shopt -u mailwarn
+    # Print an error message when the shift count exceeds the number of
+    # positional parameters.
+    shopt -s shift_verbose
+    # The 'echo' builtin should not expand backslash-escape sequences.
     shopt -u xpg_echo
 
     # History behaviour.
@@ -87,6 +58,6 @@ set_defualt_shell_options ()
 }
 
 # Set default options.
-set_defualt_shell_options
+set_preferred_shell_options
 
 # vim: ft=sh et sw=4 ts=4
