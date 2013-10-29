@@ -74,5 +74,9 @@ if !exists("sl__autocommands_loaded")
   au FileType vim set ts=2 sw=2
   au FileType python set ts=4 sw=4
 endif
+let localvimrc = $HOME . "/.vimrc.local"
+if filereadable(localvimrc)
+  exec "source" localvimrc
+endif
 syntax on
 " vim: ft=vim ts=2 sw=2 et
