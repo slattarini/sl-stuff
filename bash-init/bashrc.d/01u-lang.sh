@@ -6,27 +6,22 @@ export LC_NUMERIC=C
 
 locale -a &>/dev/null || return $SUCCESS
 
-_setlang_cmd ()
-{
-  locale | sed -e 's/=\(.*\)$/='"${1-}"';/' -e 's/^/export /'
-  case $1 in C) echo export LC_ALL=C;; *) echo unset LC_ALL;; esac
-}
-
 setlang ()
 {
-    eval $(_setlang_cmd "$@")
-    export LC_COLLATE=C
-    export LC_NUMERIC=C
-}
-
-resetlang ()
-{
-    eval "${_restore_lang_cmd}" && _restore_lang_cmd=
+    local x rc=0
+    for x in $(locale); do
+        eval "${x%%=*}=$1" || rc=1
+    done
+    case $1 in C) export LC_ALL=C;; *) unset LC_ALL;; esac || rc=1
+    export LC_COLLATE=C && export LC_NUMERIC=C || rc=1
+    # Apparently, perl is very good at detecting broken locales.
+    (locale; perl -e 1) 2>&1 >/dev/null | grep . >&2 && rc=1
+    return $rc
 }
 
 clearlang ()
 {
-    eval $(_setlang_cmd C)
+    setlang "C"
 }
 
 speak ()
@@ -41,6 +36,9 @@ speak ()
     setlang "$1"
 }
 
-setlang en_US.UTF-8
+setlang en_US.UTF-8 || {
+    mwarn "failed setting locale to en_US.UTF-8, falling back to C locale"
+    clearlang
+}
 
 # vim: ft=sh ts=4 sw=4 et
