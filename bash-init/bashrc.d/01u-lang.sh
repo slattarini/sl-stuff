@@ -18,7 +18,10 @@ setlang ()
   for x in $(locale); do
     eval "${x%%=*}=$1" || rc=1
   done
-  case $1 in C) export LC_ALL=C;; *) unset LC_ALL;; esac || rc=1
+  case $1 in
+    C) export LC_ALL=C LANG=C || rc=1;;
+    *) unset LC_ALL || rc=1;;
+  esac
   export LC_COLLATE=C && export LC_NUMERIC=C || rc=1
   return $rc
 }
